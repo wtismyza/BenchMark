@@ -1,0 +1,56 @@
+[
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-fPIC",
+            "-Wno-unused-result",
+            "-DNDEBUG",
+            "-g",
+            "-fwrapv",
+            "-O3",
+            "-Wall",
+            "-Wstrict-prototypes",
+            "-Werror=declaration-after-statement",
+            "-I./Include",
+            "-I.",
+            "-IInclude",
+            "-I/usr/include/x86_64-linux-gnu",
+            "-I/usr/local/include",
+            "-I/home/cs18/inferDoc/Python-3.4.3rc1/Include",
+            "-I/home/cs18/inferDoc/Python-3.4.3rc1",
+            "-o",
+            "build/temp.linux-x86_64-3.4/home/cs18/inferDoc/Python-3.4.3rc1/Modules/_ssl.o",
+            "Modules/_ssl.c"
+        ],
+        "directory": "/home/cs18/inferDoc/Python-3.4.3rc1",
+        "file": "Modules/_ssl.c"
+    },
+    {
+        "arguments": [
+            "cc",
+            "-c",
+            "-fPIC",
+            "-Wno-unused-result",
+            "-DNDEBUG",
+            "-g",
+            "-fwrapv",
+            "-O3",
+            "-Wall",
+            "-Wstrict-prototypes",
+            "-Werror=declaration-after-statement",
+            "-I./Include",
+            "-I.",
+            "-IInclude",
+            "-I/usr/include/x86_64-linux-gnu",
+            "-I/usr/local/include",
+            "-I/home/cs18/inferDoc/Python-3.4.3rc1/Include",
+            "-I/home/cs18/inferDoc/Python-3.4.3rc1",
+            "-o",
+            "build/temp.linux-x86_64-3.4/home/cs18/inferDoc/Python-3.4.3rc1/Modules/_hashopenssl.o",
+            "Modules/_hashopenssl.c"
+        ],
+        "directory": "/home/cs18/inferDoc/Python-3.4.3rc1",
+        "file": "Modules/_hashopenssl.c"
+    }
+]

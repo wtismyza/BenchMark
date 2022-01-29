@@ -1,0 +1,237 @@
+[2782][      debug] Loading models took 81.737ms
+[2783][      debug] Sqlite write daemon: starting up
+[2783][      debug] Sqlite write daemon: set up complete, waiting for connections
+[2782][environment] CWD = /home/cs18/inferDoc/Python-3.4.3rc1
+[2782][environment] No .inferconfig file found
+[2782][environment] Project root = /home/cs18/inferDoc/Python-3.4.3rc1
+[2782][environment] INFER_ARGS =   @/tmp/args.tmp.5f4405
+[2782][environment] command line arguments:   infer --compilation-database compile_commands.json
+[2782][environment]                           --pulse --no-biabduction
+[2782][environment] Available memory at startup: 3430 MB
+[2782][environment] Active checkers: self-in-block (C/C++/ObjC), starvation (C/C++/ObjC, Java), uninit (C/C++/ObjC), siof (C/C++/ObjC), racerd (C/C++/ObjC, Java), pulse (C/C++/ObjC, Java), liveness (C/C++/ObjC), inefficient-keyset-iterator (Java), fragment-retains-view (Java)
+[2782][environment] Scheduler: file
+[2782][environment] Cores used: 4
+[2782][environment] Infer version v1.0.0
+[2782][environment] Copyright 2009 - present Facebook. All Rights Reserved.
+[2782][environment] 
+[2782][   progress] Capturing using compilation database...
+[2782][      debug] parsing compilation database from /home/cs18/inferDoc/Python-3.4.3rc1/compile_commands.json
+[2782][      debug] created database with 18 entries
+[2782][      debug] Starting linting, translating 18 files
+[2782][      debug] 
+[2782][   progress] Starting linting, translating 18 files
+[2782][   progress] 
+
+
+
+
+
+[2795][environment] CWD = /home/cs18/inferDoc/Python-3.4.3rc1
+[2795][environment] No .inferconfig file found
+[2795][environment] Project root = /home/cs18/inferDoc/Python-3.4.3rc1
+[2795][environment] INFER_ARGS =   @/tmp/args.tmp.bd9f44
+[2795][environment] command line arguments:   /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/wrappers/clang
+[2795][environment]                           @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.913080.txt
+[2795][environment]                           -fsyntax-only
+[2795][environment] Available memory at startup: 3289 MB
+[2795][environment] Active checkers: self-in-block (C/C++/ObjC), starvation (C/C++/ObjC, Java), uninit (C/C++/ObjC), siof (C/C++/ObjC), racerd (C/C++/ObjC, Java), pulse (C/C++/ObjC, Java), liveness (C/C++/ObjC), inefficient-keyset-iterator (Java), fragment-retains-view (Java)
+[2792][environment] CWD = /home/cs18/inferDoc/Python-3.4.3rc1
+[2792][environment] No .inferconfig file found
+[2792][environment] Project root = /home/cs18/inferDoc/Python-3.4.3rc1
+[2792][environment] INFER_ARGS =   @/tmp/args.tmp.8dce8b
+[2792][environment] command line arguments:   /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/wrappers/clang
+[2792][environment]                           @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.f7bc9d.txt
+[2792][environment]                           -fsyntax-only
+[2792][environment] Available memory at startup: 3289 MB
+[2792][environment] Active checkers: self-in-block (C/C++/ObjC), starvation (C/C++/ObjC, Java), uninit (C/C++/ObjC), siof (C/C++/ObjC), racerd (C/C++/ObjC, Java), pulse (C/C++/ObjC, Java), liveness (C/C++/ObjC), inefficient-keyset-iterator (Java), fragment-retains-view (Java)
+
+[2794][environment] CWD = /home/cs18/inferDoc/Python-3.4.3rc1
+[2794][environment] No .inferconfig file found
+[2794][environment] Project root = /home/cs18/inferDoc/Python-3.4.3rc1
+[2794][environment] INFER_ARGS =   @/tmp/args.tmp.8698e3
+[2794][environment] command line arguments:   /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/wrappers/clang
+[2794][environment]                           @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.7444e2.txt
+[2794][environment]                           -fsyntax-only
+[2794][environment] Available memory at startup: 3283 MB
+[2794][environment] Active checkers: self-in-block (C/C++/ObjC), starvation (C/C++/ObjC, Java), uninit (C/C++/ObjC), siof (C/C++/ObjC), racerd (C/C++/ObjC, Java), pulse (C/C++/ObjC, Java), liveness (C/C++/ObjC), inefficient-keyset-iterator (Java), fragment-retains-view (Java)
+
+[2793][environment] CWD = /home/cs18/inferDoc/Python-3.4.3rc1
+[2793][environment] No .inferconfig file found
+[2793][environment] Project root = /home/cs18/inferDoc/Python-3.4.3rc1
+[2793][environment] INFER_ARGS =   @/tmp/args.tmp.dfe295
+[2793][environment] command line arguments:   /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/wrappers/clang
+[2793][environment]                           @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.28ef60.txt
+[2793][environment]                           -fsyntax-only
+[2793][environment] Available memory at startup: 3272 MB
+[2793][environment] Active checkers: self-in-block (C/C++/ObjC), starvation (C/C++/ObjC, Java), uninit (C/C++/ObjC), siof (C/C++/ObjC), racerd (C/C++/ObjC, Java), pulse (C/C++/ObjC, Java), liveness (C/C++/ObjC), inefficient-keyset-iterator (Java), fragment-retains-view (Java)
+[2793][      debug] 
+[2793][      debug] *** Beginning capture of file /home/cs18/inferDoc/Python-3.4.3rc1/Modules/_cryptmodule.c ***
+[2793][      debug] Loading the following linters files: /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/linter_rules/linters.al
+[2793][      debug] Elapsed: 729ms.
+[2793][      debug] GC stats for capture:
+[2793][      debug]   minor_words: 1.20081e+07
+[2793][      debug]   promoted_words: 1.08414e+06
+[2793][      debug]   major_words: 1.14375e+06
+[2793][      debug]   minor_collections: 14
+[2793][      debug]   major_collections: 3
+[2793][      debug]   compactions: 0
+[2793][      debug]   top_heap_words: 1531904
+[2793][      debug]   
+[2793][      debug] GC stats for main_process_full:
+[2793][      debug]   minor_words: 1.32637e+07
+[2793][      debug]   promoted_words: 1.388e+06
+[2793][      debug]   major_words: 1.4637e+06
+[2793][      debug]   minor_collections: 27
+[2793][      debug]   major_collections: 6
+[2793][      debug]   compactions: 1
+[2793][      debug]   top_heap_words: 1531904
+[2793][      debug]   
+[2793][environment] Scheduler: file
+[2793][environment] Cores used: 4
+[2793][environment] [2792][      debug] 
+[2792][      debug] *** Beginning capture of file /home/cs18/inferDoc/Python-3.4.3rc1/Modules/_curses_panel.c ***
+[2792][      debug] Loading the following linters files: /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/linter_rules/linters.al
+[2792][      debug] Elapsed: 802ms.
+[2792][      debug] GC stats for capture:
+[2792][      debug]   minor_words: 1.58577e+07
+[2792][      debug]   promoted_words: 1.41932e+06
+[2792][      debug]   major_words: 1.49514e+06
+[2792][      debug]   minor_collections: 18
+[2792][      debug]   major_collections: 4
+[2792][      debug]   compactions: 0
+[2792][      debug]   top_heap_words: 1761792
+[2792][      debug]   
+[2792][      debug] GC stats for main_process_full:
+[2792][      debug]   minor_words: 1.71133e+07
+[2792][      debug]   promoted_words: 1.72317e+06
+[2792][      debug]   major_words: 1.81509e+06
+[2792][      debug]   minor_collections: 31
+[2792][      debug]   major_collections: 7
+[2792][      debug]   compactions: 1
+[2792][      debug]   top_heap_words: 1761792
+[2792][      debug]   
+[2792][environment] Scheduler: file
+[2792][environment] Cores used: 4
+[2792][environment] 
+[2812][environment] CWD = /home/cs18/inferDoc/Python-3.4.3rc1
+[2812][environment] No .inferconfig file found
+[2812][environment] Project root = /home/cs18/inferDoc/Python-3.4.3rc1
+[2812][environment] INFER_ARGS =   @/tmp/args.tmp.521bb9
+[2812][environment] command line arguments:   /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/wrappers/clang
+[2812][environment]                           @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.e5ef53.txt
+[2812][environment]                           -fsyntax-only
+[2812][environment] Available memory at startup: 3225 MB
+[2812][environment] Active checkers: self-in-block (C/C++/ObjC), starvation (C/C++/ObjC, Java), uninit (C/C++/ObjC), siof (C/C++/ObjC), racerd (C/C++/ObjC, Java), pulse (C/C++/ObjC, Java), liveness (C/C++/ObjC), inefficient-keyset-iterator (Java), fragment-retains-view (Java)
+
+[2813][environment] CWD = /home/cs18/inferDoc/Python-3.4.3rc1
+[2813][environment] No .inferconfig file found
+[2813][environment] Project root = /home/cs18/inferDoc/Python-3.4.3rc1
+[2813][environment] INFER_ARGS =   @/tmp/args.tmp.307b81
+[2813][environment] command line arguments:   /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/wrappers/clang
+[2813][environment]                           @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.d30479.txt
+[2813][environment]                           -fsyntax-only
+[2813][environment] Available memory at startup: 3223 MB
+[2813][environment] Active checkers: self-in-block (C/C++/ObjC), starvation (C/C++/ObjC, Java), uninit (C/C++/ObjC), siof (C/C++/ObjC), racerd (C/C++/ObjC, Java), pulse (C/C++/ObjC, Java), liveness (C/C++/ObjC), inefficient-keyset-iterator (Java), fragment-retains-view (Java)
+[2794][      debug] 
+[2794][      debug] *** Beginning capture of file /home/cs18/inferDoc/Python-3.4.3rc1/Modules/_hashopenssl.c ***
+[2794][      debug] Loading the following linters files: /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/linter_rules/linters.al
+[2794][      debug] Modules/_hashopenssl.c:546:13: ERROR translating statement 'OpaqueValueExpr'
+[2794][      debug] 
+[2794][ intern err] Aborting translation of method 'PKCS5_PBKDF2_HMAC_fast' in file 'Modules/_hashopenssl.c'
+Known incorrect assumption in the frontend: Expected source expression for OpaqueValueExpr
+
+[2794][      debug] Modules/_hashopenssl.c:546:13: ERROR translating statement 'OpaqueValueExpr'
+[2794][      debug] 
+[2794][ intern err] Aborting translation of method 'PKCS5_PBKDF2_HMAC_fast' in file 'Modules/_hashopenssl.c'
+Known incorrect assumption in the frontend: Expected source expression for OpaqueValueExpr
+
+[2794][      debug] Elapsed: 1.236s.
+[2794][      debug] 
+[2794][ extern err] Error: the following clang command did not run successfully:
+[2794][ extern err]     /opt/infer-linux64-v1.0.0/lib/infer/facebook-clang-plugins/clang/install/bin/clang-9
+[2794][ extern err]     @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/clang_command_.tmp.c35d11.txt
+[2794][ extern err]   ++Contents of '/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/clang_command_.tmp.c35d11.txt':
+[2794][ extern err]     "-cc1" "-load"
+[2794][ extern err]     "/opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../../facebook-clang-plugins/libtooling/build/FacebookClangPlugin.dylib"
+[2794][ extern err]     "-add-plugin" "BiniouASTExporter" "-plugin-arg-BiniouASTExporter" "-"
+[2794][ extern err]     "-plugin-arg-BiniouASTExporter" "PREPEND_CURRENT_DIR=1"
+[2794][ extern err]     "-plugin-arg-BiniouASTExporter" "MAX_STRING_SIZE=65535" "-cc1" "-triple"
+[2794][ extern err]     "x86_64-unknown-linux-gnu" "-fsyntax-only" "-disable-free"
+[2794][ extern err]     "-disable-llvm-verifier" "-discard-value-names" "-main-file-name"
+[2794][ extern err]     "_hashopenssl.c" "-mrelocation-model" "pic" "-pic-level" "2"
+[2794][ extern err]     "-mthread-model" "posix" "-fmath-errno" "-masm-verbose"
+[2794][ extern err]     "-mconstructor-aliases" "-munwind-tables" "-fuse-init-array"
+[2794][ extern err]     "-target-cpu" "x86-64" "-dwarf-column-info" "-debug-info-kind=limited"
+[2794][ extern err]     "-dwarf-version=4" "-debugger-tuning=gdb" "-momit-leaf-frame-pointer"
+[2794][ extern err]     "-resource-dir"
+[2794][ extern err]     "/opt/infer-linux64-v1.0.0/lib/infer/facebook-clang-plugins/clang/install/lib/clang/9.0.0"
+[2794][ extern err]     "-include"
+[2794][ extern err]     "/opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/clang_wrappers/global_defines.h"
+[2794][ extern err]     "-D" "NDEBUG" "-I" "./Include" "-I" "." "-I" "Include" "-I"
+[2794][ extern err]     "/usr/include/x86_64-linux-gnu" "-I" "/usr/local/include" "-I"
+[2794][ extern err]     "/home/cs18/inferDoc/Python-3.4.3rc1/Include" "-I"
+[2794][ extern err]     "/home/cs18/inferDoc/Python-3.4.3rc1" "-internal-isystem"
+[2794][ extern err]     "/usr/local/include" "-internal-isystem"
+[2794][ extern err]     "/opt/infer-linux64-v1.0.0/lib/infer/facebook-clang-plugins/clang/install/lib/clang/9.0.0/include"
+[2794][ extern err]     "-internal-externc-isystem" "/usr/include/x86_64-linux-gnu"
+[2794][ extern err]     "-internal-externc-isystem" "/include" "-internal-externc-isystem"
+[2794][ extern err]     "/usr/include" "-O3" "-Wno-unused-result" "-Wall" "-Wstrict-prototypes"
+[2794][ extern err]     "-Werror=declaration-after-statement"
+[2794][ extern err]     "-Wno-ignored-optimization-argument" "-Wno-everything"
+[2794][ extern err]     "-fdebug-compilation-dir" "/home/cs18/inferDoc/Python-3.4.3rc1"
+[2794][ extern err]     "-ferror-limit" "19" "-fmessage-length" "0" "-fwrapv"
+[2794][ extern err]     "-fobjc-runtime=gcc" "-fdiagnostics-show-option" "-vectorize-loops"
+[2794][ extern err]     "-vectorize-slp" "-x" "c" "Modules/_hashopenssl.c" "-O0" "-include"
+[2794][ extern err]     "/opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/clang_wrappers/global_defines.h"
+[2794][ extern err]     "-Wno-everything"
+[2794][ extern err]   
+[2794][ extern err] 
+[2794][environment] Scheduler: file
+[2794][environment] Cores used: 4
+[2794][environment] [2791][ extern err] Error running compilation for 'Modules/_hashopenssl.c':   /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/wrappers/clang
+                                                          @/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.7444e2.txt
+                                                          -fsyntax-only
+  ++Contents of '/home/cs18/inferDoc/Python-3.4.3rc1/infer-out/tmp/cdb_clang_args.tmp.7444e2.txt':
+    -c -fPIC -Wno-unused-result -DNDEBUG -g -fwrapv -O3 -Wall
+    -Wstrict-prototypes '-Werror=declaration-after-statement' -I./Include -I.
+    -IInclude -I/usr/include/x86_64-linux-gnu -I/usr/local/include
+    -I/home/cs18/inferDoc/Python-3.4.3rc1/Include
+    -I/home/cs18/inferDoc/Python-3.4.3rc1 -o
+    build/temp.linux-x86_64-3.4/home/cs18/inferDoc/Python-3.4.3rc1/Modules/_hashopenssl.o
+    Modules/_hashopenssl.c
+  
+:
+exited with code 1
+
+[2791][ extern err] Raised at Stdlib__string.index_rec in file "string.ml", line 115, characters 19-34
+Called from Stdlib__string.index_rec in file "string.ml" (inlined), line 116, characters 36-61
+Called from Stdlib__string.contains_from in file "string.ml" (inlined), line 179, characters 15-34
+Called from Stdlib__string.contains in file "string.ml", line 182, characters 19-38
+
+
+[2782][ intern err] Subprocess 3: see backtrace above
+[2782][ intern err] Raised at Core__Core_unix.improve in file "src/core_unix.ml" (inlined), line 46, characters 4-43
+Called from Core__Core_unix.wait_gen in file "src/core_unix.ml" (inlined), line 942, characters 4-246
+Called from Core__Core_unix.wait in file "src/core_unix.ml" (inlined), line 971, characters 2-34
+Called from IBase__ProcessPool.killall.(fun) in file "src/base/ProcessPool.ml", line 189, characters 10-30
+
+[2783][      debug] Sqlite write daemon: terminating
+[2813][      debug] 
+[2813][      debug] *** Beginning capture of file /home/cs18/inferDoc/Python-3.4.3rc1/Modules/_sqlite/cache.c ***
+[2813][      debug] Loading the following linters files: /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/linter_rules/linters.al
+[2813][      debug] 
+[2813][environment] Scheduler: file
+[2813][environment] Cores used: 4
+[2813][environment] [2812][      debug] 
+[2812][      debug] *** Beginning capture of file /home/cs18/inferDoc/Python-3.4.3rc1/Modules/_lzmamodule.c ***
+[2812][      debug] Loading the following linters files: /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/linter_rules/linters.al
+[2812][      debug] 
+[2812][environment] Scheduler: file
+[2812][environment] Cores used: 4
+[2812][environment] [2795][      debug] 
+[2795][      debug] *** Beginning capture of file /home/cs18/inferDoc/Python-3.4.3rc1/Modules/_cursesmodule.c ***
+[2795][      debug] Loading the following linters files: /opt/infer-linux64-v1.0.0/lib/infer/infer/bin/../lib/linter_rules/linters.al
+[2795][      debug] 
+[2795][environment] Scheduler: file
+[2795][environment] Cores used: 4
+[2795][environment] 

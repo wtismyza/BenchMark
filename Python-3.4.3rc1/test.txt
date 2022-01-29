@@ -1,0 +1,36 @@
+cs18     19662  0.0  0.1  30780  8268 pts/1    R+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19663  0.0  0.0  14952  3504 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19664  0.0  0.0  14952  1112 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19665  0.0  0.0   4632   876 pts/1    S+   23:00   0:00 sh -c ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19667  0.0  0.0  14432  1104 pts/1    S+   23:00   0:00 grep analyze-build
+cs18     19662  7.0  0.4 285956 21144 pts/1    Sl+  23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19663  0.0  0.0  14952  3632 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19672  0.5  0.3  65504 16624 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19673  2.0  0.3  65760 16784 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19674  0.0  0.3  65496 16624 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19675  1.0  0.3  65760 16796 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19709  0.0  0.0  14952  1116 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19710  0.0  0.0   4632   888 pts/1    S+   23:00   0:00 sh -c ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19712  0.0  0.0  14432  1008 pts/1    S+   23:00   0:00 grep analyze-build
+cs18     19662  3.5  0.4 285956 21144 pts/1    Sl+  23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19663  0.0  0.0  14952  3632 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19672  0.2  0.3  65504 16624 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19673  1.2  0.3  65760 16792 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19674  0.0  0.3  65496 16624 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19675  1.5  0.3  65760 16800 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19726  0.0  0.0  14952  1116 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19727  0.0  0.0   4632   876 pts/1    S+   23:00   0:00 sh -c ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19729  0.0  0.0   4632    92 pts/1    R+   23:00   0:00 sh -c ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19662  2.3  0.4 285956 21144 pts/1    Sl+  23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19663  0.1  0.0  14952  3632 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19672  0.1  0.3  65504 16624 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19673  0.8  0.3  65760 16792 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19674  0.0  0.3  65496 16628 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19675  1.0  0.3  65760 16800 pts/1    S+   23:00   0:00 /usr/bin/python /usr/local/bin/analyze-build
+cs18     19731  0.0  0.0  14952  1116 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19732  0.0  0.0   4632   876 pts/1    S+   23:00   0:00 sh -c ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19738  0.0  0.0  14432  1056 pts/1    S+   23:00   0:00 grep analyze-build
+cs18     19663  0.1  0.0  14952  3632 pts/1    S+   23:00   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19741  0.0  0.0  14952  1116 pts/1    S+   23:01   0:00 watch ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19742  0.0  0.0   4632   832 pts/1    S+   23:01   0:00 sh -c ps aux | grep analyze-build >> test.txt && cat test.txt
+cs18     19747  0.0  0.0  14432  1100 pts/1    R+   23:01   0:00 grep analyze-build
