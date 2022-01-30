@@ -1,0 +1,3375 @@
+#0
+include/asm-generic/bitops/fls.h:35: error: Dead Store
+  The value written to &x (type int) is never used.
+  33. 	}
+  34. 	if (!(x & 0x80000000u)) {
+  35. 		x <<= 1;
+        ^
+  36. 		r -= 1;
+  37. 	}
+
+#1
+lib/net_utils.c:31: error: Uninitialized Value
+  The value read from *e was never initialized.
+  29. 			return addr;
+  30. 		}
+  31. 		if (i != 3 && *e != '.') {
+                      ^
+  32. 			addr.s_addr = 0;
+  33. 			return addr;
+
+#2
+lib/net_utils.c:38: error: Uninitialized Value
+  The value read from *e was never initialized.
+  36. 		addr.s_addr |= (val & 0xFF);
+  37. 		if (s) {
+  38. 			s = (*e) ? e+1 : e;
+             ^
+  39. 		}
+  40. 	}
+
+#3
+lib/net_utils.c:38: error: Uninitialized Value
+  The value read from e was never initialized.
+  36. 		addr.s_addr |= (val & 0xFF);
+  37. 		if (s) {
+  38. 			s = (*e) ? e+1 : e;
+             ^
+  39. 		}
+  40. 	}
+
+#4
+lib/rc4.c:31: error: Uninitialized Value
+  The value read from k[_] was never initialized.
+  29. 	j = 0;
+  30. 	for (i = 0; i < 256; i++) {
+  31. 		j = (j + s[i] + k[i]) % 256;
+        ^
+  32. 		temp = s[i];
+  33. 		s[i] = s[j];
+
+#5
+lib/rc4.c:31: error: Uninitialized Value
+  The value read from s[_] was never initialized.
+  29. 	j = 0;
+  30. 	for (i = 0; i < 256; i++) {
+  31. 		j = (j + s[i] + k[i]) % 256;
+        ^
+  32. 		temp = s[i];
+  33. 		s[i] = s[j];
+
+#6
+lib/rc4.c:32: error: Uninitialized Value
+  The value read from s[_] was never initialized.
+  30. 	for (i = 0; i < 256; i++) {
+  31. 		j = (j + s[i] + k[i]) % 256;
+  32. 		temp = s[i];
+        ^
+  33. 		s[i] = s[j];
+  34. 		s[j] = temp;
+
+#7
+lib/rc4.c:33: error: Uninitialized Value
+  The value read from s[_] was never initialized.
+  31. 		j = (j + s[i] + k[i]) % 256;
+  32. 		temp = s[i];
+  33. 		s[i] = s[j];
+        ^
+  34. 		s[j] = temp;
+  35. 	}
+
+#8
+lib/rc4.c:41: error: Uninitialized Value
+  The value read from s[_] was never initialized.
+  39. 	for (ptr = 0; ptr < len; ptr++) {
+  40. 		i = (i + 1) % 256;
+  41. 		j = (j + s[i]) % 256;
+        ^
+  42. 		temp = s[i];
+  43. 		s[i] = s[j];
+
+#9
+lib/rc4.c:42: error: Uninitialized Value
+  The value read from s[_] was never initialized.
+  40. 		i = (i + 1) % 256;
+  41. 		j = (j + s[i]) % 256;
+  42. 		temp = s[i];
+        ^
+  43. 		s[i] = s[j];
+  44. 		s[j] = temp;
+
+#10
+lib/rc4.c:43: error: Uninitialized Value
+  The value read from s[_] was never initialized.
+  41. 		j = (j + s[i]) % 256;
+  42. 		temp = s[i];
+  43. 		s[i] = s[j];
+        ^
+  44. 		s[j] = temp;
+  45. 		t = (s[i] + (s[j] % 256)) % 256;
+
+#11
+fs/fs_internal.c:68: error: Dead Store
+  The value written to &block_len (type unsigned int) is never used.
+  66. 		ALLOC_CACHE_ALIGN_BUFFER(u8, p, blk->blksz);
+  67. 
+  68. 		block_len = blk->blksz;
+        ^
+  69. 		blk_dread(blk, partition->start + sector, 1,
+  70. 			  (void *)p);
+
+#12
+include/linux/unaligned/le_byteshift.h:25: error: Dead Store
+  The value written to &p (type unsigned char*) is never used.
+  23. {
+  24. 	*p++ = val;
+  25. 	*p++ = val >> 8;
+        ^
+  26. }
+  27. 
+
+#13
+lib/list_sort.c:41: error: Uninitialized Value
+  The value read from head.next was never initialized.
+  39. 	}
+  40. 	tail->next = a?:b;
+  41. 	return head.next;
+       ^
+  42. }
+  43. 
+
+#14
+common/command.c:50: error: Uninitialized Value
+  The value read from cmd_array[_] was never initialized.
+  48. 					   cmd_array[j + 1]->name) > 0) {
+  49. 					struct cmd_tbl *tmp;
+  50. 					tmp = cmd_array[j];
+           ^
+  51. 					cmd_array[j] = cmd_array[j + 1];
+  52. 					cmd_array[j + 1] = tmp;
+
+#15
+common/command.c:51: error: Uninitialized Value
+  The value read from cmd_array[_] was never initialized.
+  49. 					struct cmd_tbl *tmp;
+  50. 					tmp = cmd_array[j];
+  51. 					cmd_array[j] = cmd_array[j + 1];
+           ^
+  52. 					cmd_array[j + 1] = tmp;
+  53. 					++swaps;
+
+#16
+common/memsize.c:60: error: Uninitialized Value
+  The value read from save[_] was never initialized.
+  58. 			addr  = base + cnt;
+  59. 			sync();
+  60. 			*addr = save[--i];
+         ^
+  61. 		}
+  62. 		return (0);
+
+#17
+common/memsize.c:68: error: Uninitialized Value
+  The value read from save[_] was never initialized.
+  66. 		addr = base + cnt;	/* pointer arith! */
+  67. 		val = *addr;
+  68. 		*addr = save[--i];
+        ^
+  69. 		if (val != ~cnt) {
+  70. 			size = cnt * sizeof(long);
+
+#18
+common/memsize.c:79: error: Uninitialized Value
+  The value read from save[_] was never initialized.
+  77. 			     cnt <<= 1) {
+  78. 				addr  = base + cnt;
+  79. 				*addr = save[--i];
+          ^
+  80. 			}
+  81. 			/* warning: don't restore save_base in this case,
+
+#19
+common/exports.c:31: error: Memory Leak
+  memory dynamically allocated at line 31 by call to `malloc`, is not freed after the last access at line 31, column 2.
+  29. int jumptable_init(void)
+  30. {
+  31. 	gd->jt = malloc(sizeof(struct jt_funcs));
+       ^
+  32. #include <_exports.h>
+  33. 
+
+#20
+cmd/x86/mtrr.c:43: error: Dead Store
+  The value written to &type (type char*) is never used.
+  41. 		return log_msg_ret("run", ret);
+  42. 	for (i = 0; i < reg_count; i++) {
+  43. 		const char *type = "Invalid";
+        ^
+  44. 		uint64_t base, mask, size;
+  45. 		bool valid;
+
+#21
+lib/efi_loader/efi_bootmgr.c:55: error: Uninitialized Value
+  The value read from hexmap[_] was never initialized.
+  53. 	efi_status_t ret;
+  54. 
+  55. 	varname[4] = hexmap[(n & 0xf000) >> 12];
+       ^
+  56. 	varname[5] = hexmap[(n & 0x0f00) >> 8];
+  57. 	varname[6] = hexmap[(n & 0x00f0) >> 4];
+
+#22
+lib/efi_loader/efi_bootmgr.c:56: error: Uninitialized Value
+  The value read from hexmap[_] was never initialized.
+  54. 
+  55. 	varname[4] = hexmap[(n & 0xf000) >> 12];
+  56. 	varname[5] = hexmap[(n & 0x0f00) >> 8];
+       ^
+  57. 	varname[6] = hexmap[(n & 0x00f0) >> 4];
+  58. 	varname[7] = hexmap[(n & 0x000f) >> 0];
+
+#23
+lib/efi_loader/efi_bootmgr.c:57: error: Uninitialized Value
+  The value read from hexmap[_] was never initialized.
+  55. 	varname[4] = hexmap[(n & 0xf000) >> 12];
+  56. 	varname[5] = hexmap[(n & 0x0f00) >> 8];
+  57. 	varname[6] = hexmap[(n & 0x00f0) >> 4];
+       ^
+  58. 	varname[7] = hexmap[(n & 0x000f) >> 0];
+  59. 
+
+#24
+lib/efi_loader/efi_bootmgr.c:58: error: Uninitialized Value
+  The value read from hexmap[_] was never initialized.
+  56. 	varname[5] = hexmap[(n & 0x0f00) >> 8];
+  57. 	varname[6] = hexmap[(n & 0x00f0) >> 4];
+  58. 	varname[7] = hexmap[(n & 0x000f) >> 0];
+       ^
+  59. 
+  60. 	load_option = efi_get_var(varname, &efi_global_variable_guid, &size);
+
+#25
+lib/net_utils.c:57: error: Uninitialized Value
+  The value read from *end was never initialized.
+  55. 		enetaddr[i] = addr ? simple_strtoul(addr, &end, 16) : 0;
+  56. 		if (addr)
+  57. 			addr = (*end) ? end + 1 : end;
+                ^
+  58. 	}
+  59. }
+
+#26
+lib/net_utils.c:57: error: Uninitialized Value
+  The value read from end was never initialized.
+  55. 		enetaddr[i] = addr ? simple_strtoul(addr, &end, 16) : 0;
+  56. 		if (addr)
+  57. 			addr = (*end) ? end + 1 : end;
+                ^
+  58. 	}
+  59. }
+
+#27
+fs/ext4/ext4fs.c:178: error: Dead Store
+  The value written to &previous_block_number (type unsigned long) is never used.
+  176. 			return -1;
+  177. 		}
+  178. 		previous_block_number = -1;
+         ^
+  179. 	}
+  180. 
+
+#28
+cmd/test.c:93: error: Uninitialized Value
+  The value read from adv was never initialized.
+  91. 			break;
+  92. 		}
+  93. 		if (left < adv) {
+            ^
+  94. 			expr = 1;
+  95. 			break;
+
+#29
+cmd/test.c:176: error: Uninitialized Value
+  The value read from adv was never initialized.
+  174. 		}
+  175. 
+  176. 		ap += adv; left -= adv;
+         ^
+  177. 	}
+  178. 
+
+#30
+cmd/test.c:176: error: Uninitialized Value
+  The value read from adv was never initialized.
+  174. 		}
+  175. 
+  176. 		ap += adv; left -= adv;
+                    ^
+  177. 	}
+  178. 
+
+#31
+cmd/test.c:99: error: Uninitialized Value
+  The value read from op was never initialized.
+   97. 
+   98. 		switch (op) {
+   99. 		case OP_STR_EMPTY:
+         ^
+  100. 			expr = strlen(ap[1]) == 0 ? 1 : 0;
+  101. 			break;
+
+#32
+cmd/test.c:102: error: Uninitialized Value
+  The value read from op was never initialized.
+  100. 			expr = strlen(ap[1]) == 0 ? 1 : 0;
+  101. 			break;
+  102. 		case OP_STR_NEMPTY:
+         ^
+  103. 			expr = strlen(ap[1]) == 0 ? 0 : 1;
+  104. 			break;
+
+#33
+cmd/test.c:105: error: Uninitialized Value
+  The value read from op was never initialized.
+  103. 			expr = strlen(ap[1]) == 0 ? 0 : 1;
+  104. 			break;
+  105. 		case OP_STR_EQ:
+         ^
+  106. 			expr = strcmp(ap[0], ap[2]) == 0;
+  107. 			break;
+
+#34
+cmd/test.c:108: error: Uninitialized Value
+  The value read from op was never initialized.
+  106. 			expr = strcmp(ap[0], ap[2]) == 0;
+  107. 			break;
+  108. 		case OP_STR_NEQ:
+         ^
+  109. 			expr = strcmp(ap[0], ap[2]) != 0;
+  110. 			break;
+
+#35
+cmd/test.c:111: error: Uninitialized Value
+  The value read from op was never initialized.
+  109. 			expr = strcmp(ap[0], ap[2]) != 0;
+  110. 			break;
+  111. 		case OP_STR_LT:
+         ^
+  112. 			expr = strcmp(ap[0], ap[2]) < 0;
+  113. 			break;
+
+#36
+cmd/test.c:114: error: Uninitialized Value
+  The value read from op was never initialized.
+  112. 			expr = strcmp(ap[0], ap[2]) < 0;
+  113. 			break;
+  114. 		case OP_STR_GT:
+         ^
+  115. 			expr = strcmp(ap[0], ap[2]) > 0;
+  116. 			break;
+
+#37
+cmd/test.c:117: error: Uninitialized Value
+  The value read from op was never initialized.
+  115. 			expr = strcmp(ap[0], ap[2]) > 0;
+  116. 			break;
+  117. 		case OP_INT_EQ:
+         ^
+  118. 			expr = simple_strtol(ap[0], NULL, 0) ==
+  119. 					simple_strtol(ap[2], NULL, 0);
+
+#38
+cmd/test.c:121: error: Uninitialized Value
+  The value read from op was never initialized.
+  119. 					simple_strtol(ap[2], NULL, 0);
+  120. 			break;
+  121. 		case OP_INT_NEQ:
+         ^
+  122. 			expr = simple_strtol(ap[0], NULL, 0) !=
+  123. 					simple_strtol(ap[2], NULL, 0);
+
+#39
+cmd/test.c:125: error: Uninitialized Value
+  The value read from op was never initialized.
+  123. 					simple_strtol(ap[2], NULL, 0);
+  124. 			break;
+  125. 		case OP_INT_LT:
+         ^
+  126. 			expr = simple_strtol(ap[0], NULL, 0) <
+  127. 					simple_strtol(ap[2], NULL, 0);
+
+#40
+cmd/test.c:129: error: Uninitialized Value
+  The value read from op was never initialized.
+  127. 					simple_strtol(ap[2], NULL, 0);
+  128. 			break;
+  129. 		case OP_INT_LE:
+         ^
+  130. 			expr = simple_strtol(ap[0], NULL, 0) <=
+  131. 					simple_strtol(ap[2], NULL, 0);
+
+#41
+cmd/test.c:133: error: Uninitialized Value
+  The value read from op was never initialized.
+  131. 					simple_strtol(ap[2], NULL, 0);
+  132. 			break;
+  133. 		case OP_INT_GT:
+         ^
+  134. 			expr = simple_strtol(ap[0], NULL, 0) >
+  135. 					simple_strtol(ap[2], NULL, 0);
+
+#42
+cmd/test.c:137: error: Uninitialized Value
+  The value read from op was never initialized.
+  135. 					simple_strtol(ap[2], NULL, 0);
+  136. 			break;
+  137. 		case OP_INT_GE:
+         ^
+  138. 			expr = simple_strtol(ap[0], NULL, 0) >=
+  139. 					simple_strtol(ap[2], NULL, 0);
+
+#43
+cmd/test.c:141: error: Uninitialized Value
+  The value read from op was never initialized.
+  139. 					simple_strtol(ap[2], NULL, 0);
+  140. 			break;
+  141. 		case OP_FILE_EXISTS:
+         ^
+  142. 			expr = file_exists(ap[1], ap[2], ap[3], FS_TYPE_ANY);
+  143. 			break;
+
+#44
+cmd/test.c:147: error: Uninitialized Value
+  The value read from op was never initialized.
+  145. 
+  146. 		switch (op) {
+  147. 		case OP_OR:
+         ^
+  148. 			last_expr = expr;
+  149. 			last_binop = OP_OR;
+
+#45
+cmd/test.c:151: error: Uninitialized Value
+  The value read from op was never initialized.
+  149. 			last_binop = OP_OR;
+  150. 			break;
+  151. 		case OP_AND:
+         ^
+  152. 			last_expr = expr;
+  153. 			last_binop = OP_AND;
+
+#46
+cmd/test.c:155: error: Uninitialized Value
+  The value read from op was never initialized.
+  153. 			last_binop = OP_AND;
+  154. 			break;
+  155. 		case OP_NOT:
+         ^
+  156. 			if (last_unop == OP_NOT)
+  157. 				last_unop = OP_INVALID;
+
+#47
+common/bootm_os.c:127: error: Memory Leak
+  memory dynamically allocated at line 105 by call to `malloc`, is not freed after the last access at line 127, column 2.
+  125. 	 *   arg[3]: char pointer to the boot arguments
+  126. 	 */
+  127. 	(*loader)(gd->bd, os_hdr, "", cmdline);
+        ^
+  128. 
+  129. 	return 1;
+
+#48
+drivers/mmc/mmc_write.c:98: error: Dead Store
+  The value written to &err (type int) is never used.
+   96. 	 * remainder.
+   97. 	 */
+   98. 	err = div_u64_rem(start, mmc->erase_grp_size, &start_rem);
+        ^
+   99. 	err = div_u64_rem(blkcnt, mmc->erase_grp_size, &blkcnt_rem);
+  100. 	if (start_rem || blkcnt_rem)
+
+#49
+drivers/mmc/mmc_write.c:99: error: Dead Store
+  The value written to &err (type int) is never used.
+   97. 	 */
+   98. 	err = div_u64_rem(start, mmc->erase_grp_size, &start_rem);
+   99. 	err = div_u64_rem(blkcnt, mmc->erase_grp_size, &blkcnt_rem);
+        ^
+  100. 	if (start_rem || blkcnt_rem)
+  101. 		printf("\n\nCaution! Your devices Erase group is 0x%x\n"
+
+#50
+arch/x86/lib/bootm.c:122: error: Uninitialized Value
+  The value read from len was never initialized.
+  120. 		char *base_ptr;
+  121. 
+  122. 		base_ptr = (char *)load_zimage(data, len, &load_address);
+                            ^
+  123. 		if (!base_ptr) {
+  124. 			puts("## Kernel loading failed ...\n");
+
+#51
+lib/smbios.c:92: error: Dead Store
+  The value written to &p (type char*) is never used.
+  90. 			*p++ = '\0';
+  91. 			ctx->next_ptr = p;
+  92. 			*p++ = '\0';
+          ^
+  93. 
+  94. 			return i;
+
+#52
+common/autoboot.c:88: error: Dead Store
+  The value written to &size (type int) is never used.
+  86. 	u_int presskey_len = 0;
+  87. 	int abort = 0;
+  88. 	int size = sizeof(sha);
+       ^
+  89. 	int ret;
+  90. 
+
+#53
+drivers/pci/pci-uclass.c:82: error: Dead Store
+  The value written to &ret (type int) is never used.
+  80. 	struct udevice *bus;
+  81. 	struct uclass *uc;
+  82. 	int ret = -1;
+       ^
+  83. 
+  84. 	ret = uclass_get(UCLASS_PCI, &uc);
+
+#54
+include/linux/bitops.h:105: error: Dead Store
+  The value written to &x (type int) is never used.
+  103. 	}
+  104. 	if (!(x & 0x80000000u)) {
+  105. 		x <<= 1;
+         ^
+  106. 		r -= 1;
+  107. 	}
+
+#55
+lib/efi_loader/efi_gop.c:176: error: Uninitialized Value
+  The value read from dwidth was never initialized.
+  174. 
+  175. 	slineoff = swidth * sy;
+  176. 	dlineoff = dwidth * dy;
+        ^
+  177. 	for (i = 0; i < height; i++) {
+  178. 		for (j = 0; j < width; j++) {
+
+#56
+lib/efi_loader/efi_gop.c:217: error: Uninitialized Value
+  The value read from dwidth was never initialized.
+  215. 		}
+  216. 		slineoff += swidth;
+  217. 		dlineoff += dwidth;
+         ^
+  218. 	}
+  219. 
+
+#57
+lib/efi_loader/efi_gop.c:209: error: Uninitialized Value
+  The value read from pix was never initialized.
+  207. 			case EFI_BLT_VIDEO_TO_VIDEO:
+  208. 				if (vid_bpp == 32)
+  209. 					fb32[dlineoff + j + dx] = *(u32 *)&pix;
+                                      ^
+  210. 				else
+  211. 					fb16[dlineoff + j + dx] =
+
+#58
+lib/efi_loader/efi_gop.c:175: error: Uninitialized Value
+  The value read from swidth was never initialized.
+  173. 	}
+  174. 
+  175. 	slineoff = swidth * sy;
+        ^
+  176. 	dlineoff = dwidth * dy;
+  177. 	for (i = 0; i < height; i++) {
+
+#59
+lib/efi_loader/efi_gop.c:216: error: Uninitialized Value
+  The value read from swidth was never initialized.
+  214. 			}
+  215. 		}
+  216. 		slineoff += swidth;
+         ^
+  217. 		dlineoff += dwidth;
+  218. 	}
+
+#60
+drivers/block/blkcache.c:142: error: Memory Leak
+  memory dynamically allocated at line 119 by call to `malloc`, is not freed after the last access at line 142, column 2.
+  140. 	node->blksz = blksz;
+  141. 	memcpy(node->cache, buffer, bytes);
+  142. 	list_add(&node->lh, &block_cache);
+        ^
+  143. 	_stats.entries++;
+  144. }
+
+#61
+lib/efi_loader/efi_load_initrd.c:98: error: Dead Store
+  The value written to &ret (type unsigned long) is never used.
+   96. {
+   97. 	struct efi_device_path *initrd_fp = NULL;
+   98. 	efi_status_t ret = EFI_NOT_FOUND;
+        ^
+   99. 	struct efi_file_handle *f = NULL;
+  100. 	efi_uintn_t bs;
+
+#62
+cmd/elf.c:257: error: Dead Store
+  The value written to &ptr (type int) is never used.
+  255. 		if (tmp) {
+  256. 			strcpy(build_buf + ptr, tmp);
+  257. 			ptr += strlen(tmp);
+          ^
+  258. 		}
+  259. 
+
+#63
+cmd/x86/mtrr.c:160: error: Uninitialized Value
+  The value read from reg was never initialized.
+  158. 		switch (cmd) {
+  159. 		case 'e':
+  160. 			ret = mtrr_set_valid(cpu_select, reg, true);
+                ^
+  161. 			break;
+  162. 		case 'd':
+
+#64
+cmd/x86/mtrr.c:163: error: Uninitialized Value
+  The value read from reg was never initialized.
+  161. 			break;
+  162. 		case 'd':
+  163. 			ret = mtrr_set_valid(cpu_select, reg, false);
+                ^
+  164. 			break;
+  165. 		case 's':
+
+#65
+cmd/x86/mtrr.c:166: error: Uninitialized Value
+  The value read from reg was never initialized.
+  164. 			break;
+  165. 		case 's':
+  166. 			ret = do_mtrr_set(cpu_select, reg, argc - 2, argv + 2);
+                ^
+  167. 			break;
+  168. 		default:
+
+#66
+arch/x86/lib/bios_interrupts.c:136: error: Dead Store
+  The value written to &bdf (type int) is never used.
+  134. 		vendorid = M.x86.R_EDX;
+  135. 		devindex = M.x86.R_ESI;
+  136. 		bdf = -1;
+         ^
+  137. 		ret = dm_pci_find_device(vendorid, devid, devindex, &dev);
+  138. 		if (!ret) {
+
+#67
+tools/proftool.c:140: error: Uninitialized Value
+  The value read from offset was never initialized.
+  138. 		}
+  139. 		if (!func_count)
+  140. 			start = offset;
+          ^
+  141. 
+  142. 		func = &func_list[func_count++];
+
+#68
+tools/proftool.c:144: error: Uninitialized Value
+  The value read from offset was never initialized.
+  142. 		func = &func_list[func_count++];
+  143. 		memset(func, '\0', sizeof(*func));
+  144. 		func->offset = offset - start;
+         ^
+  145. 		func->name = strdup(symname);
+  146. 		func->flags = FUNCF_TRACE;	/* trace by default */
+
+#69
+tools/proftool.c:129: error: Uninitialized Value
+  The value read from symtype was never initialized.
+  127. 
+  128. 		/* Must be a text symbol */
+  129. 		symtype = tolower(symtype);
+                   ^
+  130. 		if (symtype != 't' && symtype != 'w')
+  131. 			continue;
+
+#70
+lib/efi_loader/efi_load_options.c:146: error: Dead Store
+  The value written to &p (type unsigned char*) is never used.
+  144. 	if (lo->optional_data) {
+  145. 		utf8_utf16_strcpy((u16 **)&p, (const char *)lo->optional_data);
+  146. 		p += sizeof(u16); /* size of trailing \0 */
+         ^
+  147. 	}
+  148. 	return size;
+
+#71
+drivers/gpio/gpio-uclass.c:157: error: Uninitialized Value
+  The value read from offset was never initialized.
+  155. 		return ret ? ret : -EINVAL;
+  156. 
+  157. 	gpio_desc_init(desc, dev, offset);
+        ^
+  158. 
+  159. 	return 0;
+
+#72
+lib/efi_loader/efi_hii.c:221: error: Memory Leak
+  memory dynamically allocated at line 200 by call to `u16_strdup()`, is not freed after the last access at line 221, column 2.
+  219. 
+  220. out:
+  221. 	list_add(&stbl->link, &hii->string_tables);
+        ^
+  222. 	if (hii->max_string_id < nstrings)
+  223. 		hii->max_string_id = nstrings;
+
+#73
+lib/efi_loader/efi_hii.c:234: error: Memory Leak
+  memory dynamically allocated at line 200 by call to `u16_strdup()`, is not freed after the last access at line 234, column 2.
+  232. 		free(stbl->strings);
+  233. 	}
+  234. 	free(stbl);
+        ^
+  235. 
+  236. 	return ret;
+
+#74
+common/autoboot.c:204: error: Uninitialized Value
+  The value read from presskey[_] was never initialized.
+  202. 			} else {
+  203. 				for (i = 0; i < presskey_max - 1; i++)
+  204. 					presskey[i] = presskey[i + 1];
+            ^
+  205. 
+  206. 				presskey[i] = getchar();
+
+#75
+drivers/net/designware.c:201: error: Memory Leak
+  memory dynamically allocated at line 185 by call to `mdio_alloc()`, is not freed after the last access at line 201, column 2.
+  199. 	bus->priv = priv;
+  200. 
+  201. 	return mdio_register(bus);
+        ^
+  202. }
+  203. 
+
+#76
+scripts/dtc/srcpos.c:197: error: Memory Leak
+  memory dynamically allocated at line 188 by call to `xmalloc()`, is not freed after the last access at line 197, column 2.
+  195. 	else
+  196. 		search_path_head = node;
+  197. 	search_path_tail = &node->next;
+        ^
+  198. }
+  199. 
+
+#77
+fs/ext4/ext4_write.c:214: error: Dead Store
+  The value written to &status (type short) is never used.
+  212. 		dib_start_addr = di_buffer;
+  213. 		blknr = le32_to_cpu(inode->b.blocks.double_indir_block);
+  214. 		status = ext4fs_devread((lbaint_t)blknr * fs->sect_perblk, 0,
+         ^
+  215. 					fs->blksz, (char *)di_buffer);
+  216. 		for (i = 0; i < fs->blksz / sizeof(int); i++) {
+
+#78
+env/sf.c:203: error: Dead Store
+  The value written to &ret (type int) is never used.
+  201. 	u32	sect_size = CONFIG_ENV_SECT_SIZE;
+  202. 	char	*saved_buffer = NULL;
+  203. 	int	ret = 1;
+        ^
+  204. 	env_t	env_new;
+  205. 	struct spi_flash *env_flash;
+
+#79
+drivers/mmc/sdhci.c:217: error: Dead Store
+  The value written to &start (type unsigned long) is never used.
+  215. 	unsigned int time = 0;
+  216. 	int mmc_dev = mmc_get_blk_desc(mmc)->devnum;
+  217. 	ulong start = get_timer(0);
+        ^
+  218. 
+  219. 	host->start_addr = 0;
+
+#80
+tools/zynqmpbif.c:229: error: Memory Leak
+  memory dynamically allocated at line 222 by call to `malloc`, is not freed after the last access at line 229, column 7.
+  227. 	while (len < sbuf.st_size) {
+  228. 		r = read(fd, bufp, sbuf.st_size - len);
+  229. 		if (r < 0)
+             ^
+  230. 			return NULL;
+  231. 		len += r;
+
+#81
+common/fdt_support.c:235: error: Dead Store
+  The value written to &err (type int) is never used.
+  233. 	 */
+  234. 	for (j = 0; j < total; j++) {
+  235. 		err = fdt_get_mem_rsv(fdt, j, &addr, &size);
+         ^
+  236. 		if (addr == initrd_start) {
+  237. 			fdt_del_mem_rsv(fdt, j);
+
+#82
+drivers/video/vidconsole-uclass.c:290: error: Dead Store
+  The value written to &s (type char*) is never used.
+  288. 		 */
+  289. 		s++;    /* [ */
+  290. 		s = parsenum(s, &num);
+         ^
+  291. 		if (num == 0)			/* No digit in sequence ... */
+  292. 			num = 1;		/* ... means "move by 1". */
+
+#83
+drivers/video/vidconsole-uclass.c:324: error: Dead Store
+  The value written to &s (type char*) is never used.
+  322. 		s = parsenum(s, &row);
+  323. 		s++;    /* ; */
+  324. 		s = parsenum(s, &col);
+         ^
+  325. 
+  326. 		/*
+
+#84
+lib/efi_loader/efi_device_path.c:236: error: Uninitialized Value
+  The value read from ret was never initialized.
+  234. 		dp = efi_dp_next(dp);
+  235. 	}
+  236. 	return ret;
+        ^
+  237. }
+  238. 
+
+#85
+tools/img2srec.c:265: error: Dead Store
+  The value written to &getPtr (type unsigned char*) is never used.
+  263.   getPtr = ExtractWord(&elfHeader.e_shentsize, getPtr);
+  264.   getPtr = ExtractWord(&elfHeader.e_shnum, getPtr);
+  265.   getPtr = ExtractWord(&elfHeader.e_shstrndx, getPtr);
+         ^
+  266.   if (    (rxCount              != sizeof elfHeader)
+  267.        || (elfHeader.e_ident[0] != ELFMAG0)
+
+#86
+tools/img2srec.c:291: error: Dead Store
+  The value written to &getPtr (type unsigned char*) is never used.
+  289.     getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_info, getPtr);
+  290.     getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_addralign, getPtr);
+  291.     getPtr = ExtractLong((uint32_t *)&sectHeader[i].sh_entsize, getPtr);
+           ^
+  292.     if (rxCount != sizeof sectHeader[0]) {
+  293.       fclose(file);
+
+#87
+tools/img2srec.c:315: error: Dead Store
+  The value written to &loadSize (type unsigned int) is never used.
+  313. 	 && (sectHeader[i].sh_size != 0)
+  314. 	 ) {
+  315.       loadSize = sectHeader[i].sh_size;
+             ^
+  316.       if (sectHeader[i].sh_flags != 0) {
+  317. 	loadAddr = sectHeader[i].sh_addr;
+
+#88
+cmd/nvedit.c:294: error: Dead Store
+  The value written to &s (type char*) is never used.
+  292. 	}
+  293. 	if (s != value)
+  294. 		*--s = '\0';
+          ^
+  295. 
+  296. 	e.key	= name;
+
+#89
+scripts/dtc/data.c:250: error: Memory Leak
+  memory dynamically allocated at line 244 by call to `xmalloc()`, is not freed after the last access at line 250, column 9.
+  248. 	m->next = NULL;
+  249. 
+  250. 	return data_append_markers(d, m);
+               ^
+  251. }
+  252. 
+
+#90
+common/xyzModem.c:336: error: Uninitialized Value
+  The value read from c was never initialized.
+  334.       return xyzModem_timeout;
+  335.     }
+  336.   xyz.len = (c == SOH) ? 128 : 1024;
+                    ^
+  337.   xyz.bufp = xyz.pkt;
+  338.   for (i = 0; i < xyz.len; i++)
+
+#91
+drivers/spi/ich.c:351: error: Uninitialized Value
+  The value read from with_address was never initialized.
+  349. 	if (!trans->bytesout && !trans->bytesin) {
+  350. 		/* SPI addresses are 24 bit only */
+  351. 		if (with_address) {
+             ^
+  352. 			ich_writel(ctlr, trans->offset & 0x00FFFFFF,
+  353. 				   ctlr->addr);
+
+#92
+fs/fat/fat_write.c:301: error: Uninitialized Value
+  The value read from cluster was never initialized.
+  299. out:
+  300. 	/* Position back to first directory entry */
+  301. 	if (itr->clust != cluster) {
+            ^
+  302. 		ret = fat_move_to_cluster(itr, cluster);
+  303. 		if (ret)
+
+#93
+fs/fat/fat_write.c:302: error: Uninitialized Value
+  The value read from cluster was never initialized.
+  300. 	/* Position back to first directory entry */
+  301. 	if (itr->clust != cluster) {
+  302. 		ret = fat_move_to_cluster(itr, cluster);
+               ^
+  303. 		if (ret)
+  304. 			return ret;
+
+#94
+fs/fat/fat_write.c:306: error: Uninitialized Value
+  The value read from dent was never initialized.
+  304. 			return ret;
+  305. 	}
+  306. 	itr->dent = dent;
+        ^
+  307. 	itr->remaining = remaining;
+  308. 	return 0;
+
+#95
+fs/fat/fat_write.c:307: error: Uninitialized Value
+  The value read from remaining was never initialized.
+  305. 	}
+  306. 	itr->dent = dent;
+  307. 	itr->remaining = remaining;
+        ^
+  308. 	return 0;
+  309. }
+
+#96
+common/usb_hub.c:335: error: Uninitialized Value
+  The value read from portstatus was never initialized.
+  333. 
+  334. 	usb_clear_port_feature(dev, port + 1, USB_PORT_FEAT_C_RESET);
+  335. 	*portstat = portstatus;
+        ^
+  336. 	return 0;
+  337. }
+
+#97
+common/image-fdt.c:294: error: Dead Store
+  The value written to &buf (type void*) is never used.
+  292. 	img_addr = (argc == 0) ? image_load_addr :
+  293. 			simple_strtoul(argv[0], NULL, 16);
+  294. 	buf = map_sysmem(img_addr, 0);
+        ^
+  295. 
+  296. 	if (argc > 2)
+
+#98
+lib/acpi/acpigen.c:303: error: Uninitialized Value
+  The value read from dotpos was never initialized.
+  301. 		acpigen_emit_simple_namestring(ctx, namepath);
+  302. 	else if (dotcount == 1)
+  303. 		acpigen_emit_double_namestring(ctx, namepath, dotpos);
+         ^
+  304. 	else
+  305. 		acpigen_emit_multi_namestring(ctx, namepath);
+
+#99
+fs/ext4/ext4_write.c:313: error: Dead Store
+  The value written to &status (type short) is never used.
+  311. 		tib_start_addr = tigp_buffer;
+  312. 		blknr = le32_to_cpu(inode->b.blocks.triple_indir_block);
+  313. 		status = ext4fs_devread((lbaint_t)blknr * fs->sect_perblk, 0,
+         ^
+  314. 					fs->blksz, (char *)tigp_buffer);
+  315. 		for (i = 0; i < fs->blksz / sizeof(int); i++) {
+
+#100
+fs/ext4/ext4_write.c:324: error: Dead Store
+  The value written to &status (type short) is never used.
+  322. 				goto fail;
+  323. 			tipb_start_addr = tip_buffer;
+  324. 			status = ext4fs_devread((lbaint_t)le32_to_cpu(*tigp_buffer) *
+          ^
+  325. 						fs->sect_perblk, 0, fs->blksz,
+  326. 						(char *)tip_buffer);
+
+#101
+arch/x86/lib/bios.c:339: error: Dead Store
+  The value written to &eax (type unsigned int) is never used.
+  337. 	 * we leave this function.
+  338. 	 */
+  339. 	*(volatile u32 *)&eax = M.x86.R_EAX;
+        ^
+  340. 	*(volatile u32 *)&ecx = M.x86.R_ECX;
+  341. 	*(volatile u32 *)&edx = M.x86.R_EDX;
+
+#102
+arch/x86/lib/bios.c:342: error: Dead Store
+  The value written to &ebx (type unsigned int) is never used.
+  340. 	*(volatile u32 *)&ecx = M.x86.R_ECX;
+  341. 	*(volatile u32 *)&edx = M.x86.R_EDX;
+  342. 	*(volatile u32 *)&ebx = M.x86.R_EBX;
+        ^
+  343. 	*(volatile u32 *)&esi = M.x86.R_ESI;
+  344. 	*(volatile u32 *)&edi = M.x86.R_EDI;
+
+#103
+arch/x86/lib/bios.c:340: error: Dead Store
+  The value written to &ecx (type unsigned int) is never used.
+  338. 	 */
+  339. 	*(volatile u32 *)&eax = M.x86.R_EAX;
+  340. 	*(volatile u32 *)&ecx = M.x86.R_ECX;
+        ^
+  341. 	*(volatile u32 *)&edx = M.x86.R_EDX;
+  342. 	*(volatile u32 *)&ebx = M.x86.R_EBX;
+
+#104
+arch/x86/lib/bios.c:344: error: Dead Store
+  The value written to &edi (type unsigned int) is never used.
+  342. 	*(volatile u32 *)&ebx = M.x86.R_EBX;
+  343. 	*(volatile u32 *)&esi = M.x86.R_ESI;
+  344. 	*(volatile u32 *)&edi = M.x86.R_EDI;
+        ^
+  345. 	flags = M.x86.R_EFLG;
+  346. 
+
+#105
+arch/x86/lib/bios.c:341: error: Dead Store
+  The value written to &edx (type unsigned int) is never used.
+  339. 	*(volatile u32 *)&eax = M.x86.R_EAX;
+  340. 	*(volatile u32 *)&ecx = M.x86.R_ECX;
+  341. 	*(volatile u32 *)&edx = M.x86.R_EDX;
+        ^
+  342. 	*(volatile u32 *)&ebx = M.x86.R_EBX;
+  343. 	*(volatile u32 *)&esi = M.x86.R_ESI;
+
+#106
+arch/x86/lib/bios.c:343: error: Dead Store
+  The value written to &esi (type unsigned int) is never used.
+  341. 	*(volatile u32 *)&edx = M.x86.R_EDX;
+  342. 	*(volatile u32 *)&ebx = M.x86.R_EBX;
+  343. 	*(volatile u32 *)&esi = M.x86.R_ESI;
+        ^
+  344. 	*(volatile u32 *)&edi = M.x86.R_EDI;
+  345. 	flags = M.x86.R_EFLG;
+
+#107
+arch/x86/lib/bios.c:354: error: Dead Store
+  The value written to &stackflags (type unsigned short) is never used.
+  352. 		flags |= 1;  /* error: set carry */
+  353. 	}
+  354. 	*(volatile u16 *)&stackflags = flags;
+        ^
+  355. 
+  356. 	return ret;
+
+#108
+lib/efi_loader/efi_hii.c:329: error: Memory Leak
+  memory dynamically allocated at line 306 by call to `malloc`, is not freed after the last access at line 329, column 2.
+  327. 	}
+  328. 
+  329. 	list_add_tail(&package_data->link, &hii->keyboard_packages);
+        ^
+  330. 
+  331. 	return EFI_SUCCESS;
+
+#109
+lib/acpi/acpi_dp.c:319: error: Memory Leak
+  memory dynamically allocated at line 311 by call to `acpi_dp_new_table()`, is not freed after the last access at line 319, column 7.
+  317. 			break;
+  318. 
+  319. 	if (!acpi_dp_add_array(dp, dp_array))
+             ^
+  320. 		return NULL;
+  321. 
+
+#110
+lib/acpi/acpi_dp.c:319: error: Memory Leak
+  memory dynamically allocated at line 319 by call to `acpi_dp_add_array()`, is not freed after the last access at line 319, column 7.
+  317. 			break;
+  318. 
+  319. 	if (!acpi_dp_add_array(dp, dp_array))
+             ^
+  320. 		return NULL;
+  321. 
+
+#111
+tools/fit_image.c:319: error: Dead Store
+  The value written to &typename (type char const *) is never used.
+  317. 		if (cont->type != IH_TYPE_FLATDT)
+  318. 			continue;
+  319. 		typename = genimg_get_type_short_name(cont->type);
+         ^
+  320. 		snprintf(str, sizeof(str), "conf-%d", ++upto);
+  321. 		fdt_begin_node(fdt, str);
+
+#112
+lib/acpi/acpi_dp.c:336: error: Memory Leak
+  memory dynamically allocated at line 332 by call to `acpi_dp_new_table()`, is not freed after the last access at line 336, column 7.
+  334. 		return NULL;
+  335. 
+  336. 	if (!acpi_dp_add_reference(gpio, NULL, ref) ||
+             ^
+  337. 	    !acpi_dp_add_integer(gpio, NULL, index) ||
+  338. 	    !acpi_dp_add_integer(gpio, NULL, pin) ||
+
+#113
+lib/acpi/acpi_dp.c:337: error: Memory Leak
+  memory dynamically allocated at line 332 by call to `acpi_dp_new_table()`, is not freed after the last access at line 337, column 7.
+  335. 
+  336. 	if (!acpi_dp_add_reference(gpio, NULL, ref) ||
+  337. 	    !acpi_dp_add_integer(gpio, NULL, index) ||
+             ^
+  338. 	    !acpi_dp_add_integer(gpio, NULL, pin) ||
+  339. 	    !acpi_dp_add_integer(gpio, NULL, polarity == ACPI_GPIO_ACTIVE_LOW))
+
+#114
+lib/acpi/acpi_dp.c:338: error: Memory Leak
+  memory dynamically allocated at line 332 by call to `acpi_dp_new_table()`, is not freed after the last access at line 338, column 7.
+  336. 	if (!acpi_dp_add_reference(gpio, NULL, ref) ||
+  337. 	    !acpi_dp_add_integer(gpio, NULL, index) ||
+  338. 	    !acpi_dp_add_integer(gpio, NULL, pin) ||
+             ^
+  339. 	    !acpi_dp_add_integer(gpio, NULL, polarity == ACPI_GPIO_ACTIVE_LOW))
+  340. 		return NULL;
+
+#115
+lib/acpi/acpi_dp.c:339: error: Memory Leak
+  memory dynamically allocated at line 332 by call to `acpi_dp_new_table()`, is not freed after the last access at line 339, column 7.
+  337. 	    !acpi_dp_add_integer(gpio, NULL, index) ||
+  338. 	    !acpi_dp_add_integer(gpio, NULL, pin) ||
+  339. 	    !acpi_dp_add_integer(gpio, NULL, polarity == ACPI_GPIO_ACTIVE_LOW))
+             ^
+  340. 		return NULL;
+  341. 
+
+#116
+lib/acpi/acpi_dp.c:342: error: Memory Leak
+  memory dynamically allocated at line 332 by call to `acpi_dp_new_table()`, is not freed after the last access at line 342, column 7.
+  340. 		return NULL;
+  341. 
+  342. 	if (!acpi_dp_add_array(dp, gpio))
+             ^
+  343. 		return NULL;
+  344. 
+
+#117
+lib/acpi/acpi_dp.c:342: error: Memory Leak
+  memory dynamically allocated at line 342 by call to `acpi_dp_add_array()`, is not freed after the last access at line 342, column 7.
+  340. 		return NULL;
+  341. 
+  342. 	if (!acpi_dp_add_array(dp, gpio))
+             ^
+  343. 		return NULL;
+  344. 
+
+#118
+arch/x86/lib/mrccache.c:353: error: Memory Leak
+  memory dynamically allocated at line 350 by call to `malloc`, is not freed after the last access at line 353, column 3.
+  351. 		if (!data)
+  352. 			return log_msg_ret("Allocate MRC cache block", -ENOMEM);
+  353. 		mrccache_setup(mrc, data);
+         ^
+  354. 	}
+  355. 
+
+#119
+arch/x86/lib/acpi_table.c:452: error: Dead Store
+  The value written to &ret (type int) is never used.
+  450. 	serial_config = SERIAL_DEFAULT_CONFIG;
+  451. 	if (dev)
+  452. 		ret = serial_getconfig(dev, &serial_config);
+         ^
+  453. 
+  454. 	spcr->parity = SERIAL_GET_PARITY(serial_config);
+
+#120
+cmd/nvedit.c:362: error: Uninitialized Value
+  The value read from endp was never initialized.
+  360. 	if (s)
+  361. 		value = simple_strtoul(s, &endp, 16);
+  362. 	if (!s || endp == s)
+                  ^
+  363. 		return default_val;
+  364. 
+
+#121
+cmd/nvedit.c:365: error: Uninitialized Value
+  The value read from value was never initialized.
+  363. 		return default_val;
+  364. 
+  365. 	return value;
+        ^
+  366. }
+  367. 
+
+#122
+common/fdt_support.c:358: error: Dead Store
+  The value written to &off (type int) is never used.
+  356. 			const char *prop, const void *val, int len, int create)
+  357. {
+  358. 	int off = -1;
+        ^
+  359. #if defined(DEBUG)
+  360. 	int i;
+
+#123
+common/autoboot.c:388: error: Uninitialized Value
+  The value read from prev was never initialized.
+  386. 
+  387. 		if (lock)
+  388. 			disable_ctrlc(prev);	/* restore Ctrl-C checking */
+          ^
+  389. 	}
+  390. 
+
+#124
+drivers/usb/host/ehci-hcd.c:613: error: Dead Store
+  The value written to &tdp (type unsigned int*) is never used.
+  611. 		/* Update previous qTD! */
+  612. 		*tdp = cpu_to_hc32(virt_to_phys(&qtd[qtd_counter]));
+  613. 		tdp = &qtd[qtd_counter++].qt_next;
+         ^
+  614. 	}
+  615. 
+
+#125
+lib/efi_loader/efi_gop.c:377: error: Dead Store
+  The value written to &ret (type unsigned long) is never used.
+  375. 			    efi_uintn_t height, efi_uintn_t delta)
+  376. {
+  377. 	efi_status_t ret = EFI_INVALID_PARAMETER;
+        ^
+  378. 	efi_uintn_t vid_bpp;
+  379. 
+
+#126
+net/eth-uclass.c:399: error: Uninitialized Value
+  The value read from ret was never initialized.
+  397. 			break;
+  398. 	}
+  399. 	if (ret == -EAGAIN)
+            ^
+  400. 		ret = 0;
+  401. 	if (ret < 0) {
+
+#127
+net/eth-uclass.c:401: error: Uninitialized Value
+  The value read from ret was never initialized.
+  399. 	if (ret == -EAGAIN)
+  400. 		ret = 0;
+  401. 	if (ret < 0) {
+            ^
+  402. 		/* We cannot completely return the error at present */
+  403. 		debug("%s: recv() returned error %d\n", __func__, ret);
+
+#128
+net/eth-uclass.c:403: error: Uninitialized Value
+  The value read from ret was never initialized.
+  401. 	if (ret < 0) {
+  402. 		/* We cannot completely return the error at present */
+  403. 		debug("%s: recv() returned error %d\n", __func__, ret);
+         ^
+  404. 	}
+  405. 	return ret;
+
+#129
+net/eth-uclass.c:405: error: Uninitialized Value
+  The value read from ret was never initialized.
+  403. 		debug("%s: recv() returned error %d\n", __func__, ret);
+  404. 	}
+  405. 	return ret;
+        ^
+  406. }
+  407. 
+
+#130
+disk/part.c:417: error: Uninitialized Value
+  The value read from hwpart was never initialized.
+  415. 	}
+  416. 
+  417. 	*dev_desc = get_dev_hwpart(ifname, dev, hwpart);
+                    ^
+  418. 	if (!(*dev_desc) || ((*dev_desc)->type == DEV_TYPE_UNKNOWN)) {
+  419. 		debug("** Bad device %s %s **\n", ifname, dev_hwpart_str);
+
+#131
+lib/membuff.c:389: error: Use After Free
+  call to `membuff_uninit()` eventually accesses memory that was invalidated by call to `free()` on line 388.
+  387. {
+  388. 	free(&mb->start);
+  389. 	membuff_uninit(mb);
+        ^
+  390. }
+
+#132
+lib/vsprintf.c:399: error: Dead Store
+  The value written to &fmt (type char const *) is never used.
+  397. 	int str_format;
+  398. 
+  399. 	switch (*(++fmt)) {
+                  ^
+  400. 	case 'L':
+  401. 		str_format = UUID_STR_FORMAT_GUID | UUID_STR_UPPER_CASE;
+
+#133
+tools/imx8mimage.c:498: error: Dead Store
+  The value written to &file_off (type int) is never used.
+  496. 
+  497. 	csf_off = file_off;
+  498. 	file_off += CSF_SIZE;
+        ^
+  499. 
+  500. 	/* Second boot loader image */
+
+#134
+tools/imx8mimage.c:531: error: Dead Store
+  The value written to &file_off (type int) is never used.
+  529. 
+  530. 			file_off = sld_header_off;
+  531. 			file_off += sbuf.st_size + sizeof(image_header_t);
+          ^
+  532. 		}
+  533. 	}
+
+#135
+cmd/load.c:475: error: Dead Store
+  The value written to &addr (type unsigned long) is never used.
+  473. 			load_baudrate);
+  474. 
+  475. 		addr = load_serial_ymodem(offset, xyzModem_ymodem);
+         ^
+  476. 
+  477. 	} else if (strcmp(argv[0],"loadx")==0) {
+
+#136
+cmd/load.c:483: error: Dead Store
+  The value written to &addr (type unsigned long) is never used.
+  481. 			load_baudrate);
+  482. 
+  483. 		addr = load_serial_ymodem(offset, xyzModem_xmodem);
+         ^
+  484. 
+  485. 	} else {
+
+#137
+tools/image-host.c:439: error: Dead Store
+  The value written to &ret (type int) is never used.
+  437. 			   unsigned char *data_ciphered, int data_ciphered_len)
+  438. {
+  439. 	int ret = -1;
+        ^
+  440. 
+  441. 	/* Replace data with ciphered data */
+
+#138
+disk/part.c:658: error: Uninitialized Value
+  The value read from ret was never initialized.
+  656. cleanup:
+  657. 	free(dup_str);
+  658. 	return ret;
+        ^
+  659. }
+  660. 
+
+#139
+env/flags.c:449: error: Dead Store
+  The value written to &ret (type int) is never used.
+  447. 	const char *var_name = var_entry->key;
+  448. 	char flags[ENV_FLAGS_ATTR_MAX_LEN + 1] = "";
+  449. 	int ret = 1;
+        ^
+  450. 
+  451. 	if (first_call) {
+
+#140
+tools/zynqmpbif.c:471: error: Memory Leak
+  memory dynamically allocated at line 459 by call to `read_full_file()`, is not freed after the last access at line 471, column 6.
+  469. 
+  470. 	/* Skip initial header */
+  471. 	if (memcmp(bit, initial_header, sizeof(initial_header)))
+            ^
+  472. 		return -1;
+  473. 
+
+#141
+tools/zynqmpbif.c:474: error: Memory Leak
+  memory dynamically allocated at line 459 by call to `read_full_file()`, is not freed after the last access at line 474, column 2.
+  472. 		return -1;
+  473. 
+  474. 	bit += sizeof(initial_header);
+        ^
+  475. 
+  476. 	/* Design name */
+
+#142
+lib/charset.c:517: error: Dead Store
+  The value written to &ret (type int) is never used.
+  515. 		if (s > 0) {
+  516. 			*buffer = 0;
+  517. 			ret = utf_to_cp(&s, codepage_437);
+          ^
+  518. 			return s;
+  519. 			}
+
+#143
+common/fdt_support.c:576: error: Uninitialized Value
+  The value read from *end was never initialized.
+  574. 					      simple_strtoul(tmp, &end, 16) : 0;
+  575. 				if (tmp)
+  576. 					tmp = (*end) ? end + 1 : end;
+                  ^
+  577. 			}
+  578. 
+
+#144
+common/fdt_support.c:576: error: Uninitialized Value
+  The value read from end was never initialized.
+  574. 					      simple_strtoul(tmp, &end, 16) : 0;
+  575. 				if (tmp)
+  576. 					tmp = (*end) ? end + 1 : end;
+                  ^
+  577. 			}
+  578. 
+
+#145
+tools/ifwitool.c:540: error: Memory Leak
+  memory dynamically allocated at line 535 by call to `malloc`, is not freed after the last access at line 540, column 3.
+  538. 		fprintf(stderr, "incomplete read: %s\n", filename);
+  539. 		fclose(fp);
+  540. 		buffer_delete(buffer);
+         ^
+  541. 		return -1;
+  542. 	}
+
+#146
+cmd/mem.c:562: error: Dead Store
+  The value written to &i (type unsigned long) is never used.
+  560. 			llp = (ulong *)buf;
+  561. 			for (;;)
+  562. 				i = *llp;
+           ^
+  563. 		}
+  564. 		if (size == 4) {
+
+#147
+cmd/mem.c:567: error: Dead Store
+  The value written to &i (type unsigned long) is never used.
+  565. 			longp = (u32 *)buf;
+  566. 			for (;;)
+  567. 				i = *longp;
+           ^
+  568. 		}
+  569. 		if (size == 2) {
+
+#148
+cmd/mem.c:572: error: Dead Store
+  The value written to &i (type unsigned long) is never used.
+  570. 			shortp = (u16 *)buf;
+  571. 			for (;;)
+  572. 				i = *shortp;
+           ^
+  573. 		}
+  574. 		cp = (u8 *)buf;
+
+#149
+cmd/mem.c:576: error: Dead Store
+  The value written to &i (type unsigned long) is never used.
+  574. 		cp = (u8 *)buf;
+  575. 		for (;;)
+  576. 			i = *cp;
+          ^
+  577. 	}
+  578. 
+
+#150
+tools/imx8image.c:534: error: Dead Store
+  The value written to &tmp_name (type char*) is never used.
+  532. 	uint64_t core = image_stack->ext;
+  533. 	uint32_t meta;
+  534. 	char *tmp_name = "";
+        ^
+  535. 	option_type_t type = image_stack->option;
+  536. 	boot_img_t *img = &container->img[container->num_images];
+
+#151
+tools/zynqmpbif.c:543: error: Memory Leak
+  memory dynamically allocated at line 537 by call to `read_full_file()`, is not freed after the last access at line 543, column 2.
+  541. 
+  542. 	bf->flags |= 1ULL << BIF_FLAG_BIN_FILE;
+  543. 	return bif_add_part(bf, bin, size);
+        ^
+  544. }
+  545. 
+
+#152
+disk/part_efi.c:541: error: Dead Store
+  The value written to &offset_blks (type unsigned int) is never used.
+  539. static uint32_t partition_entries_offset(struct blk_desc *dev_desc)
+  540. {
+  541. 	uint32_t offset_blks = 2;
+        ^
+  542. 	uint32_t __maybe_unused offset_bytes;
+  543. 	int __maybe_unused config_offset;
+
+#153
+drivers/mtd/spi/spi-nor-core.c:596: error: Uninitialized Value
+  The value read from ret was never initialized.
+  594. 	write_disable(nor);
+  595. 
+  596. 	return ret;
+        ^
+  597. }
+  598. 
+
+#154
+fs/ext4/ext4_journal.c:597: error: Dead Store
+  The value written to &i (type int) is never used.
+  595. 	}
+  596. 
+  597. 	tag.block = cpu_to_be32(journal_ptr[--i]->blknr);
+                    ^
+  598. 	tag.flags = cpu_to_be32(EXT3_JOURNAL_FLAG_LAST_TAG);
+  599. 	memcpy(temp - sizeof(struct ext3_journal_block_tag), &tag,
+
+#155
+drivers/input/input.c:593: error: Uninitialized Value
+  The value read from keycode[_] was never initialized.
+  591. 	debug("\ncodes for %02x/%d: ", new_keycode, release);
+  592. 	for (i = 0; i < count; i++)
+  593. 		debug("%02x ", keycode[i]);
+         ^
+  594. 	debug("\n");
+  595. 
+
+#156
+lib/efi_loader/efi_hii.c:581: error: Dead Store
+  The value written to &hii (type efi_hii_packagelist*) is never used.
+  579. 		   efi_hii_handle_t *handle)
+  580. {
+  581. 	struct efi_hii_packagelist *hii =
+        ^
+  582. 				(struct efi_hii_packagelist *)handle;
+  583. 	int package_cnt, package_max;
+
+#157
+tools/zynqmpbif.c:663: error: Memory Leak
+  memory dynamically allocated at line 653 by call to `read_full_file()`, is not freed after the last access at line 663, column 3.
+  661. 	case ELFCLASS32:
+  662. 		flat = elf2flat32(elf, &size, &load_addr);
+  663. 		bf->entry = le32_to_cpu(ehdr32->e_entry);
+         ^
+  664. 		bf->flags |= 1ULL << BIF_FLAG_AARCH32;
+  665. 		break;
+
+#158
+tools/zynqmpbif.c:668: error: Memory Leak
+  memory dynamically allocated at line 653 by call to `read_full_file()`, is not freed after the last access at line 668, column 3.
+  666. 	case ELFCLASS64:
+  667. 		flat = elf2flat64(elf, &size, &load_addr);
+  668. 		bf->entry = le64_to_cpu(ehdr64->e_entry);
+         ^
+  669. 		break;
+  670. 	default:
+
+#159
+tools/zynqmpbif.c:671: error: Memory Leak
+  memory dynamically allocated at line 653 by call to `read_full_file()`, is not freed after the last access at line 671, column 3.
+  669. 		break;
+  670. 	default:
+  671. 		printf("Unknown ELF class: %d\n", ehdr32->e_ident[EI_CLASS]);
+         ^
+  672. 		return -1;
+  673. 	}
+
+#160
+tools/fit_image.c:659: error: Dead Store
+  The value written to &fd_src (type int) is never used.
+  657. static int copyfile(const char *src, const char *dst)
+  658. {
+  659. 	int fd_src = -1, fd_dst = -1;
+        ^
+  660. 	void *buf = NULL;
+  661. 	ssize_t size;
+
+#161
+drivers/net/phy/phy.c:695: error: Memory Leak
+  memory dynamically allocated at line 669 by call to `malloc`, is not freed after the last access at line 695, column 6.
+  693. 	dev->drv = get_phy_driver(dev, interface);
+  694. 
+  695. 	if (phy_probe(dev)) {
+            ^
+  696. 		printf("%s, PHY probe failed\n", __func__);
+  697. 		return NULL;
+
+#162
+scripts/dtc/pylibfdt/libfdt_wrap.c:696: error: Dead Store
+  The value written to &c (type char const *) is never used.
+  694.     }
+  695.   }
+  696.   return SWIG_UnpackData(++c,ptr,sizeof(void *));
+                                ^
+  697. }
+  698. 
+
+#163
+cmd/load.c:777: error: Dead Store
+  The value written to &length (type int) is never used.
+  775. 	a_b[length] = tochar(chk1(&a_b[1]));
+  776. 	a_b[++length] = his_eol;
+  777. 	a_b[++length] = '\0';
+            ^
+  778. 	s1_sendpacket(a_b);
+  779. }
+
+#164
+tools/fdtgrep.c:722: error: Memory Leak
+  memory dynamically allocated at line 715 by call to `malloc`, is not freed after the last access at line 722, column 4.
+  720. 		if (offset == bufsize) {
+  721. 			bufsize *= 2;
+  722. 			buf = realloc(buf, bufsize);
+          ^
+  723. 			if (!buf)
+  724. 				return -ENOMEM;
+
+#165
+common/usb_storage.c:801: error: Dead Store
+  The value written to &pipe (type unsigned int) is never used.
+  799. 	pipe = le32_to_cpu(csw->dCSWDataResidue);
+  800. 	if (pipe == 0 && srb->datalen != 0 && srb->datalen - data_actlen != 0)
+  801. 		pipe = srb->datalen - data_actlen;
+         ^
+  802. 	if (CSWSIGNATURE != le32_to_cpu(csw->dCSWSignature)) {
+  803. 		debug("!CSWSIGNATURE\n");
+
+#166
+cmd/nvedit.c:741: error: Dead Store
+  The value written to &buf (type char*) is never used.
+  739. 
+  740. 		if (n)
+  741. 			*--buf = '\0';
+           ^
+  742. 
+  743. 		printf("env_buf [%u bytes] too small for value of \"%s\"\n",
+
+#167
+scripts/dtc/pylibfdt/libfdt_wrap.c:724: error: Dead Store
+  The value written to &c (type char const *) is never used.
+  722.     }
+  723.   }
+  724.   return SWIG_UnpackData(++c,ptr,sz);
+                                ^
+  725. }
+  726. 
+
+#168
+drivers/spi/ich.c:730: error: Dead Store
+  The value written to &aux (type unsigned long long) is never used.
+  728. 		u64 aux = addr;
+  729. 
+  730. 		page_offset = do_div(aux, ICH_BOUNDARY);
+                       ^
+  731. 	}
+  732. 
+
+#169
+common/usb.c:749: error: Uninitialized Value
+  The value read from result was never initialized.
+  747. 	}
+  748. 
+  749. 	return result;
+        ^
+  750. }
+  751. 
+
+#170
+fs/ext4/ext4_write.c:839: error: Dead Store
+  The value written to &previous_block_number (type int) is never used.
+  837. 		put_ext4((uint64_t) ((uint64_t)delayed_start << log2blksz),
+  838. 			 delayed_buf, (uint32_t) delayed_extent);
+  839. 		previous_block_number = -1;
+         ^
+  840. 	}
+  841. 
+
+#171
+tools/imx8image.c:777: error: Dead Store
+  The value written to &img_sp (type image_t*) is never used.
+  775. {
+  776. 	static imx_header_v3_t imx_header;
+  777. 	image_t *img_sp = image_stack;
+        ^
+  778. 	int file_off;
+  779. 	uint8_t *tmp;
+
+#172
+tools/fdtgrep.c:791: error: Memory Leak
+  memory dynamically allocated at line 787 by call to `utilfdt_read()`, is not freed after the last access at line 791, column 6.
+  789. 		return -1;
+  790. 	ret = fdt_check_header(blob);
+  791. 	if (ret) {
+            ^
+  792. 		fprintf(stderr, "Error: %s\n", fdt_strerror(ret));
+  793. 		return ret;
+
+#173
+tools/fdtgrep.c:810: error: Memory Leak
+  memory dynamically allocated at line 787 by call to `utilfdt_read()`, is not freed after the last access at line 810, column 8.
+  808. 	for (i = 0; i < 2; i++) {
+  809. 		region = realloc(region, count * sizeof(struct fdt_region));
+  810. 		if (!region) {
+              ^
+  811. 			fprintf(stderr, "Out of memory for %d regions\n",
+  812. 				count);
+
+#174
+tools/fdtgrep.c:857: error: Memory Leak
+  memory dynamically allocated at line 846 by call to `malloc`, is not freed after the last access at line 857, column 9.
+  855. 
+  856. 			out = malloc(size);
+  857. 			if (!out) {
+               ^
+  858. 				fprintf(stderr, "Out_of_memory\n");
+  859. 				ret = -1;
+
+#175
+tools/fdtgrep.c:872: error: Memory Leak
+  memory dynamically allocated at line 856 by call to `malloc`, is not freed after the last access at line 872, column 8.
+  870. 			fdt = out;
+  871. 			ret = fdt_pack(fdt);
+  872. 			if (ret < 0) {
+              ^
+  873. 				fprintf(stderr, "Failed to pack: err=%d\n",
+  874. 					ret);
+
+#176
+tools/fdtgrep.c:828: error: Uninitialized Value
+  The value read from max_regions was never initialized.
+  826. 			break;
+  827. 	}
+  828. 	if (count > max_regions) {
+            ^
+  829. 		free(region);
+  830. 		fprintf(stderr, "Internal error with fdtgrep_find_region()\n");
+
+#177
+drivers/spi/ich.c:794: error: Dead Store
+  The value written to &ich7_spi (type ich7_spi_regs*) is never used.
+  792. 	ctlr->base = (void *)plat->mmio_base;
+  793. 	if (plat->ich_version == ICHV_7) {
+  794. 		struct ich7_spi_regs *ich7_spi = ctlr->base;
+         ^
+  795. 
+  796. 		ctlr->opmenu = offsetof(struct ich7_spi_regs, opmenu);
+
+#178
+cmd/load.c:870: error: Dead Store
+  The value written to &k_state (type char) is never used.
+  868. 		if (n == last_n) {
+  869. 			/* same sequence number, restore the previous state */
+  870. 			k_state = k_state_saved;
+          ^
+  871. 			k_data_restore();
+  872. 		} else {
+
+#179
+lib/hashtable.c:933: error: Dead Store
+  The value written to &sp (type char*) is never used.
+  931. 			*sp++ = *dp;
+  932. 		}
+  933. 		*sp++ = '\0';	/* terminate value */
+          ^
+  934. 		++dp;
+  935. 
+
+#180
+lib/hashtable.c:972: error: Uninitialized Value
+  The value read from localvars[_] was never initialized.
+  970. 	/* process variables which were not considered */
+  971. 	for (i = 0; i < nvars; i++) {
+  972. 		if (localvars[i] == NULL)
+             ^
+  973. 			continue;
+  974. 		/*
+
+#181
+tools/zynqmpbif.c:851: error: Memory Leak
+  memory dynamically allocated at line 843 by call to `read_full_file()`, is not freed after the last access at line 851, column 9.
+  849. 
+  850. 	/* A bif description starts with a { section */
+  851. 	bifp = NEXT_CHAR(bifp, '{') + 1;
+               ^
+  852. 
+  853. 	/* Read every line */
+
+#182
+common/usb_storage.c:891: error: Dead Store
+  The value written to &status (type int) is never used.
+  889. 	/* if this is an CBI Protocol, get IRQ */
+  890. 	if (us->protocol == US_PR_CBI)
+  891. 		status = usb_stor_CBI_get_status(psrb, us);
+         ^
+  892. 
+  893. 	if ((result < 0) && !(us->pusb_dev->status & USB_ST_STALLED)) {
+
+#183
+fs/ext4/ext4_common.c:918: error: Uninitialized Value
+  The value read from previous_dir was never initialized.
+  916. 			goto fail;
+  917. 
+  918. 		if (previous_dir) {
+             ^
+  919. 			/* merge dir entry with predecessor */
+  920. 			uint16_t new_len;
+
+#184
+lib/efi_loader/efi_file.c:910: error: Dead Store
+  The value written to &ret (type unsigned long) is never used.
+  908. {
+  909. 	struct file_handle *fh = to_fh(file);
+  910. 	efi_status_t ret = EFI_UNSUPPORTED;
+        ^
+  911. 
+  912. 	EFI_ENTRY("%p, %pUl, %zu, %p", file, info_type, buffer_size, buffer);
+
+#185
+fs/ext4/ext4_common.c:941: error: Dead Store
+  The value written to &blknr (type long) is never used.
+  939. {
+  940. 	int blk_idx;
+  941. 	long int blknr = -1;
+        ^
+  942. 	int inodeno = -1;
+  943. 	uint32_t directory_blocks;
+
+#186
+fs/ext4/ext4_common.c:942: error: Dead Store
+  The value written to &inodeno (type int) is never used.
+  940. 	int blk_idx;
+  941. 	long int blknr = -1;
+  942. 	int inodeno = -1;
+        ^
+  943. 	uint32_t directory_blocks;
+  944. 
+
+#187
+cmd/load.c:970: error: Dead Store
+  The value written to &store_addr (type unsigned long) is never used.
+  968. 	connection_info_t info;
+  969. 	char ymodemBuf[1024];
+  970. 	ulong store_addr = ~0;
+        ^
+  971. 	ulong addr = 0;
+  972. 
+
+#188
+tools/kwbimage.c:1095: error: Dead Store
+  The value written to &cur (type unsigned char*) is never used.
+  1093. 	*((uint32_t *)cur) = 0x00000000;
+  1094. 
+  1095. 	cur += sizeof(uint32_t);
+         ^
+  1096. 
+  1097. 	return 0;
+
+#189
+arch/x86/cpu/quark/mrc_util.c:1070: error: Uninitialized Value
+  The value read from sampled_val[_] was never initialized.
+  1068. 			num_1s = 0x00;	/* reset '1' tracker for byte lane */
+  1069. 			for (j = 0; j < SAMPLE_SIZE; j++) {
+  1070. 				if (sampled_val[j] & msk[bl])
+                ^
+  1071. 					num_1s++;
+  1072. 				else
+
+#190
+drivers/usb/host/ehci-hcd.c:1153: error: Dead Store
+  The value written to &cmd (type unsigned int) is never used.
+  1151. 
+  1152. 	/* unblock posted write */
+  1153. 	cmd = ehci_readl(&ctrl->hcor->or_usbcmd);
+         ^
+  1154. 	mdelay(5);
+  1155. 	reg = HC_VERSION(ehci_readl(&ctrl->hccr->cr_capbase));
+
+#191
+arch/x86/cpu/quark/mrc_util.c:1205: error: Uninitialized Value
+  The value read from direction[_] was never initialized.
+  1203. 			if (temp & (1 << bl)) {
+  1204. 				/* sampled "1" */
+  1205. 				if (direction[bl] == BACKWARD) {
+                ^
+  1206. 					/*
+  1207. 					 * keep looking for edge
+
+#192
+arch/x86/cpu/quark/mrc_util.c:1222: error: Uninitialized Value
+  The value read from direction[_] was never initialized.
+  1220. 			} else {
+  1221. 				/* sampled "0" */
+  1222. 				if (direction[bl] == FORWARD) {
+                ^
+  1223. 					/*
+  1224. 					 * keep looking for edge
+
+#193
+arch/x86/cpu/quark/mrc_util.c:1141: error: Uninitialized Value
+  The value read from sample_result[_] was never initialized.
+  1139. 		transition_pattern = 0;
+  1140. 		for (sample = 0; sample < SAMPLE_CNT; sample++) {
+  1141. 			transition_pattern |=
+           ^
+  1142. 				((sample_result[sample] & (1 << bl)) >> bl) <<
+  1143. 				(SAMPLE_CNT - 1 - sample);
+
+#194
+drivers/core/device.c:1123: error: Dead Store
+  The value written to &ret (type int) is never used.
+  1121. 	ofnode pnode = ofnode_get_parent(node);
+  1122. 	struct udevice *parent;
+  1123. 	int ret = 1;
+         ^
+  1124. 
+  1125. 	if (!of_live_active())
+
+#195
+common/image.c:1310: error: Dead Store
+  The value written to &rd_data (type unsigned long) is never used.
+  1308. 			{
+  1309. 				puts("Wrong Ramdisk Image Format\n");
+  1310. 				rd_data = rd_len = rd_load = 0;
+            ^
+  1311. 				return 1;
+  1312. 			}
+
+#196
+common/image.c:1272: error: Dead Store
+  The value written to &rd_load (type unsigned long) is never used.
+  1270. 			rd_data = image_get_data(rd_hdr);
+  1271. 			rd_len = image_get_data_size(rd_hdr);
+  1272. 			rd_load = image_get_load(rd_hdr);
+           ^
+  1273. 			break;
+  1274. #endif
+
+#197
+tools/kwbimage.c:1297: error: Memory Leak
+  memory dynamically allocated at line 1237 by call to `malloc`, is not freed after the last access at line 1297, column 6.
+  1295. 	*next_ext = 1;
+  1296. 
+  1297. 	if (add_binary_header_v1(cur))
+             ^
+  1298. 		return NULL;
+  1299. 
+
+#198
+tools/ifwitool.c:1234: error: Memory Leak
+  memory dynamically allocated at line 1231 by call to `alloc_buffer()`, is not freed after the last access at line 1234, column 3.
+  1232. 		memcpy(buffer_get(&temp), buffer_get(b), buffer_size(b));
+  1233. 		buffer_delete(b);
+  1234. 		*b = temp;
+          ^
+  1235. 	}
+  1236. 
+
+#199
+drivers/mtd/spi/spi-nor-core.c:1267: error: Dead Store
+  The value written to &aux (type unsigned long long) is never used.
+  1265. 			u64 aux = addr;
+  1266. 
+  1267. 			page_offset = do_div(aux, nor->page_size);
+                         ^
+  1268. 		}
+  1269. 		/* the size of data remaining on the first page */
+
+#200
+drivers/mtd/spi/spi-nor-core.c:1295: error: Uninitialized Value
+  The value read from ret was never initialized.
+  1293. 	ret = clean_bar(nor);
+  1294. #endif
+  1295. 	return ret;
+         ^
+  1296. }
+  1297. 
+
+#201
+fs/fat/fat_write.c:1314: error: Dead Store
+  The value written to &ret (type int) is never used.
+  1312. 	fsdata *mydata = &datablock;
+  1313. 	fat_itr *itr = NULL;
+  1314. 	int ret = -1;
+         ^
+  1315. 	char *filename_copy, *parent, *basename;
+  1316. 	char l_filename[VFAT_MAXLEN_BYTES];
+
+#202
+tools/ifwitool.c:1339: error: Memory Leak
+  memory dynamically allocated at line 1333 by call to `alloc_buffer()`, is not freed after the last access at line 1339, column 2.
+  1337. 	memset(data + buff_size, 0xFF, size - buff_size);
+  1338. 
+  1339. 	*b = temp;
+         ^
+  1340. }
+  1341. 
+
+#203
+lib/fdtdec.c:1426: error: Dead Store
+  The value written to &ptr (type unsigned int*) is never used.
+  1424. 		*ptr++ = cpu_to_fdt32(upper);
+  1425. 
+  1426. 	*ptr++ = cpu_to_fdt32(lower);
+          ^
+  1427. 
+  1428. 	err = fdt_setprop(blob, node, "reg", cells, (na + ns) * sizeof(*cells));
+
+#204
+lib/fdtdec.c:1440: error: Uninitialized Value
+  The value read from phandle was never initialized.
+  1438. 	/* return the phandle for the new node for the caller to use */
+  1439. 	if (phandlep)
+  1440. 		*phandlep = phandle;
+          ^
+  1441. 
+  1442. 	return 0;
+
+#205
+common/fdt_support.c:1371: error: Uninitialized Value
+  The value read from ranges was never initialized.
+  1369. 	}
+  1370. 
+  1371. 	if (!ranges || parent < 0) {
+              ^
+  1372. 		debug("no dma-ranges found for node %s\n",
+  1373. 		      fdt_get_name(blob, node, NULL));
+
+#206
+scripts/dtc/dtc-lexer.lex.c:1479: error: Memory Leak
+  memory dynamically allocated at line 1462 by call to `yyrestart()`, is not freed after the last access at line 1479, column 3.
+  1477. 		/* Extend the array by 50%, plus the number we really need. */
+  1478. 		int new_size = (yy_n_chars) + number_to_move + ((yy_n_chars) >> 1);
+  1479. 		YY_CURRENT_BUFFER_LVALUE->yy_ch_buf = (char *) yyrealloc(
+          ^
+  1480. 			(void *) YY_CURRENT_BUFFER_LVALUE->yy_ch_buf, (yy_size_t) new_size  );
+  1481. 		if ( ! YY_CURRENT_BUFFER_LVALUE->yy_ch_buf )
+
+#207
+common/image-fit.c:1377: error: Dead Store
+  The value written to &err_msg (type char*) is never used.
+  1375. 	const void	*data;
+  1376. 	size_t		size;
+  1377. 	char		*err_msg = "";
+         ^
+  1378. 
+  1379. 	if (strchr(name, '@')) {
+
+#208
+tools/ifwitool.c:1717: error: Memory Leak
+  memory dynamically allocated at line 1685 by call to `alloc_buffer()`, is not freed after the last access at line 1717, column 2.
+  1715. 	memcpy(data, dir, buffer_size(&subpart_dir_buff));
+  1716. 
+  1717. 	buffer_delete(&subpart_dir_buff);
+         ^
+  1718. }
+  1719. 
+
+#209
+arch/x86/cpu/quark/smc.c:1859: error: Dead Store
+  The value written to &address (type unsigned int) is never used.
+  1857. 	/* initialize other variables */
+  1858. 	bl_mask = byte_lane_mask(mrc_params);
+  1859. 	address = get_addr(0, 0);
+         ^
+  1860. 
+  1861. #ifdef R2R_SHARING
+
+#210
+tools/ifwitool.c:1904: error: Memory Leak
+  memory dynamically allocated at line 1882 by call to `parse_subpart_dir()`, is not freed after the last access at line 1904, column 2.
+  1902. 	DEBUG("Splicing buffer at 0x%x size 0x%x\n", s->e[i].offset,
+  1903. 	      s->e[i].length);
+  1904. 	buffer_splice(&dst, &ifwi_image.subpart_buf[type], s->e[i].offset,
+         ^
+  1905. 		      s->e[i].length);
+  1906. 
+
+#211
+common/dlmalloc.c:1995: error: Memory Leak
+  memory dynamically allocated at line 1948 by call to `malloc`, is not freed after the last access at line 1995, column 7.
+  1993.   p = mem2chunk(m);
+  1994. 
+  1995.   if ((((unsigned long)(m)) % alignment) == 0) /* aligned */
+              ^
+  1996.   {
+  1997. #if HAVE_MMAP
+
+#212
+common/dlmalloc.c:2013: error: Memory Leak
+  memory dynamically allocated at line 1948 by call to `malloc`, is not freed after the last access at line 2013, column 5.
+  2011.     */
+  2012. 
+  2013.     brk = (char*)mem2chunk(((unsigned long)(m + alignment - 1)) & -((signed) alignment));
+            ^
+  2014.     if ((long)(brk - (char*)(p)) < MINSIZE) brk = brk + alignment;
+  2015. 
+
+#213
+common/dlmalloc.c:1995: error: Memory Leak
+  memory dynamically allocated at line 1975 by call to `malloc`, is not freed after the last access at line 1995, column 7.
+  1993.   p = mem2chunk(m);
+  1994. 
+  1995.   if ((((unsigned long)(m)) % alignment) == 0) /* aligned */
+              ^
+  1996.   {
+  1997. #if HAVE_MMAP
+
+#214
+common/dlmalloc.c:2013: error: Memory Leak
+  memory dynamically allocated at line 1975 by call to `malloc`, is not freed after the last access at line 2013, column 5.
+  2011.     */
+  2012. 
+  2013.     brk = (char*)mem2chunk(((unsigned long)(m + alignment - 1)) & -((signed) alignment));
+            ^
+  2014.     if ((long)(brk - (char*)(p)) < MINSIZE) brk = brk + alignment;
+  2015. 
+
+#215
+lib/efi_loader/efi_boottime.c:1988: error: Uninitialized Value
+  The value read from addr was never initialized.
+  1986. 	EFI_CALL(efi_close_protocol(device, guid, efi_root, NULL));
+  1987. 	if (ret == EFI_SUCCESS) {
+  1988. 		*buffer = (void *)(uintptr_t)addr;
+          ^
+  1989. 		*size = buffer_size;
+  1990. 	}
+
+#216
+tools/ifwitool.c:1984: error: Memory Leak
+  memory dynamically allocated at line 1989 by call to `parse_subpart_dir()`, is not freed after the last access at line 1984, column 33.
+  1982. 	struct buffer subpart_dir_buf;
+  1983. 
+  1984. 	for (i = 0; i < MAX_SUBPARTS ; i++) {
+                                        ^
+  1985. 		if (!(subparts[i].attr & CONTAINS_DIR) ||
+  1986. 		    (buffer_size(&ifwi_image.subpart_buf[i]) == 0))
+
+#217
+tools/ifwitool.c:2076: error: Memory Leak
+  memory dynamically allocated at line 2039 by call to `buffer_from_file()`, is not freed after the last access at line 2076, column 2.
+  2074. 	/* Update length of entry in the subpartition */
+  2075. 	s->e[i].length = buffer_size(&b);
+  2076. 	buffer_delete(&b);
+         ^
+  2077. 
+  2078. 	/* Adjust offsets of affected entries in subpartition */
+
+#218
+arch/x86/cpu/quark/smc.c:2149: error: Dead Store
+  The value written to &address (type unsigned int) is never used.
+  2147. 	/* initialize other variables */
+  2148. 	bl_mask = byte_lane_mask(mrc_params);
+  2149. 	address = get_addr(0, 0);
+         ^
+  2150. 
+  2151. #ifdef R2R_SHARING
+
+#219
+fs/ext4/ext4_common.c:2222: error: Dead Store
+  The value written to &oldnode (type ext2fs_node*) is never used.
+  2220. 	int type = FILETYPE_DIRECTORY;
+  2221. 	struct ext2fs_node *currnode = currroot;
+  2222. 	struct ext2fs_node *oldnode = currroot;
+         ^
+  2223. 
+  2224. 	strncpy(fpath, currpath, strlen(currpath) + 1);
+
+#220
+drivers/mmc/mmc.c:2829: error: Dead Store
+  The value written to &err (type int) is never used.
+  2827. 
+  2828. 	/* Test for SD version 2 */
+  2829. 	err = mmc_send_if_cond(mmc);
+         ^
+  2830. 
+  2831. 	/* Now try to get the SD card's operating condition */
+
+#221
+scripts/dtc/pylibfdt/libfdt_wrap.c:2953: error: Memory Leak
+  memory dynamically allocated at line 2953 by call to `malloc`, is not freed after the last access at line 2953, column 4.
+  2951.       if (alloc) {
+  2952. 	if (*alloc == SWIG_NEWOBJ) {
+  2953. 	  *cptr = (char *)memcpy(malloc((len + 1)*sizeof(char)), cstr, sizeof(char)*(len + 1));
+           ^
+  2954. 	  *alloc = SWIG_NEWOBJ;
+  2955. 	} else {
+
+#222
+lib/efi_loader/efi_boottime.c:3023: error: Uninitialized Value
+  The value read from exit_status was never initialized.
+  3021. 			  ~EFI_ERROR_MASK));
+  3022. 		current_image = parent_image;
+  3023. 		return EFI_EXIT(exit_status);
+                 ^
+  3024. 	}
+  3025. 
+
+#223
+scripts/dtc/pylibfdt/libfdt_wrap.c:3161: error: Dead Store
+  The value written to &res (type int) is never used.
+  3159. SWIG_AsVal_unsigned_SS_long_SS_long (PyObject *obj, unsigned long long *val)
+  3160. {
+  3161.   int res = SWIG_TypeError;
+          ^
+  3162.   if (PyLong_Check(obj)) {
+  3163.     unsigned long long v = PyLong_AsUnsignedLongLong(obj);
+
+#224
+scripts/dtc/pylibfdt/libfdt_wrap.c:3244: error: Uninitialized Value
+  The value read from v was never initialized.
+  3242.     unsigned long v;
+  3243.     res = SWIG_AsVal_unsigned_SS_long (obj, val ? &v : 0);
+  3244.     if (SWIG_IsOK(res) && val) *val = (size_t)(v);
+                                       ^
+  3245. #ifdef SWIG_LONG_LONG_AVAILABLE
+  3246.   } else if (sizeof(size_t) <= sizeof(unsigned long long)) {
+
+#225
+scripts/dtc/pylibfdt/libfdt_wrap.c:3249: error: Uninitialized Value
+  The value read from v was never initialized.
+  3247.     unsigned long long v;
+  3248.     res = SWIG_AsVal_unsigned_SS_long_SS_long (obj, val ? &v : 0);
+  3249.     if (SWIG_IsOK(res) && val) *val = (size_t)(v);
+                                       ^
+  3250.   }
+  3251. #endif
+
+#226
+common/cli_hush.c:3259: error: Dead Store
+  The value written to &p (type char*) is never used.
+  3257. 	if (!*s)
+  3258. 		return 0;
+  3259. 	if (!(p = strchr(s, '\n')) || *++p) {
+                                        ^
+  3260. 		p = xmalloc(strlen(s) + 2);
+  3261. 		strcpy(p, s);
+
+#227
+common/cli_hush.c:3529: error: Dead Store
+  The value written to &p (type char*) is never used.
+  3527. 			res_str_len += len;
+  3528. 		}
+  3529. 		inp = ++p;
+                ^
+  3530. 		/* find the ending marker */
+  3531. 		p = strchr(inp, SPECIAL_VAR_SYMBOL);
+
+#228
+common/cli_hush.c:3564: error: Dead Store
+  The value written to &p (type char*) is never used.
+  3562. 		}
+  3563. 		*p = SPECIAL_VAR_SYMBOL;
+  3564. 		inp = ++p;
+                ^
+  3565. 		done = 1;
+  3566. 	}
+
+#229
+common/cli_hush.c:3603: error: Memory Leak
+  memory dynamically allocated at line 3586 by call to `xmalloc()`, is not freed after the last access at line 3603, column 4.
+  3601. 			/* we use n + 2 in realloc for list,because we add
+  3602. 			 * new element and then we will add NULL element */
+  3603. 			list = xrealloc(list, sizeof(*list) * (n + 2));
+           ^
+  3604. 			list[n] = xmalloc(2 + name_len + len);
+  3605. 			strcpy(list[n], name);
+
+#230
+scripts/dtc/pylibfdt/libfdt_wrap.c:4427: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4425.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4426.     fdt1 = arg1;
+  4427.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4428.   }
+  4429.   result = (uint32_t)fdt_magic((void const *)arg1);
+
+#231
+scripts/dtc/pylibfdt/libfdt_wrap.c:4453: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4451.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4452.     fdt1 = arg1;
+  4453.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4454.   }
+  4455.   result = (uint32_t)fdt_totalsize((void const *)arg1);
+
+#232
+scripts/dtc/pylibfdt/libfdt_wrap.c:4479: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4477.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4478.     fdt1 = arg1;
+  4479.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4480.   }
+  4481.   result = (uint32_t)fdt_off_dt_struct((void const *)arg1);
+
+#233
+scripts/dtc/pylibfdt/libfdt_wrap.c:4505: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4503.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4504.     fdt1 = arg1;
+  4505.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4506.   }
+  4507.   result = (uint32_t)fdt_off_dt_strings((void const *)arg1);
+
+#234
+scripts/dtc/pylibfdt/libfdt_wrap.c:4531: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4529.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4530.     fdt1 = arg1;
+  4531.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4532.   }
+  4533.   result = (uint32_t)fdt_off_mem_rsvmap((void const *)arg1);
+
+#235
+scripts/dtc/pylibfdt/libfdt_wrap.c:4557: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4555.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4556.     fdt1 = arg1;
+  4557.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4558.   }
+  4559.   result = (uint32_t)fdt_version((void const *)arg1);
+
+#236
+scripts/dtc/pylibfdt/libfdt_wrap.c:4583: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4581.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4582.     fdt1 = arg1;
+  4583.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4584.   }
+  4585.   result = (uint32_t)fdt_last_comp_version((void const *)arg1);
+
+#237
+scripts/dtc/pylibfdt/libfdt_wrap.c:4609: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4607.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4608.     fdt1 = arg1;
+  4609.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4610.   }
+  4611.   result = (uint32_t)fdt_boot_cpuid_phys((void const *)arg1);
+
+#238
+scripts/dtc/pylibfdt/libfdt_wrap.c:4635: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4633.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4634.     fdt1 = arg1;
+  4635.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4636.   }
+  4637.   result = (uint32_t)fdt_size_dt_strings((void const *)arg1);
+
+#239
+scripts/dtc/pylibfdt/libfdt_wrap.c:4661: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4659.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4660.     fdt1 = arg1;
+  4661.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4662.   }
+  4663.   result = (uint32_t)fdt_size_dt_struct((void const *)arg1);
+
+#240
+scripts/dtc/pylibfdt/libfdt_wrap.c:4694: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4692.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  4693.     fdt1 = arg1;
+  4694.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4695.   }
+  4696.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#241
+scripts/dtc/pylibfdt/libfdt_wrap.c:4740: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4738.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  4739.     fdt1 = arg1;
+  4740.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4741.   }
+  4742.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#242
+scripts/dtc/pylibfdt/libfdt_wrap.c:4785: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4783.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  4784.     fdt1 = arg1;
+  4785.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4786.   }
+  4787.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#243
+scripts/dtc/pylibfdt/libfdt_wrap.c:4839: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4837.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  4838.     fdt1 = arg1;
+  4839.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4840.   }
+  4841.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#244
+scripts/dtc/pylibfdt/libfdt_wrap.c:4880: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4878.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4879.     fdt1 = arg1;
+  4880.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4881.   }
+  4882.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#245
+scripts/dtc/pylibfdt/libfdt_wrap.c:4917: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4915.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  4916.     fdt1 = arg1;
+  4917.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4918.   }
+  4919.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#246
+scripts/dtc/pylibfdt/libfdt_wrap.c:4949: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4947.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  4948.     fdt1 = arg1;
+  4949.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4950.   }
+  4951.   ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(swig_obj[1], &val2);
+
+#247
+scripts/dtc/pylibfdt/libfdt_wrap.c:4984: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  4982.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  4983.     fdt1 = arg1;
+  4984.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  4985.   }
+  4986.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#248
+scripts/dtc/pylibfdt/libfdt_wrap.c:5025: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5023.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5024.     fdt1 = arg1;
+  5025.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5026.   }
+  5027.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#249
+scripts/dtc/pylibfdt/libfdt_wrap.c:5058: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5056.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5057.     fdt1 = arg1;
+  5058.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5059.   }
+  5060.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#250
+scripts/dtc/pylibfdt/libfdt_wrap.c:5090: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5088.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5089.     fdt1 = arg1;
+  5090.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5091.   }
+  5092.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#251
+scripts/dtc/pylibfdt/libfdt_wrap.c:5122: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5120.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5121.     fdt1 = arg1;
+  5122.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5123.   }
+  5124.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#252
+scripts/dtc/pylibfdt/libfdt_wrap.c:5154: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5152.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5153.     fdt1 = arg1;
+  5154.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5155.   }
+  5156.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#253
+scripts/dtc/pylibfdt/libfdt_wrap.c:5186: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5184.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5185.     fdt1 = arg1;
+  5186.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5187.   }
+  5188.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#254
+scripts/dtc/pylibfdt/libfdt_wrap.c:5218: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5216.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5217.     fdt1 = arg1;
+  5218.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5219.   }
+  5220.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#255
+scripts/dtc/pylibfdt/libfdt_wrap.c:5250: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5248.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5249.     fdt1 = arg1;
+  5250.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5251.   }
+  5252.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#256
+scripts/dtc/pylibfdt/libfdt_wrap.c:5282: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5280.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5281.     fdt1 = arg1;
+  5282.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5283.   }
+  5284.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#257
+scripts/dtc/pylibfdt/libfdt_wrap.c:5314: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5312.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5313.     fdt1 = arg1;
+  5314.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5315.   }
+  5316.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#258
+scripts/dtc/pylibfdt/libfdt_wrap.c:5346: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5344.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5345.     fdt1 = arg1;
+  5346.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5347.   }
+  5348.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#259
+scripts/dtc/pylibfdt/libfdt_wrap.c:5378: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5376.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  5377.     fdt1 = arg1;
+  5378.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5379.   }
+  5380.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#260
+scripts/dtc/pylibfdt/libfdt_wrap.c:5409: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5407.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5408.     fdt1 = arg1;
+  5409.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5410.   }
+  5411.   result = fdt_header_size((void const *)arg1);
+
+#261
+scripts/dtc/pylibfdt/libfdt_wrap.c:5458: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5456.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5457.     fdt1 = arg1;
+  5458.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5459.   }
+  5460.   result = (int)fdt_check_header((void const *)arg1);
+
+#262
+scripts/dtc/pylibfdt/libfdt_wrap.c:5488: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5486.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5487.     fdt1 = arg1;
+  5488.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5489.   }
+  5490.   {
+
+#263
+scripts/dtc/pylibfdt/libfdt_wrap.c:5497: error: Dead Store
+  The value written to &fdt2 (type void const *) is never used.
+  5495.     arg2 = PyByteArray_AsString(swig_obj[1]);
+  5496.     fdt2 = arg2;
+  5497.     fdt2 = fdt2; /* avoid unused variable warning */
+            ^
+  5498.   }
+  5499.   ecode3 = SWIG_AsVal_int(swig_obj[2], &val3);
+
+#264
+scripts/dtc/pylibfdt/libfdt_wrap.c:5530: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5528.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5529.     fdt1 = arg1;
+  5530.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5531.   }
+  5532.   ecode2 = SWIG_AsVal_size_t(swig_obj[1], &val2);
+
+#265
+scripts/dtc/pylibfdt/libfdt_wrap.c:5567: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5565.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5566.     fdt1 = arg1;
+  5567.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5568.   }
+  5569.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#266
+scripts/dtc/pylibfdt/libfdt_wrap.c:5606: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5604.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5605.     fdt1 = arg1;
+  5606.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5607.   }
+  5608.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#267
+scripts/dtc/pylibfdt/libfdt_wrap.c:5639: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5637.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5638.     fdt1 = arg1;
+  5639.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5640.   }
+  5641.   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+
+#268
+scripts/dtc/pylibfdt/libfdt_wrap.c:5670: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5668.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5669.     fdt1 = arg1;
+  5670.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5671.   }
+  5672.   result = (uint32_t)fdt_get_max_phandle((void const *)arg1);
+
+#269
+scripts/dtc/pylibfdt/libfdt_wrap.c:5698: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5696.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5697.     fdt1 = arg1;
+  5698.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5699.   }
+  5700.   res2 = SWIG_ConvertPtr(swig_obj[1], &argp2,SWIGTYPE_p_unsigned_int, 0 |  0 );
+
+#270
+scripts/dtc/pylibfdt/libfdt_wrap.c:5729: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5727.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5728.     fdt1 = arg1;
+  5729.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5730.   }
+  5731.   result = (int)fdt_num_mem_rsv((void const *)arg1);
+
+#271
+scripts/dtc/pylibfdt/libfdt_wrap.c:5767: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5765.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5766.     fdt1 = arg1;
+  5767.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5768.   }
+  5769.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#272
+scripts/dtc/pylibfdt/libfdt_wrap.c:5822: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5820.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5821.     fdt1 = arg1;
+  5822.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5823.   }
+  5824.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#273
+scripts/dtc/pylibfdt/libfdt_wrap.c:5863: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5861.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5862.     fdt1 = arg1;
+  5863.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5864.   }
+  5865.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#274
+scripts/dtc/pylibfdt/libfdt_wrap.c:5902: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5900.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5901.     fdt1 = arg1;
+  5902.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5903.   }
+  5904.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#275
+scripts/dtc/pylibfdt/libfdt_wrap.c:5941: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5939.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5940.     fdt1 = arg1;
+  5941.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5942.   }
+  5943.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#276
+scripts/dtc/pylibfdt/libfdt_wrap.c:5974: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  5972.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  5973.     fdt1 = arg1;
+  5974.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  5975.   }
+  5976.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#277
+scripts/dtc/pylibfdt/libfdt_wrap.c:6196: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6194.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6195.     fdt1 = arg1;
+  6196.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6197.   }
+  6198.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#278
+scripts/dtc/pylibfdt/libfdt_wrap.c:6259: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6257.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  6258.     fdt1 = arg1;
+  6259.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6260.   }
+  6261.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#279
+scripts/dtc/pylibfdt/libfdt_wrap.c:6305: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6303.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6304.     fdt1 = arg1;
+  6305.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6306.   }
+  6307.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#280
+scripts/dtc/pylibfdt/libfdt_wrap.c:6339: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6337.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6338.     fdt1 = arg1;
+  6339.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6340.   }
+  6341.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#281
+scripts/dtc/pylibfdt/libfdt_wrap.c:6381: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6379.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6380.     fdt1 = arg1;
+  6381.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6382.   }
+  6383.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#282
+scripts/dtc/pylibfdt/libfdt_wrap.c:6432: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6430.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6431.     fdt1 = arg1;
+  6432.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6433.   }
+  6434.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#283
+scripts/dtc/pylibfdt/libfdt_wrap.c:6475: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6473.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6474.     fdt1 = arg1;
+  6475.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6476.   }
+  6477.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#284
+scripts/dtc/pylibfdt/libfdt_wrap.c:6508: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6506.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6507.     fdt1 = arg1;
+  6508.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6509.   }
+  6510.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#285
+scripts/dtc/pylibfdt/libfdt_wrap.c:6550: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6548.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6549.     fdt1 = arg1;
+  6550.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6551.   }
+  6552.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#286
+scripts/dtc/pylibfdt/libfdt_wrap.c:6569: error: Dead Store
+  The value written to &fdt4 (type void const *) is never used.
+  6567.     arg4 = (void *)PyByteArray_AsString(swig_obj[3]);
+  6568.     fdt4 = arg4;
+  6569.     fdt4 = fdt4; /* avoid unused variable warning */
+            ^
+  6570.   }
+  6571.   ecode5 = SWIG_AsVal_int(swig_obj[4], &val5);
+
+#287
+scripts/dtc/pylibfdt/libfdt_wrap.c:6604: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6602.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6603.     fdt1 = arg1;
+  6604.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6605.   }
+  6606.   ecode2 = SWIG_AsVal_unsigned_SS_int(swig_obj[1], &val2);
+
+#288
+scripts/dtc/pylibfdt/libfdt_wrap.c:6641: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6639.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6640.     fdt1 = arg1;
+  6641.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6642.   }
+  6643.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#289
+scripts/dtc/pylibfdt/libfdt_wrap.c:6685: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6683.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6684.     fdt1 = arg1;
+  6685.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6686.   }
+  6687.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#290
+scripts/dtc/pylibfdt/libfdt_wrap.c:6773: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6771.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6772.     fdt1 = arg1;
+  6773.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6774.   }
+  6775.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#291
+scripts/dtc/pylibfdt/libfdt_wrap.c:6821: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6819.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6820.     fdt1 = arg1;
+  6821.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6822.   }
+  6823.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#292
+scripts/dtc/pylibfdt/libfdt_wrap.c:6879: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6877.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6878.     fdt1 = arg1;
+  6879.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6880.   }
+  6881.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#293
+scripts/dtc/pylibfdt/libfdt_wrap.c:6930: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6928.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6929.     fdt1 = arg1;
+  6930.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6931.   }
+  6932.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#294
+scripts/dtc/pylibfdt/libfdt_wrap.c:6963: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  6961.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  6962.     fdt1 = arg1;
+  6963.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  6964.   }
+  6965.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#295
+scripts/dtc/pylibfdt/libfdt_wrap.c:7003: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7001.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7002.     fdt1 = arg1;
+  7003.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7004.   }
+  7005.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#296
+scripts/dtc/pylibfdt/libfdt_wrap.c:7055: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7053.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7054.     fdt1 = arg1;
+  7055.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7056.   }
+  7057.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#297
+scripts/dtc/pylibfdt/libfdt_wrap.c:7107: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7105.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7106.     fdt1 = arg1;
+  7107.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7108.   }
+  7109.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#298
+scripts/dtc/pylibfdt/libfdt_wrap.c:7156: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7154.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7155.     fdt1 = arg1;
+  7156.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7157.   }
+  7158.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#299
+scripts/dtc/pylibfdt/libfdt_wrap.c:7196: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7194.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7195.     fdt1 = arg1;
+  7196.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7197.   }
+  7198.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#300
+scripts/dtc/pylibfdt/libfdt_wrap.c:7232: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7230.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7231.     fdt1 = arg1;
+  7232.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7233.   }
+  7234.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#301
+scripts/dtc/pylibfdt/libfdt_wrap.c:7270: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7268.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7269.     fdt1 = arg1;
+  7270.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7271.   }
+  7272.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#302
+scripts/dtc/pylibfdt/libfdt_wrap.c:7305: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7303.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7304.     fdt1 = arg1;
+  7305.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7306.   }
+  7307.   {
+
+#303
+scripts/dtc/pylibfdt/libfdt_wrap.c:7314: error: Dead Store
+  The value written to &fdt2 (type void const *) is never used.
+  7312.     arg2 = PyByteArray_AsString(swig_obj[1]);
+  7313.     fdt2 = arg2;
+  7314.     fdt2 = fdt2; /* avoid unused variable warning */
+            ^
+  7315.   }
+  7316.   ecode3 = SWIG_AsVal_int(swig_obj[2], &val3);
+
+#304
+scripts/dtc/pylibfdt/libfdt_wrap.c:7350: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7348.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7349.     fdt1 = arg1;
+  7350.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7351.   }
+  7352.   ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(swig_obj[1], &val2);
+
+#305
+scripts/dtc/pylibfdt/libfdt_wrap.c:7386: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7384.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7385.     fdt1 = arg1;
+  7386.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7387.   }
+  7388.   result = (int)fdt_finish_reservemap(arg1);
+
+#306
+scripts/dtc/pylibfdt/libfdt_wrap.c:7415: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7413.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7414.     fdt1 = arg1;
+  7415.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7416.   }
+  7417.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#307
+scripts/dtc/pylibfdt/libfdt_wrap.c:7454: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7452.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7453.     fdt1 = arg1;
+  7454.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7455.   }
+  7456.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#308
+scripts/dtc/pylibfdt/libfdt_wrap.c:7498: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7496.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7497.     fdt1 = arg1;
+  7498.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7499.   }
+  7500.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#309
+scripts/dtc/pylibfdt/libfdt_wrap.c:7545: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7543.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7544.     fdt1 = arg1;
+  7545.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7546.   }
+  7547.   res2 = SWIG_AsCharPtrAndSize(swig_obj[1], &buf2, NULL, &alloc2);
+
+#310
+scripts/dtc/pylibfdt/libfdt_wrap.c:7588: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7586.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7587.     fdt1 = arg1;
+  7588.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7589.   }
+  7590.   result = (int)fdt_end_node(arg1);
+
+#311
+scripts/dtc/pylibfdt/libfdt_wrap.c:7614: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7612.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7613.     fdt1 = arg1;
+  7614.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7615.   }
+  7616.   result = (int)fdt_finish(arg1);
+
+#312
+scripts/dtc/pylibfdt/libfdt_wrap.c:7642: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7640.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7641.     fdt1 = arg1;
+  7642.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7643.   }
+  7644.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#313
+scripts/dtc/pylibfdt/libfdt_wrap.c:7677: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7675.     arg1 = (void *)PyByteArray_AsString(swig_obj[0]);
+  7676.     fdt1 = arg1;
+  7677.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7678.   }
+  7679.   {
+
+#314
+scripts/dtc/pylibfdt/libfdt_wrap.c:7686: error: Dead Store
+  The value written to &fdt2 (type void const *) is never used.
+  7684.     arg2 = PyByteArray_AsString(swig_obj[1]);
+  7685.     fdt2 = arg2;
+  7686.     fdt2 = fdt2; /* avoid unused variable warning */
+            ^
+  7687.   }
+  7688.   ecode3 = SWIG_AsVal_int(swig_obj[2], &val3);
+
+#315
+scripts/dtc/pylibfdt/libfdt_wrap.c:7717: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7715.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7716.     fdt1 = arg1;
+  7717.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7718.   }
+  7719.   result = (int)fdt_pack(arg1);
+
+#316
+scripts/dtc/pylibfdt/libfdt_wrap.c:7748: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7746.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7747.     fdt1 = arg1;
+  7748.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7749.   }
+  7750.   ecode2 = SWIG_AsVal_unsigned_SS_long_SS_long(swig_obj[1], &val2);
+
+#317
+scripts/dtc/pylibfdt/libfdt_wrap.c:7786: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7784.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7785.     fdt1 = arg1;
+  7786.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7787.   }
+  7788.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#318
+scripts/dtc/pylibfdt/libfdt_wrap.c:7823: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7821.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7822.     fdt1 = arg1;
+  7823.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7824.   }
+  7825.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#319
+scripts/dtc/pylibfdt/libfdt_wrap.c:7871: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7869.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7870.     fdt1 = arg1;
+  7871.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7872.   }
+  7873.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#320
+scripts/dtc/pylibfdt/libfdt_wrap.c:7937: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7935.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7936.     fdt1 = arg1;
+  7937.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7938.   }
+  7939.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#321
+scripts/dtc/pylibfdt/libfdt_wrap.c:7994: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  7992.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  7993.     fdt1 = arg1;
+  7994.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  7995.   }
+  7996.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#322
+scripts/dtc/pylibfdt/libfdt_wrap.c:8046: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8044.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8045.     fdt1 = arg1;
+  8046.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8047.   }
+  8048.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#323
+scripts/dtc/pylibfdt/libfdt_wrap.c:8098: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8096.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8097.     fdt1 = arg1;
+  8098.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8099.   }
+  8100.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#324
+scripts/dtc/pylibfdt/libfdt_wrap.c:8151: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8149.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8150.     fdt1 = arg1;
+  8151.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8152.   }
+  8153.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#325
+scripts/dtc/pylibfdt/libfdt_wrap.c:8214: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8212.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8213.     fdt1 = arg1;
+  8214.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8215.   }
+  8216.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#326
+scripts/dtc/pylibfdt/libfdt_wrap.c:8266: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8264.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8265.     fdt1 = arg1;
+  8266.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8267.   }
+  8268.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#327
+scripts/dtc/pylibfdt/libfdt_wrap.c:8318: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8316.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8317.     fdt1 = arg1;
+  8318.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8319.   }
+  8320.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#328
+scripts/dtc/pylibfdt/libfdt_wrap.c:8376: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8374.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8375.     fdt1 = arg1;
+  8376.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8377.   }
+  8378.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#329
+scripts/dtc/pylibfdt/libfdt_wrap.c:8435: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8433.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8434.     fdt1 = arg1;
+  8435.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8436.   }
+  8437.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#330
+scripts/dtc/pylibfdt/libfdt_wrap.c:8479: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8477.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8478.     fdt1 = arg1;
+  8479.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8480.   }
+  8481.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#331
+scripts/dtc/pylibfdt/libfdt_wrap.c:8519: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8517.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8518.     fdt1 = arg1;
+  8519.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8520.   }
+  8521.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#332
+scripts/dtc/pylibfdt/libfdt_wrap.c:8551: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8549.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8550.     fdt1 = arg1;
+  8551.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8552.   }
+  8553.   {
+
+#333
+scripts/dtc/pylibfdt/libfdt_wrap.c:8560: error: Dead Store
+  The value written to &fdt2 (type void const *) is never used.
+  8558.     arg2 = PyByteArray_AsString(swig_obj[1]);
+  8559.     fdt2 = arg2;
+  8560.     fdt2 = fdt2; /* avoid unused variable warning */
+            ^
+  8561.   }
+  8562.   result = (int)fdt_overlay_apply(arg1,arg2);
+
+#334
+scripts/dtc/pylibfdt/libfdt_wrap.c:8593: error: Dead Store
+  The value written to &fdt1 (type void const *) is never used.
+  8591.     arg1 = PyByteArray_AsString(swig_obj[0]);
+  8592.     fdt1 = arg1;
+  8593.     fdt1 = fdt1; /* avoid unused variable warning */
+            ^
+  8594.   }
+  8595.   ecode2 = SWIG_AsVal_int(swig_obj[1], &val2);
+
+#335
+scripts/dtc/pylibfdt/libfdt_wrap.c:8607: error: Dead Store
+  The value written to &fdt3 (type void const *) is never used.
+  8605.     arg3 = PyByteArray_AsString(swig_obj[2]);
+  8606.     fdt3 = arg3;
+  8607.     fdt3 = fdt3; /* avoid unused variable warning */
+            ^
+  8608.   }
+  8609.   ecode4 = SWIG_AsVal_int(swig_obj[3], &val4);
+
+#336
+scripts/dtc/pylibfdt/libfdt_wrap.c:9373: error: Memory Leak
+  memory dynamically allocated at line 9365 by call to `SWIG_Python_NewPackedObj()`, is not freed after the last access at line 9373, column 9.
+  9371.       if (obj) {
+  9372.         PyDict_SetItemString(d, constants[i].name, obj);
+  9373.         Py_DECREF(obj);
+                ^
+  9374.       }
+  9375.     }
+
+Found 337 issues
+                Issue Type(ISSUED_TYPE_ID): #
+                    Dead Store(DEAD_STORE): 196
+  Uninitialized Value(UNINITIALIZED_VALUE): 92
+                  Memory Leak(MEMORY_LEAK): 48
+            Use After Free(USE_AFTER_FREE): 1
