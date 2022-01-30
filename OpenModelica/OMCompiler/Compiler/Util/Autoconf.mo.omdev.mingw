@@ -1,0 +1,47 @@
+encapsulated package Autoconf
+
+  constant Boolean is64Bit = @ISMINGW64@;
+  constant Boolean isNewOMDev = @IS_NEW_OMDEV@;
+
+  constant String bstatic = "-Wl,-Bstatic";
+  constant String bdynamic = "-Wl,-Bdynamic";
+
+  constant String linkType = " -Wl,-B$(OMC_LDFLAGS_LINK_TYPE) " "OMC_LDFLAGS_LINK_TYPE is set in the Makefile, can be overrided when calling make";
+  constant String configureCommandLine = "Manually created Makefiles for OMDev";
+  constant String os = "Windows_NT";
+  constant String make = "make";
+  constant String exeExt = ".exe";
+  constant String dllExt = ".dll";
+  constant String libFortran = if not isNewOMDev then "-lgfortranbegin " else " ";
+  constant String libMsvcrt = if not isNewOMDev then "-lmsvcrt " else " ";
+  constant String ldflags_suitesparse = " -lumfpack -lklu -lcolamd -lbtf -lamd -lsuitesparseconfig";
+  constant String ldflags_sundials = " -lsundials_nvecserial -lsundials_sunmatrixdense -lsundials_sunmatrixsparse" +
+                                     " -lsundials_sunlinsoldense -lsundials_sunlinsolklu -lsundials_sunlinsollapackdense -lsundials_sunlinsolspbcgs -lsundials_sunlinsolspfgmr -lsundials_sunlinsolspgmr -lsundials_sunlinsolsptfqmr -lsundials_sunnonlinsolnewton" +
+                                     " -lsundials_cvode -lsundials_cvodes -lsundials_idas -lsundials_kinsol";
+  constant String ldflags_basic = linkType + "-lomcgc -lregex -ltre -lintl -liconv -lexpat -static-libgcc -luuid -loleaut32 -lole32 -limagehlp -lws2_32 -llis" +
+                                  ldflags_sundials +
+                                  ldflags_suitesparse +
+                                  " -lipopt -lcoinmumps -lpthread -lm " +
+                                  libFortran +
+                                  "-lgfortran -lquadmath -lmingw32 -lgcc_eh -lmoldname -lmingwex " +
+                                  libMsvcrt +
+                                  "-luser32 -lkernel32 -ladvapi32 -lshell32 -lopenblas -lcminpack -Wl,-Bdynamic";
+
+  constant String ldflags_runtime = " -lOpenModelicaRuntimeC" + ldflags_basic;
+  constant String ldflags_runtime_sim = linkType + "-lSimulationRuntimeC -Wl,-Bdynamic " + ldflags_basic + " -lwsock32 " + linkType + " -lstdc++ -Wl,-Bdynamic ";
+  constant String ldflags_runtime_fmu = linkType + "-lregex -ltre -lintl -liconv -static-libgcc -lpthread -lm " +
+                                        libFortran +
+                                        "-lgfortran -lquadmath -lmingw32 -lgcc_eh -lmoldname -lmingwex " +
+                                        libMsvcrt + "-luser32 -lkernel32 -ladvapi32 -lshell32 -limagehlp -lopenblas -lhdf5 -lz -lszip -Wl,-Bdynamic";
+
+  constant String platform = if is64Bit then "WIN64" else "WIN32";
+  constant String pathDelimiter = "/";
+  constant String groupDelimiter = ";";
+
+  constant String corbaLibs = "-L$(OPENMODELICAHOME)/lib/omc -lomniORB420_rt -lomnithread40_rt";
+  constant list<String> systemLibs = {};
+
+  constant String triple = "";
+
+annotation(__OpenModelica_Interface="util");
+end Autoconf;

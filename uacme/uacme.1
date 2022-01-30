@@ -1,0 +1,480 @@
+'\" t
+.\"     Title: uacme
+.\"    Author: [see the "AUTHOR" section]
+.\" Generator: DocBook XSL Stylesheets v1.79.1 <http://docbook.sf.net/>
+.\"      Date: 07/26/2020
+.\"    Manual: User Commands
+.\"    Source: uacme 1.5
+.\"  Language: English
+.\"
+.TH "UACME" "1" "07/26/2020" "uacme 1\&.5" "User Commands"
+.\" -----------------------------------------------------------------
+.\" * Define some portability stuff
+.\" -----------------------------------------------------------------
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.\" http://bugs.debian.org/507673
+.\" http://lists.gnu.org/archive/html/groff/2009-02/msg00013.html
+.\" ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+.ie \n(.g .ds Aq \(aq
+.el       .ds Aq '
+.\" -----------------------------------------------------------------
+.\" * set default formatting
+.\" -----------------------------------------------------------------
+.\" disable hyphenation
+.nh
+.\" disable justification (adjust text to left margin only)
+.ad l
+.\" -----------------------------------------------------------------
+.\" * MAIN CONTENT STARTS HERE *
+.\" -----------------------------------------------------------------
+.SH "NAME"
+uacme \- ACMEv2 client written in plain C code with minimal dependencies
+.SH "SYNOPSIS"
+.sp
+\fBuacme\fR [\fB\-?\fR|\fB\-\-help\fR] [\fB\-a\fR|\fB\-\-acme\-url\fR \fIURL\fR] [\fB\-b\fR|\fB\-\-bits\fR \fIBITS\fR] [\fB\-c\fR|\fB\-\-confdir\fR \fIDIR\fR] [\fB\-d\fR|\fB\-\-days\fR \fIDAYS\fR] [\fB\-f\fR|\fB\-\-force\fR] [\fB\-h\fR|\fB\-\-hook\fR \fIPROGRAM\fR] [\fB\-l\fR|\fB\-\-alternate\fR \fIN\fR] [\fB\-m\fR|\fB\-\-must\-staple\fR] [\fB\-n\fR|\fB\-\-never\-create\fR] [\fB\-o\fR|\fB\-\-no\-ocsp\fR] [\fB\-s\fR|\fB\-\-staging\fR] [\fB\-t\fR|\fB\-\-type\fR \fBRSA\fR|\fBEC\fR] [\fB\-v\fR|\fB\-\-verbose\fR \&...] [\fB\-V\fR|\fB\-\-version\fR] [\fB\-y\fR|\fB\-\-yes\fR] \fBnew\fR [\fIEMAIL\fR] | \fBupdate\fR [\fIEMAIL\fR] | \fBdeactivate\fR | \fBnewkey\fR | \fBissue\fR \fIIDENTIFIER\fR [\fIALTNAME\fR \&...]] | \fBissue\fR \fICSRFILE\fR | \fBrevoke\fR \fICERTFILE\fR [\fICERTKEYFILE\fR]
+.SH "DESCRIPTION"
+.sp
+\fBuacme\fR is a client for the ACMEv2 protocol described in RFC8555, written in plain C code with minimal dependencies (libcurl and one of GnuTLS, OpenSSL or mbedTLS)\&. The ACMEv2 protocol allows a Certificate Authority (https://letsencrypt\&.org is a popular one) and an applicant to automate the process of verification and certificate issuance\&. The protocol also provides facilities for other certificate management functions, such as certificate revocation\&. For more information see https://tools\&.ietf\&.org/html/rfc8555
+.SH "OPTIONS"
+.PP
+\fB\-?, \-\-help\fR
+.RS 4
+Print a brief usage text on stderr and exit\&.
+.RE
+.PP
+\fB\-a, \-\-acme\-url\fR \fIURL\fR
+.RS 4
+ACMEv2 server directory object
+\fIURL\fR\&. If not specified
+\fBuacme\fR
+uses one of the following:
+.PP
+\fIhttps://acme\-v02\&.api\&.letsencrypt\&.org/directory\fR
+.RS 4
+production URL
+.RE
+.PP
+\fIhttps://acme\-staging\-v02\&.api\&.letsencrypt\&.org/directory\fR
+.RS 4
+staging URL (see
+\fB\-s, \-\-staging\fR
+below)
+.RE
+.RE
+.PP
+\fB\-b, \-\-bits\fR \fIBITS\fR
+.RS 4
+key bit length (default 2048 for RSA, 256 for EC)\&. Only applies to newly generated keys\&. RSA key length must be a multiple of 8 between 2048 and 8192\&. EC key length must be either 256 (\fBNID_X9_62_prime256v1\fR
+curve) or 384 (\fBNID_secp384r1\fR
+curve)\&.
+.RE
+.PP
+\fB\-c, \-\-confdir\fR \fICONFDIR\fR
+.RS 4
+Use configuration directory
+\fICONFDIR\fR
+(default
+\fI/etc/ssl/uacme\fR)\&. The structure is as follows (multiple
+\fIIDENTIFIERs\fR
+allowed)
+.PP
+\fICONFDIR/private/key\&.pem\fR
+.RS 4
+ACME account private key
+.RE
+.PP
+\fICONFDIR/private/IDENTIFIER/key\&.pem\fR
+.RS 4
+certificate key for
+\fIIDENTIFIER\fR
+.RE
+.PP
+\fICONFDIR/IDENTIFIER/cert\&.pem\fR
+.RS 4
+certificate for
+\fIIDENTIFIER\fR
+.RE
+.RE
+.PP
+\fB\-d, \-\-days\fR \fIDAYS\fR
+.RS 4
+Do not reissue certificates that are still valid for longer than
+\fIDAYS\fR
+(default 30)\&. See also
+\fB\-o, \-\-no\-ocsp\fR\&.
+.RE
+.PP
+\fB\-f, \-\-force\fR
+.RS 4
+Force certificate reissuance regardless of expiration date\&.
+.RE
+.PP
+\fB\-h, \-\-hook\fR \fIPROGRAM\fR
+.RS 4
+Challenge hook program\&. If not specified
+\fBuacme\fR
+interacts with the user for every ACME challenge, printing information about the challenge type, token and authorization on stderr\&. If specified
+\fBuacme\fR
+executes
+\fIPROGRAM\fR
+(a binary, a shell script or any file that can be executed by the operating system) for every challenge with the following 5 string arguments:
+.PP
+\fIMETHOD\fR
+.RS 4
+one of
+\fBbegin\fR,
+\fBdone\fR
+or
+\fBfailed\fR\&.
+.PP
+\fBbegin\fR
+.RS 4
+is called at the beginning of the challenge\&.
+\fIPROGRAM\fR
+must return 0 to accept it\&. Any other return code declines the challenge\&. Neither
+\fBdone\fR
+nor
+\fBfailed\fR
+method calls are made for declined challenges\&.
+.RE
+.PP
+\fBdone\fR
+.RS 4
+is called upon successful completion of an accepted challenge\&.
+.RE
+.PP
+\fBfailed\fR
+.RS 4
+is called upon failure of an accepted challenge\&.
+.RE
+.RE
+.PP
+\fITYPE\fR
+.RS 4
+challenge type (for example
+\fBdns\-01\fR
+or
+\fBhttp\-01\fR)
+.RE
+.PP
+\fIIDENT\fR
+.RS 4
+The identifier the challenge refers to
+.RE
+.PP
+\fITOKEN\fR
+.RS 4
+The challenge token
+.RE
+.PP
+\fIAUTH\fR
+.RS 4
+The key authorization (for
+\fBdns\-01\fR
+and
+\fBtls\-alpn\-01\fR
+already converted to the base64\-encoded SHA256 digest format)
+.RE
+.RE
+.PP
+\fB\-l, \-\-alternate\fR \fIN\fR
+.RS 4
+According to
+https://tools\&.ietf\&.org/html/rfc8555#section\-7\&.4\&.2
+the server MAY provide one or more additional certificate download URLs, each pointing to an alternative certificate chain starting with the same end\-entity certificate\&. Specifying this option makes
+\fBuacme\fR
+choose the Nth alternate link\&. If the server does not provide it or the download fails,
+\fBuacme\fR
+falls back to the main certificate URL\&.
+.RE
+.PP
+\fB\-m, \-\-must\-staple\fR
+.RS 4
+Request certificates with the RFC7633 Certificate Status Request TLS Feature Extension, informally also known as "OCSP Must\-Staple"\&. This option is ignored when using an externally supplied Certificate Signing Request file (see USAGE below)\&.
+.RE
+.PP
+\fB\-n, \-\-never\-create\fR
+.RS 4
+By default
+\fBuacme\fR
+creates directories/keys if they do not exist\&. When this option is specified
+\fBuacme\fR
+never does so and instead exits with an error if anything required is missing\&.
+.RE
+.PP
+\fB\-o, \-\-no\-ocsp\fR
+.RS 4
+When this flag is
+\fBnot\fR
+specified and the certificate has an Authority Information Access extension with an OCSP server location according to
+https://tools\&.ietf\&.org/html/rfc5280#section\-4\&.2\&.2\&.1
+\fBuacme\fR
+makes an OCSP request to the server; if the certificate is reported as revoked
+\fBuacme\fR
+forces reissuance regardless of the expiration date\&. See also
+\fB\-d, \-\-days\fR\&.
+.RE
+.PP
+\fB\-s, \-\-staging\fR
+.RS 4
+Use Let\(cqs Encrypt staging URL for testing\&. This only works if
+\fB\-a, \-\-acme\-url\fR
+is
+\fBNOT\fR
+specified\&.
+.RE
+.PP
+\fB\-t, \-\-type\fR=\fBRSA\fR | \fBEC\fR
+.RS 4
+Key type, either RSA or EC\&. Only applies to newly generated keys\&. The bit length can be specified with
+\fB\-b, \-\-bits\fR\&.
+.RE
+.PP
+\fB\-v, \-\-verbose\fR
+.RS 4
+By default
+\fBuacme\fR
+only produces output upon errors or when user interaction is required\&. When this option is specified
+\fBuacme\fR
+prints information about what is going on on stderr\&. This option can be specified more than once to increase verbosity\&.
+.RE
+.PP
+\fB\-V, \-\-version\fR
+.RS 4
+Print program version on stderr and exit\&.
+.RE
+.PP
+\fB\-y, \-\-yes\fR
+.RS 4
+Autoaccept ACME server terms (if any) upon new account creation\&.
+.RE
+.SH "USAGE"
+.PP
+\fBuacme\fR [\fIOPTIONS\fR \&...] \fBnew\fR [\fIEMAIL\fR]
+.RS 4
+Create a new ACME account with optional
+\fIEMAIL\fR
+contact\&. If the account private key does not exist at
+\fICONFDIR/private/key\&.pem\fR
+a new key is generated unless
+\fB\-n, \-\-never\-create\fR
+is specified\&. A valid account must be created
+\fBbefore\fR
+any other operation can succeed (with the exception of certificate revocation requests signed by the certificate private key)\&. Any certificate issued by the ACME server is associated with a single account\&. An account can be associated with multiple certificates, subject of course to the rate limits imposed by the ACME server\&.
+.RE
+.PP
+\fBuacme\fR [\fIOPTIONS\fR \&...] \fBupdate\fR [\fIEMAIL\fR]
+.RS 4
+Update the
+\fIEMAIL\fR
+associated with the ACME account corresponding to the account private key\&. If
+\fIEMAIL\fR
+is not specified the account contact email is removed\&.
+.RE
+.PP
+\fBuacme\fR [\fIOPTIONS\fR \&...] \fBdeactivate\fR
+.RS 4
+Deactivate the ACME account corresponding to the account private key\&.
+\fBWARNING\fR
+this action is irreversible\&. Users may wish to do this when the account key is compromised or decommissioned\&. A deactivated account can no longer request certificate issuances and revocations or access resources related to the account\&.
+.RE
+.PP
+\fBuacme\fR [\fIOPTIONS\fR \&...] \fBnewkey\fR
+.RS 4
+Change the ACME account private key\&. If the new account private key does not exist at
+\fICONFDIR/private/newkey\&.pem\fR
+it is generated unless
+\fB\-n, \-\-never\-create\fR
+is specified\&. The new key is then submitted to the server and if the operation succeeds the old key is hardlinked to
+\fICONFDIR/private/key\-TIMESTAMP\&.pem\fR
+before renaming
+\fICONFDIR/private/newkey\&.pem\fR
+to
+\fICONFDIR/private/key\&.pem\fR\&.
+.RE
+.PP
+\fBuacme\fR [\fIOPTIONS\fR \&...] \fBissue\fR \fIIDENTIFIER\fR [\fIALTNAME\fR \&...]
+.RS 4
+Issue a certificate for
+\fIIDENTIFIER\fR
+with zero or more
+\fIALTNAMEs\fR\&. If a certificate is already available at
+\fICONFDIR/IDENTIFIER/cert\&.pem\fR
+for the specified
+\fIIDENTIFIER\fR
+and
+\fIALTNAMEs\fR
+and is still valid for longer than
+\fIDAYS\fR
+no action is taken unless
+\fB\-f, \-\-force\fR
+is specified or
+\fB\-o, \-\-no\-ocsp\fR
+is
+\fBnot\fR
+specified and the certificate is reported as revoked by the OCSP server\&. The new certificate is saved to
+\fICONFDIR/IDENTIFIER/cert\&.pem\fR\&. If the certificate file already exists it is hardlinked to
+\fICONFDIR/IDENTIFIER/cert\-TIMESTAMP\&.pem\fR
+before overwriting\&. The private key for the certificate is loaded from
+\fICONFDIR/private/IDENTIFIER/key\&.pem\fR\&. If no such file exists, a new key is generated unless
+\fB\-n, \-\-never\-create\fR
+is specified\&. Wildcard IDENTIFIERs or ALTNAMEs are dealt with correctly, as long as the ACME server supports them; note that any such wildcards are automatically removed from the configuration subdirectory name: for example a certificate for
+\fI*\&.test\&.com\fR
+is saved to
+\fICONFDIR/test\&.com/cert\&.pem\fR\&. IP address IDENTIFIERs and ALTNAMEs are also supported according to
+https://tools\&.ietf\&.org/html/rfc8738#section\-3
+.RE
+.PP
+\fBuacme\fR [\fIOPTIONS\fR \&...] \fBissue\fR \fICSRFILE\fR
+.RS 4
+Issue a certificate based on a RFC2986 Certificate Signing Request contained in
+\fICSRFILE\fR, which must be in PEM format\&. In this mode of issuance
+\fBuacme\fR
+neither needs nor generates the certificate private key, but it is of course the responsibility of the user to ensure that the CSR is constructed and signed appropriately\&. If a certificate file
+\fICSRBASE\-cert\&.pem\fR
+(where
+\fICSRBASE\fR
+is obtained by stripping the extension, if any, from
+\fICSRFILE\fR) is already available in the same directory containing
+\fICSRFILE\fR, and is still valid for longer than
+\fIDAYS\fR
+no action is taken unless
+\fB\-f, \-\-force\fR
+is specified or
+\fB\-o, \-\-no\-ocsp\fR
+is
+\fBnot\fR
+specified and the certificate is reported as revoked by the OCSP server\&. If the certificate file already exists it is hardlinked to
+\fIBASENAME\-cert\-TIMESTAMP\&.pem\fR
+before overwriting\&. Wildcard identifiers in the CSR are dealt with correctly, as long as the ACME server supports them\&. IP addresses are also supported according to
+https://tools\&.ietf\&.org/html/rfc8738#section\-3
+.RE
+.PP
+\fBuacme\fR [\fIOPTIONS\fR \&...] \fBrevoke\fR \fICERTFILE\fR [\fICERTKEYFILE\fR]
+.RS 4
+Revoke the certificate stored in
+\fICERTFILE\fR\&. The revocation request is signed with the private key of either the certificate, when
+\fICERTKEYFILE\fR
+is specified; or the ACME account associated with the certificate, when only
+\fICERTFILE\fR
+is specified\&. In the first instance the account key and the configuration directory are not required\&. If successful
+\fICERTFILE\fR
+is renamed to
+\fIrevoked\-TIMESTAMP\&.pem\fR\&.
+.RE
+.SH "EXIT STATUS"
+.PP
+\fB0\fR
+.RS 4
+Success
+.RE
+.PP
+\fB1\fR
+.RS 4
+Certificate not reissued because it is still current
+.RE
+.PP
+\fB2\fR
+.RS 4
+Failure (syntax or usage error; configuration error; processing failure; unexpected error)\&.
+.RE
+.SH "EXAMPLE HOOK SCRIPT"
+.sp
+The \fIuacme\&.sh\fR hook script included in the distribution can be used to automate the certificate issuance with \fIhttp\-01\fR challenges, provided a web server for the domain being validated runs on the same machine, with webroot at /var/www
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+#!/bin/sh
+CHALLENGE_PATH=/var/www/\&.well\-known/acme\-challenge
+ARGS=5
+E_BADARGS=85
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+if test $# \-ne "$ARGS"
+then
+    echo "Usage: $(basename "$0") method type ident token auth" 1>&2
+    exit $E_BADARGS
+fi
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+METHOD=$1
+TYPE=$2
+IDENT=$3
+TOKEN=$4
+AUTH=$5
+.fi
+.if n \{\
+.RE
+.\}
+.sp
+.if n \{\
+.RS 4
+.\}
+.nf
+case "$METHOD" in
+    "begin")
+        case "$TYPE" in
+            http\-01)
+                echo \-n "${AUTH}" > "${CHALLENGE_PATH}/${TOKEN}"
+                exit $?
+                ;;
+            *)
+                exit 1
+                ;;
+        esac
+        ;;
+    "done"|"failed")
+        case "$TYPE" in
+            http\-01)
+                rm "${CHALLENGE_PATH}/${TOKEN}"
+                exit $?
+                ;;
+            *)
+                exit 1
+                ;;
+        esac
+        ;;
+    *)
+        echo "$0: invalid method" 1>&2
+        exit 1
+esac
+.fi
+.if n \{\
+.RE
+.\}
+.SH "BUGS"
+.sp
+If you believe you have found a bug, please create a new issue at https://github\&.com/ndilieto/uacme/issues with any applicable information\&.
+.SH "SEE ALSO"
+.sp
+\fBualpn\fR(1)
+.SH "AUTHOR"
+.sp
+\fBuacme\fR was written by Nicola Di Lieto
+.SH "COPYRIGHT"
+.sp
+Copyright \(co 2019,2020 Nicola Di Lieto <nicola\&.dilieto@gmail\&.com>
+.sp
+This file is part of \fBuacme\fR\&.
+.sp
+\fBuacme\fR is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version\&.
+.sp
+\fBuacme\fR is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE\&. See the GNU General Public License for more details\&.
+.sp
+You should have received a copy of the GNU General Public License along with this program\&. If not, see http://www\&.gnu\&.org/licenses/\&.

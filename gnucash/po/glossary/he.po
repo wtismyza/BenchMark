@@ -1,0 +1,827 @@
+# Glossary of terms in GnuCash
+# Copyright (C) 2008 Free Software Foundation, Inc.
+# Ori Hoch <ori@uumpa.com>, 2008
+# http://www.uumpa.com/gnucash-he/
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: gnucash 3.6\n"
+"Report-Msgid-Bugs-To: https://bugs.gnucash.org/enter_bug.cgi?"
+"product=GnuCash&component=Translations\n"
+"POT-Creation-Date: 2020-12-06 18:14+0100\n"
+"PO-Revision-Date: 2019-08-12 17:55+0300\n"
+"Last-Translator: Avi Markovitz <avi.markovitz@gmail.com>\n"
+"Language-Team: HE\n"
+"Language: he\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#. "English Definition (Dear translator: This file will never be visible to the user! It should only serve as a tool for you, the translator. Nothing more.)"
+msgid "Term (Dear translator: This file will never be visible to the user!)"
+msgstr "מונח"
+
+#. "A detailed record of money spent and received"
+msgid "account"
+msgstr "חשבון"
+
+#. "An alphanumerical key of an account in GnuCash, not at the bank, can be used to sort. Some templates provide them or the user can enter them."
+msgid "account code"
+msgstr "קוד חשבון"
+
+#. "the tree view of all accounts"
+msgid "account hierarchy"
+msgstr "תרשים חשבונות"
+
+#. "-"
+msgid "account name"
+msgstr "שם חשבון"
+
+#. "The left side of the balance sheet in T account form shows the application of funds in form of assets. Because it contains only assets use assets directly. Complement: Passive. See also: Report Form"
+msgid "account type: Active"
+msgstr "סוג חשבון: פעיל"
+
+#. "A thing, esp. owned by a person or company, that has value and can be used or sold to pay debts. Dependent on the context you might use 'account type: Active' instead."
+msgid "account type: Asset"
+msgstr "סוג חשבון: נכס"
+
+#. "in fact: 'Active & Passive', group aka 'Balance Sheet accounts'; complement of 'Profit & Loss'"
+msgid "account type: Assets & Liabilities"
+msgstr "סוג חשבון: נכסים והתחיבויות"
+
+#. "(esp. US) (Brit = current account) a bank account from which money can be withdrawn without previous notice"
+msgid "account type: checking"
+msgstr "סוג חשבון: עובר ושב"
+
+#. "-"
+msgid "account type: currency"
+msgstr "סוג חשבון: מטבע"
+
+#. "see: Equity, but see also 'account type: Passive'"
+msgid "account type: Equity"
+msgstr "סוג חשבון: הון"
+
+#. "-"
+msgid "account type: Expense"
+msgstr "סוג חשבון: הוצאות"
+
+#. "-"
+msgid "account type: Income"
+msgstr "סוג חשבון: הכנסות"
+
+#. "A debt, a financial obligation, but see also 'account type: Passive'"
+msgid "account type: Liability"
+msgstr "סוג חשבון: הצחיבויות"
+
+#. "-"
+msgid "account type: money-market"
+msgstr "סוג חשבון: שוק ההון"
+
+#. "-"
+msgid "account type: Mutual fund"
+msgstr "סוג חשבון: קרן נאמנות"
+
+#. "The right side of the balance sheet in T account form shows the source of funds and contains equity & liability. While not common in english, most languages would translate 'equity & liability' with 'passive'. Complement: Active. See also: Report Form Implementation: https://bugs.gnucash.org/show_bug.cgi?id=421766"
+msgid "account type: Passive"
+msgstr "סוג חשבון: סביל"
+
+#. "Group of accounts tracking your success, complement of 'Assets & Liabilities'"
+msgid "account type: Profit & Loss"
+msgstr "סוג חשבון: רווח והפסד"
+
+#. "1. (US) any type of account that earns interest 2. (Brit) any type of bank account that earns a higher level of interest than a current account or deposit account"
+msgid "account type: saving"
+msgstr "סוג חשבון: חיסכון"
+
+#. "-"
+msgid "account type: Stock"
+msgstr "סוג חשבון: נירות ערך"
+
+#. "This account type (new in gnucash-2.4.0) is used when exchanging or trading amounts from one currency into another"
+msgid "account type: trading"
+msgstr "סוג חשבון: המרה"
+
+#. "-"
+msgid "account: parent account"
+msgstr "חשבון: חשבון אב"
+
+#. "-"
+msgid "account: subaccount"
+msgstr "חשבון: חשבון משנה"
+
+#. "-"
+msgid "account: top level account"
+msgstr "חשבון: רמה עליונה"
+
+#. "The process of doing something that caused a transaction to happen"
+msgid "Action (register)"
+msgstr "פעולה (יומן)"
+
+#. "Automated teller machine"
+msgid "action: ATM"
+msgstr "פעולה: כספומט"
+
+#. "Transaction was an auto deposit"
+msgid "action: autoDep"
+msgstr "פעולה: הפקדה אוטומטית"
+
+#. "-"
+msgid "action: buy"
+msgstr "פעולה: קניה"
+
+#. "-"
+msgid "action: deposit"
+msgstr "פעולה: הפקדה"
+
+#. "When people can automatically deduct money straight from your account. The reverse of Direct Deposit."
+msgid "action: direct debit"
+msgstr "פעולה: חיוב ישיר"
+
+#. "transaction is a distribution (???)"
+msgid "action: dist"
+msgstr "פעולה: הפצה"
+
+#. "transaction is a dividend"
+msgid "action: div"
+msgstr "פעולה: דיבידנד"
+
+#. "-"
+msgid "action: fee"
+msgstr "פעולה: עמלה"
+
+#. "transaction comes from interest"
+msgid "action: int"
+msgstr "פעולה: ריבית"
+
+#. "-"
+msgid "action: loan"
+msgstr "פעולה: הלוואה"
+
+#. "see: payment 1."
+msgid "action: payment"
+msgstr "פעולה: תשלום"
+
+#. "Point of sale"
+msgid "action: POS"
+msgstr "פעולה: נקודת מכירה"
+
+#. "-"
+msgid "action: rebate"
+msgstr "זיפעולה: החזר"
+
+#. "-"
+msgid "action: sell"
+msgstr "פעולה: מכירה"
+
+#. "-"
+msgid "action: Teller"
+msgstr "פעולה: כספר"
+
+#. "see: transfer 2. (=credit transfer)"
+msgid "action: transfer"
+msgstr "פעולה: העברה"
+
+#. "-"
+msgid "action: wire"
+msgstr "פעולה: מברק"
+
+#. "-"
+msgid "action: withdraw"
+msgstr "פעולה: משיכה"
+
+#. "As in: payable aging, or: receivable aging. The aging report categorizes payables or receivables based on time buckets. This gives an overview of which bills or invoices are overdue at which time in the future. "
+msgid "aging"
+msgstr ""
+
+#. "A sum of money"
+msgid "amount"
+msgstr "סכום"
+
+#. "The result of adding several amounts together and then dividing this total by the number of amounts"
+msgid "average"
+msgstr "ממוצע"
+
+#. "The amount of money that is in one's account"
+msgid "balance (noun)"
+msgstr "מאזן (שם עצם)"
+
+#. "Balance brought forward - usually the first entry of an account statement containing the 'balance c/f' of the previous billing period or page"
+#, fuzzy
+msgid "balance b/f"
+msgstr "לאזן, ל"
+
+#. "Balance carried forward - usually the last entry of an account statement to be used as 'balance b/f' on the next billing period or page"
+#, fuzzy
+msgid "balance c/f"
+msgstr "לאזן, ל"
+
+#. "A written record of money received and paid out, showing the difference between the two total amounts"
+msgid "balance sheet"
+msgstr "מאזן"
+
+#. "To arrange for income and spending to be equal"
+msgid "balance, to"
+msgstr "לאזן, ל"
+
+#. "-"
+msgid "bank"
+msgstr "בנק"
+
+#. "A written statement of money owed for goods or services supplied. In Gnucash, a 'bill' is a statement that we received (from a vendor), whereas an 'invoice' is one that we sent out (to a customer)."
+msgid "bill"
+msgstr "הודעת חיוב"
+
+#. "see invoice owner"
+msgid "bill owner"
+msgstr "בעל החיוב"
+
+#. "Conditions on paying a bill. Both an invoice and a bill have billing terms. For example, you can have 'terms' of 'Net-30', where the bill is due in full in 30 days."
+msgid "billing terms"
+msgstr "תנאי תשלום"
+
+#. "The dataset that encapsulates all the collections of entities (accounts etc.) in gnucash. The written records of the financial affairs of a business."
+msgid "Book"
+msgstr "ספרים"
+
+#. "Completing the records of financial affairs for a specific time period, e.g. at the end of the year."
+msgid "book closing"
+msgstr "סגירת ספרים"
+
+#. "An estimate or plan of the money available to somebody and how it will be spent over a period of time."
+msgid "Budget"
+msgstr "תקציב"
+
+#. "-"
+msgid "business (adjective)"
+msgstr "עסקי (שם תואר)"
+
+#. "as Menu Item: Headline for features that are related to small business accounting"
+msgid "business (noun)"
+msgstr "עסק (שם עסק)"
+
+#. "Profits made from the sale of investments or property"
+msgid "capital gains"
+msgstr "רווחי הון"
+
+#. "Distinguishing the uppercase and lowercase letters"
+msgid "case sensitive"
+msgstr "תלוי רישיות"
+
+#. "Money in coins or notes"
+msgid "cash"
+msgstr "מזומן"
+
+#. "(esp. US) (= cheque) A special printed form on which one writes an order to a bank to pay a sum of money from one's account to another person"
+msgid "check"
+msgstr "המחאה"
+
+#. "To repair unbalanced transactions and orphan splits in an account tree. Any transactions that have debits != credits will get a balancing split added (pointing to a special new account called 'Imbalance'). Any splits that do not have accounts are put into another special account called 'Orphan'. Formerly known as 'to scrub'."
+msgid "check and repair, to"
+msgstr "בדיקה ותיקון, ל"
+
+#. "To end an application's relationship with an open file so that the application will no longer be able to access the file without opening it again. "
+msgid "close, to"
+msgstr "סגירה, ל"
+
+#. "An article that is bought and sold. The most general term of what an account keeps track of, e.g. a currency or a stock."
+msgid "commodity"
+msgstr "סחורה"
+
+#. "e.g. NASDAQ"
+msgid "commodity listing"
+msgstr "בורסה"
+
+#. "the smallest amount of a commodity that's traded (e.g. 1/100 for USD, 1 for most stocks)"
+msgid "commodity option: fraction"
+msgstr "אפשרות סחורה: שבר"
+
+#. "e.g. USD, DEM"
+msgid "commodity option: Symbol"
+msgstr "אפשרות סחורה: סמל"
+
+#. "interest which is earned on both the initial deposit and on any interest that has already been earned but left on deposit."
+msgid "compound interests"
+msgstr "ריבית דריבית"
+
+#. "(a) A sum of money paid into an account. (b) A record of such a payment. (c) The state of having money in one's bank account."
+msgid "Credit (column in register)"
+msgstr "זכות (עמודה ביומן)"
+
+#. "-"
+msgid "Credit Card"
+msgstr "כרטיס אשראי"
+
+#. "A transfer of money direct from one bank account to another, without using a cheque"
+msgid "credit transfer"
+msgstr "העברה בנקאית"
+
+#. "A document that you give to a client that says you owe money to the client, i.e. the opposite of an invoice"
+msgid "credit note"
+msgstr "הודעת זיכוי"
+
+#. "The system of money used in a country"
+msgid "currency"
+msgstr "מטבע"
+
+#. "Custom print format (i.e. according to the user's wishes) as opposed to a template choice."
+msgid "Custom"
+msgstr "מותאם אישית"
+
+#. "The backend where the data is stored."
+msgid "database"
+msgstr "מסד נתונים"
+
+#. "A specific numbered day of the month"
+msgid "Date"
+msgstr "תאריך"
+
+#. "DD/MM/YY or MM/DD/YY or something else"
+msgid "date format"
+msgstr "מבנה התאריך"
+
+#. "A range in time that is delimited by two distinct dates."
+msgid "date range"
+msgstr "טווח תאריכים"
+
+#. "(a) A written note in an account of a sum owed or paid out. (b) A sum withdrawn from an account."
+msgid "Debit (column in register)"
+msgstr "חובה (עמודה ביומן)"
+
+#. "Each option has a default setting that it is shipped with, until the user changes the setting."
+msgid "default"
+msgstr "ברירת מחדל"
+
+#. "see credit"
+msgid "deposit (in the reconcile dialog)"
+msgstr "הפקדה"
+
+#. "The process of something becoming less valuable"
+msgid "depreciation"
+msgstr "פחת"
+
+#. "1. One textfield per transaction. The text in it should describe what the transaction was about. A short descriptive phrase (up to 40 chars) 2. One textfield per account. It is intended to be a longer, 1-5 sentence description of what this account is all about."
+msgid "Description (column in register)"
+msgstr "תיאור"
+
+#. "Reductions to a basic price of goods or services. Your language might distinguish between discounts dealing with payments (billing terms) and others (invoice)."
+msgid "discount"
+msgstr "הנחה"
+
+#. "Important Buzzword :)"
+msgid "double entry"
+msgstr "הכנסה כפולה"
+
+#. "Transactions or bills/invoices can contain a document link which links either to some file on the local disk or to some arbitrary URL."
+msgid "document link"
+msgstr ""
+
+#. "a person who works for somebody or a company in return for wages"
+msgid "employee"
+msgstr "עובד"
+
+#. "1. The money value of a property after all charges on it have been paid. Equity isn't debt, it's a representation of long-term capital (So combining it with liability isn't really very meaningful, except in the balance sheet. 2. (a) The value of the shares issued by  a company. (b) Ordinary stocks and shares that carry no fixed interest."
+msgid "equity"
+msgstr "הון עצמי"
+
+#. "Report that ... FIXME: Add description."
+msgid "equity statement"
+msgstr "תדפיס הון"
+
+#. "A trusted third party that holds a payment or deposit until a transaction is completed. In the US, many mortgage companies set up an escrow account when you get a mortgage.  You pay into the account every month and they disburse amounts out of the escrow to pay for hazard insurance and property taxes. So they are holding funds 'in escrow' to complete the transactions (paying insurance and taxes)."
+msgid "escrow (account)"
+msgstr "חשבון נאמנות"
+
+#. "The relation in value between the money used in different countries"
+msgid "exchange rate"
+msgstr "שער חליפין"
+
+#. "in the account creation dialog??"
+msgid "field"
+msgstr "שדה"
+
+#. "Any piece of information (text, graphics, executable) put together and given a name. All the information you have on the hard drive is arranged as a collection of  files."
+msgid "file"
+msgstr "קובץ"
+
+#. "-"
+msgid "file type"
+msgstr "סוג קובץ"
+
+#. "-"
+msgid "financial calculator: interest rate"
+msgstr "מחשבון פיננסי: שער ריבית"
+
+#. "see: payment"
+msgid "financial calculator: payments"
+msgstr "מחשבון פיננסי: תשלומים"
+
+#. "An increase in wealth; profit; advantage (See also: capital gains)"
+msgid "gain"
+msgstr "רווח"
+
+#. "Name of an automatically created account to get imbalanced transactions back in balance"
+msgid "imbalance"
+msgstr "לא מאוזן"
+
+#. "Process of extracting data from a non-Gnucash format into a Gnucash file. E.g. QIF Import."
+msgid "import"
+msgstr "ייבוא"
+
+#. "Report that ... FIXME: add description. This report used to be called the 'Profit & Loss', but it was renamed on 2004-07-13."
+msgid "income statement"
+msgstr "תדפיס הכנסות"
+
+#. "Money charged for borrowing money, or paid to somebody who invests money"
+msgid "interest"
+msgstr "ריבית"
+
+#. "A list of goods sold or services provided together with the prices charged; see also: a bill. In Gnucash, an 'invoice' is a statement that we sent out (to a customer), whereas a 'bill' is one that we received (from a vendor)."
+msgid "invoice"
+msgstr "קבלה"
+
+#. "In business accounting: Jobs are a mechanism by which you can group multiple invoices or bills that belong to the same customer or vendor. The job describes a (larger) piece of work or a task undertaken on order, for which one or many invoices or bills will be issued."
+msgid "job"
+msgstr "ריכוז"
+
+#. "A book in which a bank, business firm, etc. records its financial accounts"
+msgid "ledger"
+msgstr "ספר חשבונות"
+
+#. "The heading for the right side of the balance sheet. See also: Equity."
+msgid "liabilities/equity"
+msgstr "התחייבויות/הון"
+
+#. "A sum of money that is lent (by a bank), see also: financial calculator, Mortgage"
+msgid "loan"
+msgstr "הלוואה"
+
+#. "Annual Percentage Rate, includes in contrast to the Nominal Rate some of the various costs to obtain a loan."
+#, fuzzy
+#| msgid "loan"
+msgid "loan: APR"
+msgstr "הלוואה"
+
+#. "The money lost in business activity"
+msgid "loss"
+msgstr "הפסד"
+
+#. "name of an automatically created account"
+msgid "Lost Accounts"
+msgstr "חשבונות אבודים"
+
+#. "A particular collection of items that were bought in one transaction. A lot is typically formed when the item is bought, and is closed when the item is sold out. Needed e.g. for U.S. tax purposes."
+msgid "Lot"
+msgstr "דבוקה"
+
+#. "Combine two books into one (see book)."
+msgid "merge, to"
+msgstr "לאחד"
+
+#. "The thing that the scatter plot uses to mark each data point"
+msgid "marker"
+msgstr "סמן"
+
+#. "1. Some text annotation, but this meaning isn't used inside gnucash. 2. In the Customer summary report: The ratio of profit vs. sales, i.e. the profit amount divided by the sales amount, shown in percent."
+msgid "markup"
+msgstr "מרווח"
+
+#. "The way how more than one window is displayed in GnuCash at the same time. MDI = Multiple Document Interface."
+msgid "MDI modus"
+msgstr "מנגנון הצגת חלונות מרובים"
+
+#. "One textfield per split that should help you remember what this split was about."
+msgid "Memo"
+msgstr "תזכיר"
+
+#. "(a) An agreement by which money is lent by a bank for buying a house or other property, the property being the security. (b) A sum of money lent in this way."
+msgid "Mortgage"
+msgstr "משכנתה"
+
+#. "Adjustable Rate Mortgage"
+#, fuzzy
+#| msgid "Mortgage"
+msgid "mortgage: ARM"
+msgstr "משכנתה"
+
+#. "Fixed Rate Mortgage"
+#, fuzzy
+#| msgid "Mortgage"
+msgid "mortgage: FRM"
+msgstr "משכנתה"
+
+#. "e.g. USD, DEM, see Currency."
+msgid "national currency"
+msgstr "מטבע לאומי"
+
+#. "(of money) remaining when nothing more is to be taken away"
+msgid "net"
+msgstr "נטו"
+
+#. "net total of all assets"
+msgid "net assets"
+msgstr "נכסים נטו"
+
+#. "The total income minus the total expenses of a given time period."
+msgid "net profit"
+msgstr "רווח נקי"
+
+#. "Your net worth is your assets minus your liabilities. If your accounts are balanced, your net worth should equal your equity plus your net profit."
+msgid "net worth"
+msgstr "ערך נקי"
+
+#. "One textfield per transaction that can hold explanatory text about the transaction."
+msgid "notes (register)"
+msgstr "רשימות"
+
+#. "Abbreviation for: number; Field in a transaction. If this transaction was done by check, then the check number should be noted in this field."
+msgid "Num (column in register)"
+msgstr "מס'"
+
+#. "to make accessible"
+msgid "open, to"
+msgstr "לפתוח"
+
+#. "If an account starts with a non-zero balance, then this amount is called the opening balance."
+msgid "opening balance"
+msgstr "מאזן פתיחה"
+
+#. "A menu choice in the graphical user interface that allows the user to specify how the application will act each time it is used. "
+msgid "options"
+msgstr "אפשרויות"
+
+#. "Watch out: Although this word exists in gnucash program code, all that program code in gnucash is currently not activated. In the future, it will be used in business accounting as follows: A particular request to make or supply goods, but belonging to a (larger) job. Such a request can come from a customer or be sent to a vendor. An order will probably generate one invoice or bill."
+msgid "order"
+msgstr "הזמנה"
+
+#. "Name of an automatically created account that holds splits that have no account."
+msgid "orphan"
+msgstr "יתום"
+
+#. "The customer to (or employee or vendor from) which this invoice is sent - or short your business partner."
+msgid "owner (of bill, invoice or expense voucher)"
+msgstr "בעלים (של חיוב, חשבונית או שובר תשלום)"
+
+#. "A secret phrase that one needs to know in order to get access to a user account "
+msgid "passphrase"
+msgstr "סיסמה"
+
+#. "An amount that must be paid / An amount for which money has not yet been received"
+msgid "Payables/Receivables"
+msgstr "זכאים/חייבים"
+
+#. "A person to whom sth is paid"
+msgid "payee"
+msgstr "מוטב"
+
+#. "A person who pays or who has to pay for sth"
+msgid "payer"
+msgstr "משלם"
+
+#. "1. The action of paying sb/sth or of being paid. 2. A sum of money paid."
+msgid "payment"
+msgstr "תשלום"
+
+#. "An account where no transactions may be posted to; transactions can only be posted to subaccounts of this account, so this account serves as a placeholder in the hierarchy"
+msgid "placeholder"
+msgstr "שומר מקום"
+
+#. "A set of investments owned by a person"
+msgid "portfolio"
+msgstr "תיק השקעות"
+
+#. "Register invoice, voucher in account register"
+msgid "post, to"
+msgstr "רישום, ל"
+
+#. "A menu choice in many graphical user interface applications that allows the user to specify how the application will act each time it is used. "
+msgid "preferences"
+msgstr "מאפיינים"
+
+#. "Loan repayment calculator: your payments are split in interests payment and principal payment"
+msgid "principal payment"
+msgstr "תשלום קרן"
+
+#. "An amount of money for which sth may be bought or sold"
+msgid "price (in a split)"
+msgstr "מחיר (בפיצול מניות)"
+
+#. "An ask is an offer to sell, and the price you want to sell at."
+msgid "price type: ask"
+msgstr "סוג מחיר: מכירה"
+
+#. "A bid is an offer to buy, and the price you want to buy at."
+msgid "price type: bid"
+msgstr "סוג מחיר: קניה"
+
+#. "online quotes (rather: quotation!?) A statement of the current price of stocks or commodities"
+msgid "price: quotes"
+msgstr "מחיר: שער"
+
+#. "Money gained in business, esp. the difference between the amount earned (sales) and the amount spent (expenses/cost): Profit is sales minus expenses/cost."
+msgid "profit"
+msgstr "רווח"
+
+#. "OBSOLETE. This report was renamed to 'income statement' on 2004-07-13. Old definition: A list that shows the amount of money spent compared with the amount earned by a business in a particular period"
+msgid "Profit & Loss"
+msgstr "רווח והפסד"
+
+#. "-"
+msgid "quick-fill"
+msgstr "השלמה מהירה"
+
+#. "-"
+msgid "rebalance, to (a transaction)"
+msgstr "איזון מחדש"
+
+#. "reconcile an account, a reconciled split. To find a way to make the bank's account statement agree with the user's recorded transactions in an account."
+msgid "reconcile, to"
+msgstr "התאמה, ל"
+
+#. "-"
+msgid "record keeping"
+msgstr "שמירת מסמכים"
+
+#. "A list of items; a book containing such a list"
+msgid "register"
+msgstr "יומן"
+
+#. "A transaction that is divided into two or more parts"
+msgid "register entry: split transaction"
+msgstr "רישום יומן: פיצול תנועה"
+
+#. "-"
+msgid "register entry: stock split"
+msgstr "רישום יומן: פיצול מניות"
+
+#. "one form of register"
+msgid "register: auto-split ledger"
+msgstr "יומן: כרטסת פיצול אוטומטי"
+
+#. "another form of register"
+msgid "register: basic ledger"
+msgstr "יומן: כרטסת בסיסית"
+
+#. "another form of register"
+msgid "register: general ledger"
+msgstr "יומן: כרטסת חשבונות"
+
+#. "another form of register"
+msgid "register: transaction journal"
+msgstr "יומן: יומן תנועות"
+
+#. "reload the current document"
+msgid "reload, to"
+msgstr "טעינה מחודשת, ל"
+
+#. "aka 'two-sided form' is in Europe often used for the balance sheet. Complement: report form: Vertical Form"
+msgid "report form: T Account Form"
+msgstr "טופס דוח: טופס חשבון טי"
+
+#. "aka 'running form' is in english speaking countries usually used for the balance sheet in one column. Complement: report form: T Account Form"
+msgid "report form: Vertical Form"
+msgstr "טופס דוח: חשבון אנכי"
+
+#. "name of an equity account (?); to be distinguished from the opening balance."
+msgid "Retained Earnings"
+msgstr "Retained Earnings"
+
+#. "Create a new transaction that is the inverse of the old one.  When you add the two together they completely cancel out.  Accounts use this instead of voiding transactions, usually because the prior month has been closed and can no longer be changed, or the entire accounting system is 'write only'."
+msgid "reverse transaction, to (Action in the register)"
+msgstr "תנועת היפוך, ל (פעולה ביומן, סטורנו)"
+
+#. "(In the customer summary report) The total amount of money received because something was sold."
+msgid "sales"
+msgstr "מכירות"
+
+#. "To write data (typically a file) to a storage medium, such as a disk or tape."
+msgid "save, to (to a file)"
+msgstr "שמירה, ל (לקובץ)"
+
+#. "A transaction or reminder of a transaction that can be automatically executed at a specific time. It can be executed either once, or several times at regular intervals."
+msgid "Scheduled Transaction"
+msgstr "תנועה מחזורית"
+
+#. "DEPRECATED. To repair unbalanced transactions and orphan splits in an account tree. Any transactions that have debits != credits will get a balancing split added (pointing to a special new account called 'Imbalance'). Any splits that do not have accounts are put into another special account called 'Orphan'. Deprecated - use the term 'to check and repair' now."
+msgid "scrub, to"
+msgstr "ניקוי"
+
+#. "A document or certificate showing who owns shares"
+msgid "security"
+msgstr "בטוחה"
+
+#. "-"
+msgid "Share Balance (register)"
+msgstr "איזון מניות (יומן)"
+
+#. "Any of the equal parts into which the money of a business company is divided, giving the holder a right to a portion of the profits"
+msgid "shares"
+msgstr "מניות"
+
+#. "(often: of a quote) A place from which something comes or is obtained."
+msgid "source"
+msgstr "מקור:"
+
+#. "One of the two or several parts a transaction is divided into"
+msgid "split"
+msgstr "פיצול"
+
+#. "This sets the particular design or shape of a report."
+msgid "style sheet"
+msgstr "גיליון סגנון"
+
+#. "The total of a set of figures that are part of a larger group of figures"
+msgid "subtotal"
+msgstr "סכום ביניים"
+
+#. "On the government's tax forms, the tax code identifies the given line or place on the form where certain amounts must be specified according to the current country's legislation"
+msgid "tax code"
+msgstr "קוד מס"
+
+#. "field of an account"
+msgid "tax info"
+msgstr "מידע מס"
+
+#. "if you create a new e.g. style sheet, you can start from a template"
+msgid "template"
+msgstr "תבנית"
+
+#. "see: date range"
+msgid "time period"
+msgstr "תקופת זמן"
+
+#. "as abbreviation for Total"
+msgid "Tot"
+msgstr "סה\"כ"
+
+#. "The full number or amount: total of some balances, of any account's running balance etc."
+msgid "total"
+msgstr "סך הכל"
+
+#. "A piece of business done; the transfer of money from one account to one or more other accounts. (see also: Scheduled Transaction)"
+msgid "transaction"
+msgstr "תנועה"
+
+#. "A transaction whose amount has actually been moved. The word comes from checks: a check is issued, but several steps have to be done until the amount is actually retrieved from the bank account, which is the point in time where that transaction (check) gets cleared."
+msgid "transaction state: cleared"
+msgstr "נוקה"
+
+#. "-"
+msgid "transaction state: frozen"
+msgstr "הוקפא"
+
+#. "A transaction that was reconciled with the bank's statement."
+msgid "transaction state: reconciled"
+msgstr "אושר"
+
+#. "A transaction that is void i.e. not valid (anymore)."
+msgid "transaction state: voided"
+msgstr "שגוי"
+
+#. "1. The action of transferring sth. 2. see: credit transfer"
+msgid "transfer (noun)"
+msgstr "העברה (שם עצם)"
+
+#. "The account where an amount is transferred to"
+msgid "transfer account"
+msgstr "חשבון נגדי"
+
+#. "To move money from one account to another. Will create a transaction."
+msgid "transfer, to (register toolbar)"
+msgstr "העברה, ל (סרגל כלים ביומן)"
+
+#. "The trial balance is a worksheet on which you list all your general ledger accounts and their debit or credit balance. It is a tool that is used to alert you to errors in your books. The total debits must equal the total credits. If they don't equal, you know you have an error that must be tracked down."
+msgid "trial balance (report)"
+msgstr "מאזן בוחן (דוח)"
+
+#. "A class or things that have characteristics in common; type of an account, of a commodity etc."
+msgid "type"
+msgstr "סוג"
+
+#. "A fixed amount or number used as a standard of measurement; e.g. millimeters, inch; for absolute positioning in the custom check format."
+msgid "units"
+msgstr "יחידות"
+
+#. "-"
+msgid "URL"
+msgstr "כתובת אינטרנט (‏‪URL‬‏)‏"
+
+#. "The worth of sth in terms of money or other commodities for which it can be exchanged"
+msgid "value (in a split)"
+msgstr "ערך (בפיצול)"
+
+#. "In small business accounting: A person or company that sells items and is supplying goods"
+msgid "vendor"
+msgstr "ספק"
+
+#. "The terms 'Voucher' and 'Expense Voucher' are used interchangeably in gnucash. The 'Expense Voucher' is also a bit of a misnomer -- it's more like an 'Expense Report' in gnucash.  The phrase is meant to be a list of expenses incurred by an employee for which the company will reminburse them."
+msgid "voucher"
+msgstr "שובר"
+
+#. "see debit"
+msgid "withdraw (in the reconcile dialog)"
+msgstr "משיכה (בתיבת דו שיח התאמות)"
+
+#, fuzzy
+#~ msgid "invoice owner"
+#~ msgstr "קבלה"

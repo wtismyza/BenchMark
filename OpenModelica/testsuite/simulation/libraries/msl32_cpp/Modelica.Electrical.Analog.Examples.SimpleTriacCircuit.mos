@@ -1,0 +1,37 @@
+// name:     Modelica.Electrical.Analog.Examples.SimpleTriacCircuit
+// keywords: simulation MSL Examples
+// status: correct
+// cflags: -d=-newInst
+//
+// Simulation Results
+// Modelica Standard Library
+//
+
+runScript("../common/ModelTestingDefaults.mos"); getErrorString();
+
+modelTestingType := OpenModelicaModelTesting.Kind.Compilation;
+modelName := $TypeName(Modelica.Electrical.Analog.Examples.SimpleTriacCircuit);
+compareVars :=
+{
+   "L.i",
+   "simpleTriac.thyristor.vControl",
+   "simpleTriac.thyristor1.vControl"
+};
+
+simulationRuntime := OpenModelicaModelTesting.SimulationRuntime.Cpp;
+
+runScript(modelTesting);getErrorString();
+
+// Result:
+// "true
+// "
+// ""
+// OpenModelicaModelTesting.Kind.Compilation
+// Modelica.Electrical.Analog.Examples.SimpleTriacCircuit
+// {"L.i","simpleTriac.thyristor.vControl","simpleTriac.thyristor1.vControl"}
+// OpenModelicaModelTesting.SimulationRuntime.Cpp
+// Compilation succeeded
+// "true
+// "
+// ""
+// endResult

@@ -1,0 +1,215 @@
+############################################################
+          GnuCash README file.
+
+The current stable series is GnuCash 4.x.
+------------------------------------------------------------
+
+##################
+Table of Contents:
+------------------
+
+  - Overview
+  - Dependencies
+  - Invocation/running
+  - Internationalization
+  - Building & Installing
+  - Supported Platforms
+  - Additional Download Sites
+  - Getting the Source via Git
+  - Developing GnuCash
+
+########
+Overview
+--------
+
+GnuCash is a personal and small business double entry accounting application.
+
+Home Page:
+https://www.gnucash.org/
+
+Wiki:
+https://wiki.gnucash.org/wiki/GnuCash
+
+Precompiled binaries:
+https://www.gnucash.org/download
+
+############
+Dependencies
+------------
+
+Please see README.dependencies for current build dependencies.
+
+The optional online stock and currency price retrieval feature requires Perl.
+This is generally already installed on Gnu/Linux and *BSD, and MacOS.
+
+In addition, some perl modules need to be installed. You can run the
+script 'gnc-fq-update' as root to obtain the latest versions of
+required packages.
+
+Microsoft Windows users can use the "Install Online Quotes" program in the
+Start menu's Gnucash group; it will install perl and all of the required
+modules more-or-less automatically. MacOS users will find "Update Finance Quote"
+in the distribution disk image; it will automate running gnc-fq-update for you.
+
+#######
+Running
+-------
+
+For GnuCash invocation details, see the manpage in doc/gnucash.1.
+You can also run gnucash --help for the command line options.
+
+You can start GnuCash at the command-line, with "gnucash" or "gnucash
+<filename>", where <filename> is a GnuCash account file.  Sample
+accounts can be found in the "doc/examples" subdirectory.  *.gnucash
+files are GnuCash accounts that can be opened with the "Open File" menu entry.
+*.qif files are Quicken Import Format files that can be opened with the
+"Import QIF" menu entry.
+
+GnuCash responds to the following environment variables:
+
+  GNC_BOOTSTRAP_SCM - the location of the initial bootstrapping scheme code.
+
+  GUILE_LOAD_PATH - an override for the GnuCash load path, used when
+  loading scheme files.  It should be a string in the same form as the
+  PATH or LD_LIBRARY_PATH environment variable.
+
+  GNC_MODULE_PATH - an override for the GnuCash load path, used when
+  loading gnucash modules.  It should be a string representing a
+  proper scheme list.  It should be a string in the same form as the
+  PATH or LD_LIBRARY_PATH environment variable.
+
+  GNC_DEBUG - enable debugging output.  This allows you to turn on
+  debugging earlier in the startup process than you can with --debug.
+
+
+####################
+Internationalization
+--------------------
+
+Message catalogs exist for many different languages. In general
+GnuCash will use the locale configured in the desktop environment if
+we have a translation for it, but this may be overridden if one
+likes. Instructions for overriding the locale settings may be found at
+https://wiki.gnucash.org/wiki/Locale_Settings
+
+#####################
+Building & Installing
+---------------------
+
+GnuCash uses CMake to handle the build process. Details are available
+in cmake/README_CMAKE.txt
+
+Prior to building GnuCash, you will have to obtain and install the
+following packages:
+
+  cmake: Available https://cmake.org.
+
+  ninja: Optional, available at https://ninja-build.org. CMake can
+    generated build rules for Ninja, and generally using Ninja results
+    in faster builds that Makefile based ones.
+
+  gnome development system: headers, libraries, etc.
+
+  libxml2: available from ftp.gnome.org
+
+  SWIG: 2.0.10 or later is needed. See http://www.swig.org or
+    https://sourceforge.net/projects/swig/
+
+Generally, up-to-date build instructions for various Linux
+distributions can be found on the GnuCash wiki at
+https://wiki.gnucash.org/wiki/Building
+
+The options that the CMake build system understands are documented in
+cmake/README_CMAKE.txt and in the Building wiki page mentioned above.
+
+Note that while you need the Gnome libraries installed, you don't need
+to have a Gnome desktop.
+
+Runtime and install destinations are separate.  The CMake option
+CMAKE_INSTALL_PREFIX determines where the resulting binary will look
+for things at runtime.  Normally this determines where a "make
+install" will put all the files.  However, cmake also supports the
+DESTDIR variable.  DESTDIR is used during the `make install' step to
+relocate install objects into a staging area.  Each object and path is
+prefixed with the value of `DESTDIR' before being copied into the
+install area.  Here is an example of typical DESTDIR usage:
+
+     make DESTDIR=/tmp/staging install
+
+This places install objects in a directory tree built under
+`/tmp/staging'.  If `/gnu/bin/foo' and `/gnu/share/aclocal/foo.m4' are
+to be installed, the above command would install
+`/tmp/staging/gnu/bin/foo' and
+`/tmp/staging/gnu/share/aclocal/foo.m4'.
+
+DESTDIR can be helpful when trying to build install images and
+packages.
+
+NOTE: If you have installed different parts of Gnome in different
+places (for instance, if you've installed webkit in /usr/local) you
+will need to set the environment variables GNOME_PATH and
+GNOME_LIBCONFIG_PATH.  See the manpage for gnome-config for more
+details.
+
+
+###################
+Supported Platforms
+-------------------
+
+GnuCash 3.x is known to work with the following operating systems:
+
+GNU/Linux             -- x86, Sparc, PPC
+FreeBSD               -- x86
+OpenBSD               -- x86
+MacOS		      -- Intel, Versions 10.9 and later
+
+
+GnuCash can probably be made to work on any platform for which Gtk+ can
+and for which there is a C++11 compiler available, given sufficient expertise
+and effort. If you try and encounter difficulty, please subscribe to the
+developer's mailing list, gnucash-devel@gnucash.org and we'll try to help you.
+
+#########################
+Downloads
+-------------------------
+
+GnuCash sources and Mac and Windows binaries are hosted at
+SourceForge and Github. Links for the current version are provided at
+https://www.gnucash.org. We depend upon distribution packagers for
+GNU/Linux and *BSD binaries, so if you want a more recent version than
+your distribution provides you'll have to build from source.
+
+##############################
+Getting Source with Git
+------------------------------
+
+We maintain a mirror of our master repository on Github. You can
+browse the code at https://github.com/Gnucash/gnucash. Clone URIs are
+on that page, or if you have a Github account you can fork it
+there.
+
+##################
+Developing GnuCash
+------------------
+Before you start developing GnuCash, you should do the following:
+
+1. Read https://wiki.gnucash.org/wiki/Development
+
+2. Look over the doxygen-generated documentation at
+    https://code.gnucash.org/docs/MASTER/ or
+    https://code.gnucash.org/docs/MAINT/
+
+3. Go to the GnuCash website and skim the archives of the GnuCash
+   development mailing list.
+
+4. Join the GnuCash development mailing list. See the GnuCash website
+   for details on how to do this.
+
+5. Build the branch you want from a git clone of our repository and make
+   sure that your build passes all of the tests and runs correctly.
+
+Submitting a Patch:
+
+  Please read https://wiki.gnucash.org/wiki/Development#Submitting_Patches.
+
+Thank you.

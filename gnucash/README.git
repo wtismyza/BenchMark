@@ -1,0 +1,52 @@
+This file contains guidelines for using GnuCash from a git repository.
+They have been adapted from the guidelines for gnome-libs by
+Miguel de Icaza who adapted them from guidelines written by
+Owen Taylor.
+
+Autotools specific information in this file was removed in Jan 2018 
+by Rob Gowin as part of the transition to CMake.
+
+When making changes to GnuCash and trying to commit to the repository:
+
+ + Ask first. If your changes are major, or could possibly break existing
+   code, you should always ask. If your change is minor and you have
+   been working on gnucash for a while it is probably not necessary
+   to ask. But when in doubt, ask. Even if your change is correct,
+   somebody may know a better way to do things.
+
+   Since you want other people to review your code before it goes in,
+   you can submit your changes as a patch to gnucash-devel@gnucash.org.
+   See README for details.
+
+   If you are making changes to gnucash, you should be subscribed
+   to gnucash-devel@gnucash.org and to gnucash-changes@gnucash.org.
+   (Subscription address: https://www.gnucash.org/en/lists.phtml)
+   gnucash-devel@gnucash.org is a good place to ask about intended
+   changes.
+
+ + You must not break the build! Never check in changes that do not
+   compile, install or run. Just because your local tree compiles
+   doesn't mean you are done. The most common way to break the build
+   is to forget to add new files or directories to git. But it is easy
+   to fix this problem: Clone your local repo, but never make changes
+   in it. After you have committed a set of changes, cd to the clone,
+   run git pull, build and make distcheck. If that passes, it's safe
+   to push.
+
+ + It's wise to do major work in a branch. That allows you to keep the
+   rest of your repo up to date. It's also better to commit small
+   changes often rather than to make a single large change. Run make
+   check often so that you can quickly find errors.
+
+ + When code is added from new developers, add them to AUTHORS and to
+   doc/sgml/C/xacc-about.sgml.
+
+Dave Peticolas
+June 21, 2002
+
+Derek Atkins
+November 21, 2002
+
+Neil Williams
+November 6th, 2005
+

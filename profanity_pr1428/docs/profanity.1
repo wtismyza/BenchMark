@@ -1,0 +1,77 @@
+.TH man 1 "2020-07-01" "0.9.5" "Profanity XMPP client"
+.SH NAME
+Profanity \- a simple console based XMPP chat client.
+.SH SYNOPSIS
+.B profanity
+[\-vh] [\-l level] [\-a account]
+.SH DESCRIPTION
+.B Profanity
+is a simple lightweight console based XMPP chat client. Its emphasis is
+on having a simple and configurable command driven UI, see the homepage
+at:
+.br
+.PP
+<https://profanity-im.github.io>
+.SH OPTIONS
+.TP
+.BI "\-v, \-\-version"
+Show version and build information.
+.TP
+.BI "\-h, \-\-help"
+Show help on command line arguments.
+.TP
+.BI "\-a, \-\-account "ACCOUNT
+Auto connect to an account on startup,
+.I ACCOUNT
+must be an existing account.
+.TP
+.BI "\-c, \-\-config"
+Use an alternative config file.
+.TP
+.BI "\-l, \-\-log "LEVEL
+Set the logging level,
+.I LEVEL
+may be set to DEBUG, INFO (the default), WARN or ERROR.
+.TP
+.BI "\-f, \-\-logfile"
+Specify a different logfile
+.TP
+.BI "\-t, \-\-theme "THEME
+Specify which theme to use.
+.I THEME
+must be one of the themes installed in $XDG_CONFIG_HOME/profanity/themes
+.SH USING PROFANITY
+The user guide can be found at <https://profanity-im.github.io/userguide.html>.
+.SH SEE ALSO
+.B Profanity
+itself has a lot of built\-in help. Check the /help command for more information.
+Type "/help help" for information on how to use help itself.
+.SH CONFIGURATION
+Configuration for
+.B Profanity
+is stored in
+.I $XDG_CONFIG_HOME/profanity/profrc
+, details on commands for configuring Profanity can be found at <https://profanity-im.github.io/reference.html>.
+.SH BUGS
+Bugs can either be reported by raising an issue at the Github issue tracker:
+.br
+.PP
+<https://github.com/profanity-im/profanity/issues>
+.br
+.PP
+or to the mailing list at:
+.br
+.PP
+<https://lists.notraces.net/mailman/listinfo/profanity>
+.br
+.SH LICENSE
+Copyright (C) 2012 \- 2019 James Booth <boothj5web@gmail.com>.
+Copyright (C) 2019 \- 2020 Michael Vetter <jubalh@iodoru.com>.
+License GPLv3+: GNU GPL version 3 or later <https://www.gnu.org/licenses/gpl.html>
+This is free software; you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.
+.SH AUTHORS/CREDITS
+.B Profanity
+was created by James Booth
+.B <boothj5web@gmail.com>
+with many contributions from others, see the full list at: <https://github.com/profanity-im/profanity/graphs/contributors>

@@ -1,0 +1,13 @@
+// name: ErrorSimPackage
+// status: correct
+// cflags: -d=-newInst
+
+loadString("package P end P;");
+translateModel(P);getErrorString();
+
+// Result:
+// true
+// false
+// "Error: Cannot instantiate P due to class specialization PACKAGE.
+// "
+// endResult

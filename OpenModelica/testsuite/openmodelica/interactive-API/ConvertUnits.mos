@@ -1,0 +1,48 @@
+// status: correct
+// cflags: -d=-newInst
+
+convertUnits("MW/s","kg");getErrorString();
+convertUnits("degC","K");getErrorString();
+convertUnits("K","degF");getErrorString();
+convertUnits("degC","degF");getErrorString();
+convertUnits("degF","degC");getErrorString();
+convertUnits("K","Unknown");getErrorString();
+convertUnits("Pa","mmHg");getErrorString();
+convertUnits("m3/Pa","ml/mmHg");getErrorString();
+convertUnits("s-1","d-1");getErrorString();
+
+getDerivedUnits("K");getErrorString();
+getDerivedUnits("W");getErrorString();
+getDerivedUnits("Pa");getErrorString();
+getDerivedUnits("n");getErrorString();
+
+// Result:
+// (false,1e-06,0.0)
+// ""
+// (true,1.0,-273.15)
+// ""
+// (true,0.5555555555555556,255.3722222222222)
+// ""
+// (true,0.5555555555555556,-17.77777777777774)
+// ""
+// (true,1.8,31.99999999999994)
+// ""
+// (false,1.0,0.0)
+// "Error: Error parsing unit Unknown: Prefix not found
+// "
+// (true,133.322387415,0.0)
+// ""
+// (true,7.500615758456563e-09,0.0)
+// ""
+// (true,1.157407407407407e-05,0.0)
+// ""
+// {"degC","degF","degRk"}
+// ""
+// {"VA","var"}
+// ""
+// {"bar","inWG","mmHg","psi"}
+// ""
+// {}
+// "Error: Error parsing unit n: Unit not found
+// "
+// endResult

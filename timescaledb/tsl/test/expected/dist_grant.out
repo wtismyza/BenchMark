@@ -1,0 +1,702 @@
+-- This file and its contents are licensed under the Timescale License.
+-- Please see the included NOTICE for copyright information and
+-- LICENSE-TIMESCALE for a copy of the license.
+-- Need to be super user to create extension and add data nodes
+\c :TEST_DBNAME :ROLE_CLUSTER_SUPERUSER;
+\unset ECHO
+psql:include/remote_exec.sql:5: NOTICE:  schema "test" already exists, skipping
+DROP TABLE IF EXISTS conditions;
+NOTICE:  table "conditions" does not exist, skipping
+SELECT * FROM add_data_node('data1', host => 'localhost', database => 'data1');
+ node_name |   host    | port  | database | node_created | database_created | extension_created 
+-----------+-----------+-------+----------+--------------+------------------+-------------------
+ data1     | localhost | 55432 | data1    | t            | t                | t
+(1 row)
+
+SELECT * FROM add_data_node('data2', host => 'localhost', database => 'data2');
+ node_name |   host    | port  | database | node_created | database_created | extension_created 
+-----------+-----------+-------+----------+--------------+------------------+-------------------
+ data2     | localhost | 55432 | data2    | t            | t                | t
+(1 row)
+
+SELECT * FROM add_data_node('data3', host => 'localhost', database => 'data3');
+ node_name |   host    | port  | database | node_created | database_created | extension_created 
+-----------+-----------+-------+----------+--------------+------------------+-------------------
+ data3     | localhost | 55432 | data3    | t            | t                | t
+(1 row)
+
+CREATE TABLE conditions(time TIMESTAMPTZ NOT NULL, device INTEGER, temperature FLOAT, humidity FLOAT);
+GRANT SELECT ON conditions TO :ROLE_1;
+GRANT INSERT, DELETE ON conditions TO :ROLE_2;
+SELECT relname, relacl FROM pg_class WHERE relname = 'conditions';
+  relname   |                                                       relacl                                                       
+------------+--------------------------------------------------------------------------------------------------------------------
+ conditions | {cluster_super_user=arwdDxt/cluster_super_user,test_role_1=r/cluster_super_user,test_role_2=ad/cluster_super_user}
+(1 row)
+
+SELECT * FROM create_distributed_hypertable('conditions', 'time', 'device');
+ hypertable_id | schema_name | table_name | created 
+---------------+-------------+------------+---------
+             1 | public      | conditions | t
+(1 row)
+
+SELECT has_table_privilege(:'ROLE_1', 'conditions', 'SELECT') AS "SELECT"
+     , has_table_privilege(:'ROLE_1', 'conditions', 'DELETE') AS "DELETE"
+     , has_table_privilege(:'ROLE_1', 'conditions', 'INSERT') AS "INSERT";
+ SELECT | DELETE | INSERT 
+--------+--------+--------
+ t      | f      | f
+(1 row)
+
+SELECT * FROM test.remote_exec(NULL, format($$
+  SELECT has_table_privilege('%s', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('%s', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('%s', 'conditions', 'INSERT') AS "INSERT";
+$$, :'ROLE_1', :'ROLE_1', :'ROLE_1'));
+NOTICE:  [data1]: 
+  SELECT has_table_privilege('test_role_1', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'conditions', 'INSERT') AS "INSERT"
+NOTICE:  [data1]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |f     
+(1 row)
+
+
+NOTICE:  [data2]: 
+  SELECT has_table_privilege('test_role_1', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'conditions', 'INSERT') AS "INSERT"
+NOTICE:  [data2]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |f     
+(1 row)
+
+
+NOTICE:  [data3]: 
+  SELECT has_table_privilege('test_role_1', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'conditions', 'INSERT') AS "INSERT"
+NOTICE:  [data3]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |f     
+(1 row)
+
+
+ remote_exec 
+-------------
+ 
+(1 row)
+
+SELECT has_table_privilege(:'ROLE_2', 'conditions', 'SELECT') AS "SELECT"
+     , has_table_privilege(:'ROLE_2', 'conditions', 'DELETE') AS "DELETE"
+     , has_table_privilege(:'ROLE_2', 'conditions', 'INSERT') AS "INSERT";
+ SELECT | DELETE | INSERT 
+--------+--------+--------
+ f      | t      | t
+(1 row)
+
+SELECT * FROM test.remote_exec(NULL, format($$
+  SELECT has_table_privilege('%s', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('%s', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('%s', 'conditions', 'INSERT') AS "INSERT";
+$$, :'ROLE_2', :'ROLE_2', :'ROLE_2'));
+NOTICE:  [data1]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+NOTICE:  [data1]:
+SELECT|DELETE|INSERT
+------+------+------
+f     |t     |t     
+(1 row)
+
+
+NOTICE:  [data2]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+NOTICE:  [data2]:
+SELECT|DELETE|INSERT
+------+------+------
+f     |t     |t     
+(1 row)
+
+
+NOTICE:  [data3]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+NOTICE:  [data3]:
+SELECT|DELETE|INSERT
+------+------+------
+f     |t     |t     
+(1 row)
+
+
+ remote_exec 
+-------------
+ 
+(1 row)
+
+INSERT INTO conditions
+SELECT time, (random()*30)::int, random()*80
+FROM generate_series('2019-01-01 00:00:00'::timestamptz, '2019-02-01 00:00:00', '1 min') AS time;
+-- Check that we can actually execute a select as non-owner
+SET ROLE :ROLE_1;
+SELECT COUNT(*) FROM conditions;
+ count 
+-------
+ 44641
+(1 row)
+
+SET ROLE :ROLE_CLUSTER_SUPERUSER;
+GRANT UPDATE ON conditions TO :ROLE_2;
+BEGIN;
+GRANT TRUNCATE ON conditions TO :ROLE_2;
+ROLLBACK;
+-- Should have UPDATE, but not TRUNCATE
+SELECT has_table_privilege(:'ROLE_2', 'conditions', 'SELECT') AS "SELECT"
+     , has_table_privilege(:'ROLE_2', 'conditions', 'DELETE') AS "DELETE"
+     , has_table_privilege(:'ROLE_2', 'conditions', 'INSERT') AS "INSERT"
+     , has_table_privilege(:'ROLE_2', 'conditions', 'UPDATE') AS "UPDATE"
+     , has_table_privilege(:'ROLE_2', 'conditions', 'TRUNCATE') AS "TRUNCATE";
+ SELECT | DELETE | INSERT | UPDATE | TRUNCATE 
+--------+--------+--------+--------+----------
+ f      | t      | t      | t      | f
+(1 row)
+
+SELECT * FROM test.remote_exec(NULL, format($$
+  SELECT has_table_privilege('%s', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('%s', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('%s', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('%s', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('%s', 'conditions', 'TRUNCATE') AS "TRUNCATE";
+$$, :'ROLE_2', :'ROLE_2', :'ROLE_2', :'ROLE_2', :'ROLE_2'));
+NOTICE:  [data1]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data1]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data2]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data2]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data3]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data3]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+ remote_exec 
+-------------
+ 
+(1 row)
+
+-- Add another data node and check that grants are propagated when the
+-- data node is attached to an existing table.
+SELECT * FROM add_data_node('data4', host => 'localhost', database => 'data4');
+ node_name |   host    | port  | database | node_created | database_created | extension_created 
+-----------+-----------+-------+----------+--------------+------------------+-------------------
+ data4     | localhost | 55432 | data4    | t            | t                | t
+(1 row)
+
+\set ON_ERROR_STOP 0
+SELECT * FROM test.remote_exec(NULL, format($$
+  SELECT has_table_privilege('%s', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('%s', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('%s', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('%s', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('%s', 'conditions', 'TRUNCATE') AS "TRUNCATE";
+$$, :'ROLE_2', :'ROLE_2', :'ROLE_2', :'ROLE_2', :'ROLE_2'));
+NOTICE:  [data1]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data1]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data2]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data2]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data3]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data3]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data4]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+ERROR:  [data4]: relation "conditions" does not exist
+\set ON_ERROR_STOP 1
+SELECT * FROM attach_data_node('data4', 'conditions');
+NOTICE:  the number of partitions in dimension "device" was increased to 4
+ hypertable_id | node_hypertable_id | node_name 
+---------------+--------------------+-----------
+             1 |                  1 | data4
+(1 row)
+
+INSERT INTO conditions
+SELECT time, (random()*30)::int, random()*80
+FROM generate_series('2019-02-01 00:00:00'::timestamptz, '2019-03-01 00:00:00', '1 min') AS time;
+SELECT * FROM test.remote_exec(NULL, format($$
+  SELECT has_table_privilege('%s', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('%s', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('%s', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('%s', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('%s', 'conditions', 'TRUNCATE') AS "TRUNCATE";
+$$, :'ROLE_2', :'ROLE_2', :'ROLE_2', :'ROLE_2', :'ROLE_2'));
+NOTICE:  [data1]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data1]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data2]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data2]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data3]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data3]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+NOTICE:  [data4]: 
+  SELECT has_table_privilege('test_role_2', 'conditions', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_2', 'conditions', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_2', 'conditions', 'INSERT') AS "INSERT"
+       , has_table_privilege('test_role_2', 'conditions', 'UPDATE') AS "UPDATE"
+       , has_table_privilege('test_role_2', 'conditions', 'TRUNCATE') AS "TRUNCATE"
+NOTICE:  [data4]:
+SELECT|DELETE|INSERT|UPDATE|TRUNCATE
+------+------+------+------+--------
+f     |t     |t     |t     |f       
+(1 row)
+
+
+ remote_exec 
+-------------
+ 
+(1 row)
+
+-- Check that grants are not propagated when enable_grant_propagation
+-- is false.
+SET timescaledb.enable_grant_propagation = false;
+CREATE TABLE no_grants(time TIMESTAMPTZ NOT NULL, device INTEGER, temperature FLOAT);
+GRANT SELECT ON no_grants TO :ROLE_1;
+-- First case is when table is created. Grants should not be propagated.
+SELECT * FROM create_distributed_hypertable('no_grants', 'time', 'device');
+ hypertable_id | schema_name | table_name | created 
+---------------+-------------+------------+---------
+             2 | public      | no_grants  | t
+(1 row)
+
+SELECT has_table_privilege(:'ROLE_1', 'no_grants', 'SELECT') AS "SELECT"
+     , has_table_privilege(:'ROLE_1', 'no_grants', 'DELETE') AS "DELETE"
+     , has_table_privilege(:'ROLE_1', 'no_grants', 'INSERT') AS "INSERT";
+ SELECT | DELETE | INSERT 
+--------+--------+--------
+ t      | f      | f
+(1 row)
+
+SELECT * FROM test.remote_exec(NULL, format($$
+  SELECT has_table_privilege('%s', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('%s', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('%s', 'no_grants', 'INSERT') AS "INSERT";
+$$, :'ROLE_1', :'ROLE_1', :'ROLE_1'));
+NOTICE:  [data1]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data1]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |f     
+(1 row)
+
+
+NOTICE:  [data2]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data2]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |f     
+(1 row)
+
+
+NOTICE:  [data3]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data3]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |f     
+(1 row)
+
+
+NOTICE:  [data4]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data4]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |f     
+(1 row)
+
+
+ remote_exec 
+-------------
+ 
+(1 row)
+
+-- Second case is when grants is done on an existing table. The grant
+-- should not be propagated.
+GRANT INSERT ON no_grants TO :ROLE_1;
+SELECT has_table_privilege(:'ROLE_1', 'no_grants', 'SELECT') AS "SELECT"
+     , has_table_privilege(:'ROLE_1', 'no_grants', 'DELETE') AS "DELETE"
+     , has_table_privilege(:'ROLE_1', 'no_grants', 'INSERT') AS "INSERT";
+ SELECT | DELETE | INSERT 
+--------+--------+--------
+ t      | f      | t
+(1 row)
+
+SELECT * FROM test.remote_exec(NULL, format($$
+  SELECT has_table_privilege('%s', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('%s', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('%s', 'no_grants', 'INSERT') AS "INSERT";
+$$, :'ROLE_1', :'ROLE_1', :'ROLE_1'));
+NOTICE:  [data1]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data1]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |t     
+(1 row)
+
+
+NOTICE:  [data2]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data2]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |t     
+(1 row)
+
+
+NOTICE:  [data3]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data3]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |t     
+(1 row)
+
+
+NOTICE:  [data4]: 
+  SELECT has_table_privilege('test_role_1', 'no_grants', 'SELECT') AS "SELECT"
+       , has_table_privilege('test_role_1', 'no_grants', 'DELETE') AS "DELETE"
+       , has_table_privilege('test_role_1', 'no_grants', 'INSERT') AS "INSERT"
+NOTICE:  [data4]:
+SELECT|DELETE|INSERT
+------+------+------
+t     |f     |t     
+(1 row)
+
+
+ remote_exec 
+-------------
+ 
+(1 row)
+
+DROP TABLE conditions;
+DROP TABLE no_grants;
+-- Check that grants and revokes are copied properly to the chunks and
+-- that newly created chunks have the right privileges.
+CREATE TABLE conditions(
+    time TIMESTAMPTZ NOT NULL,
+    device INTEGER,
+    temperature FLOAT
+);
+-- Create a hypertable and show that it does not have any privileges
+SELECT * FROM create_hypertable('conditions', 'time', chunk_time_interval => '5 days'::interval);
+ hypertable_id | schema_name | table_name | created 
+---------------+-------------+------------+---------
+             3 | public      | conditions | t
+(1 row)
+
+INSERT INTO conditions
+SELECT time, (random()*30)::int, random()*80 - 40
+FROM generate_series('2018-12-01 00:00'::timestamp, '2018-12-10 00:00'::timestamp, '1h') AS time;
+\z conditions
+                               Access privileges
+ Schema |    Name    | Type  | Access privileges | Column privileges | Policies 
+--------+------------+-------+-------------------+-------------------+----------
+ public | conditions | table |                   |                   | 
+(1 row)
+
+\z _timescaledb_internal.*chunk
+                                          Access privileges
+        Schema         |       Name        | Type  | Access privileges | Column privileges | Policies 
+-----------------------+-------------------+-------+-------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table |                   |                   | 
+ _timescaledb_internal | _hyper_3_36_chunk | table |                   |                   | 
+ _timescaledb_internal | _hyper_3_37_chunk | table |                   |                   | 
+(3 rows)
+
+-- Add privileges and show that they propagate to the chunks
+GRANT SELECT, INSERT ON conditions TO PUBLIC;
+\z conditions
+                                             Access privileges
+ Schema |    Name    | Type  |               Access privileges               | Column privileges | Policies 
+--------+------------+-------+-----------------------------------------------+-------------------+----------
+ public | conditions | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+        |            |       | =ar/cluster_super_user                        |                   | 
+(1 row)
+
+\z _timescaledb_internal.*chunk
+                                                        Access privileges
+        Schema         |       Name        | Type  |               Access privileges               | Column privileges | Policies 
+-----------------------+-------------------+-------+-----------------------------------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+ _timescaledb_internal | _hyper_3_36_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+ _timescaledb_internal | _hyper_3_37_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+(3 rows)
+
+-- Create some more chunks and show that they also get the privileges.
+INSERT INTO conditions
+SELECT time, (random()*30)::int, random()*80 - 40
+FROM generate_series('2018-12-10 00:00'::timestamp, '2018-12-20 00:00'::timestamp, '1h') AS time;
+\z conditions
+                                             Access privileges
+ Schema |    Name    | Type  |               Access privileges               | Column privileges | Policies 
+--------+------------+-------+-----------------------------------------------+-------------------+----------
+ public | conditions | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+        |            |       | =ar/cluster_super_user                        |                   | 
+(1 row)
+
+\z _timescaledb_internal.*chunk
+                                                        Access privileges
+        Schema         |       Name        | Type  |               Access privileges               | Column privileges | Policies 
+-----------------------+-------------------+-------+-----------------------------------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+ _timescaledb_internal | _hyper_3_36_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+ _timescaledb_internal | _hyper_3_37_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+ _timescaledb_internal | _hyper_3_38_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+ _timescaledb_internal | _hyper_3_39_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =ar/cluster_super_user                        |                   | 
+(5 rows)
+
+-- Revoke one of the privileges and show that it propagate to the
+-- chunks.
+REVOKE INSERT ON conditions FROM PUBLIC;
+\z conditions
+                                             Access privileges
+ Schema |    Name    | Type  |               Access privileges               | Column privileges | Policies 
+--------+------------+-------+-----------------------------------------------+-------------------+----------
+ public | conditions | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+        |            |       | =r/cluster_super_user                         |                   | 
+(1 row)
+
+\z _timescaledb_internal.*chunk
+                                                        Access privileges
+        Schema         |       Name        | Type  |               Access privileges               | Column privileges | Policies 
+-----------------------+-------------------+-------+-----------------------------------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_36_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_37_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_38_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_39_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+(5 rows)
+
+-- Add some more chunks and show that it inherits the grants from the
+-- hypertable.
+INSERT INTO conditions
+SELECT time, (random()*30)::int, random()*80 - 40
+FROM generate_series('2018-12-20 00:00'::timestamp, '2018-12-30 00:00'::timestamp, '1h') AS time;
+\z conditions
+                                             Access privileges
+ Schema |    Name    | Type  |               Access privileges               | Column privileges | Policies 
+--------+------------+-------+-----------------------------------------------+-------------------+----------
+ public | conditions | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+        |            |       | =r/cluster_super_user                         |                   | 
+(1 row)
+
+\z _timescaledb_internal.*chunk
+                                                        Access privileges
+        Schema         |       Name        | Type  |               Access privileges               | Column privileges | Policies 
+-----------------------+-------------------+-------+-----------------------------------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_36_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_37_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_38_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_39_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_40_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+ _timescaledb_internal | _hyper_3_41_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+(7 rows)
+
+-- Change grants of one chunk explicitly and check that it is possible
+\z _timescaledb_internal._hyper_3_35_chunk
+                                                        Access privileges
+        Schema         |       Name        | Type  |               Access privileges               | Column privileges | Policies 
+-----------------------+-------------------+-------+-----------------------------------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =r/cluster_super_user                         |                   | 
+(1 row)
+
+GRANT UPDATE ON _timescaledb_internal._hyper_3_35_chunk TO PUBLIC;
+\z _timescaledb_internal._hyper_3_35_chunk
+                                                        Access privileges
+        Schema         |       Name        | Type  |               Access privileges               | Column privileges | Policies 
+-----------------------+-------------------+-------+-----------------------------------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =rw/cluster_super_user                        |                   | 
+(1 row)
+
+REVOKE SELECT ON _timescaledb_internal._hyper_3_35_chunk FROM PUBLIC;
+\z _timescaledb_internal._hyper_3_35_chunk
+                                                        Access privileges
+        Schema         |       Name        | Type  |               Access privileges               | Column privileges | Policies 
+-----------------------+-------------------+-------+-----------------------------------------------+-------------------+----------
+ _timescaledb_internal | _hyper_3_35_chunk | table | cluster_super_user=arwdDxt/cluster_super_user+|                   | 
+                       |                   |       | =w/cluster_super_user                         |                   | 
+(1 row)
+
+DROP TABLE conditions;
+-- Test that we can create a writer role, assign users to that role,
+-- and allow the users to insert data and create new chunks.
+\c :TEST_DBNAME :ROLE_CLUSTER_SUPERUSER;
+CREATE TABLE conditions(
+       time timestamptz,
+       device int CHECK (device > 0),
+       temp float,
+       PRIMARY KEY (time,device)
+);
+SELECT * FROM create_distributed_hypertable('conditions', 'time', 'device', 3);
+WARNING:  the number of partitions in dimension "device" is too low to make use of all attached data nodes
+ hypertable_id | schema_name | table_name | created 
+---------------+-------------+------------+---------
+             4 | public      | conditions | t
+(1 row)
+
+-- Test that we can create a writer role, assign users to that role,
+-- and allow the users to insert data and create new chunks.
+SET ROLE :ROLE_DEFAULT_PERM_USER_2;
+\set ON_ERROR_STOP 0
+INSERT INTO conditions
+SELECT time, 1 + (random()*30)::int, random()*80
+FROM generate_series('2019-01-01 00:00:00'::timestamptz, '2019-02-01 00:00:00', '1 min') AS time;
+ERROR:  permission denied for table conditions
+\set ON_ERROR_STOP 1
+RESET ROLE;
+GRANT INSERT ON conditions TO :ROLE_DEFAULT_PERM_USER_2;
+SET ROLE :ROLE_DEFAULT_PERM_USER_2;
+INSERT INTO conditions
+SELECT time, 1 + (random()*30)::int, random()*80
+FROM generate_series('2019-01-01 00:00:00'::timestamptz, '2019-02-01 00:00:00', '1 min') AS time;

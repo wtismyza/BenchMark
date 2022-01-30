@@ -1,0 +1,204 @@
+2020-07-26 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.5
+	- uacme: add -l option to allow selecting alternate chain
+	- ualpn: move signal calls to beginning
+	- ualpn: add mbedtls_x509_crt_parse_der_with_ext_cb support
+		 fixes https://github.com/ndilieto/uacme/issues/23
+
+2020-05-30 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.4.1
+	- fix SIGPIPE of parent process in daemon mode
+	  https://github.com/ndilieto/uacme/issues/36
+
+2020-05-30 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.4
+	- fix nsupdate.sh
+	  https://github.com/ndilieto/uacme/issues/32
+	- uacme: warn that --must-staple is ignored with CSRFILE
+	- ualpn: swap -p and -P command line switches
+	- ualpn: remove redundant memset
+	- ualpn: increase key buffer size as required by OpenSSL 3.x
+	- ualpn: fix minor OpenBSD portability issues
+	- ualpn: fix typo in warning message
+	- ualpn: fix library link order when using built-in libev
+	- README.md now included in distribution
+
+2020-05-08 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.3
+	- allow signing revocation requests with certificate key
+	- add support for issuing certificates based on a CSR
+	- add mbedTLS implementation of OCSP check
+	- add nsupdate.sh dns-01 authentication script
+	- improve handling of RFC8738 with OpenSSL/mbedTLS
+	- fix memory leak in csr_gen upon some OpenSSL errors
+
+2020-04-25 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.2.4
+	- improve mbedTLS detection in configure.ac
+	- check format string arguments with GCC
+	- ualpn: fix incorrect message arguments
+
+2020-04-22 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.2.3
+	- fix Content-Type header parsing
+	  https://github.com/ndilieto/uacme/issues/22
+
+2020-04-18 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.2.2
+	- fix ualpn socket type bug on uClibc based systems
+	- fix configure.ac MAP_ANON cross-compilation test
+
+2020-04-17 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.2.1
+	- increase cert buf size to cope with long identifiers
+	- fix gcc8 -Wstringop-truncation warning
+
+2020-04-15 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.2
+	- add uacme OCSP certificate status check
+	- add ualpn OpenSSL/mbedTLS implementations
+	- add key usage to ualpn challenge certificate
+	- ensure top bit of ualpn certificate S/N is 0 with OpenSSL
+	- fix ualpn memory leaks and corner case bugs
+	- minor cosmetic code and documentation changes
+
+2020-03-12 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.1.2
+	- fix configure.ac typo affecting LDFLAGS
+	- fix missing PIPE_BUF when building on hurd-386
+
+2020-03-12 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.1.1
+	- fix typo breaking build without HAVE_SPLICE
+	- fix addr_t name collision on s390x
+
+2020-03-11 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.1
+	- added IP identifier support (RFC8738)
+	- added tls-alpn-01 (RFC8737) challenge responder (ualpn)
+
+2020-02-01 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.22
+	- relax account status check (compatibility with buypass.no)
+	- allow client challenge retry requests (RFC8555 sec. 7.1.6)
+	- pass -L flag to a2x in order to avoid depending on xmllint
+	- add wildcard clarification in manpage
+
+2020-01-12 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.21
+	- Fixed uacme.sh: https://github.com/ndilieto/uacme/pull/12
+	- Added LFS support (AC_SYS_LARGEFILE)
+
+2019-10-03 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.20
+	- improved HTTP header parsing to fix problem that
+	  can happen when retrieving directory over HTTP/2
+
+2019-09-30 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.19
+	- Fix configure script bug when using explicit
+	  PKG_CONFIG environment variable
+	- explicitly set key usage in certificate request
+
+2019-08-29 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.18
+	- support for OCSP Must-Staple (-m, --must-staple)
+	- explicitly set key usage constraints with mbedTLS
+	- fix compilation warning with gcc7 on solaris
+
+2019-07-03 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.17
+	- fix pedantic compilation warning
+        - configure fails if pkg-config isn't found
+
+2019-06-17 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.16
+	- Configure script checks for libcurl HTTPS support
+	- Minor man page corrections
+
+2019-06-15 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.15
+	- Exit with error if both -a and -s are specified
+	- Avoid depending on libtasn1 if gnutls_decode_rs_value is available
+
+2019-06-12 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.14
+	- Fix deprecated API when building with OpenSSL v1.1.1c
+
+2019-06-05 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.13
+	- Disable mbedTLS runtime version check if not available
+
+2019-05-18 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.12
+	- Ensure EC key params are always properly padded
+	- Improved hook_run error checking
+
+2019-05-17 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.11
+	- Key rollover (https://tools.ietf.org/html/rfc8555#section-7.3.5)
+	- Revoked cert files now renamed to 'revoked-TIMESTAMP.pem'
+	- Key auth contains SHA256 digest for tls-alpn-01 (like dns-01)
+	- Minor logging improvements
+
+2019-05-12 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.10
+	- added secp384r1 EC key support
+	- -b, --bits option accepts 256 or 384 for EC keys
+	- enforce multiple of 8 RSA key size
+	- improved acme_get and acme_post verbose logging
+	- retry upon badNonce response according to RFC8555 6.5
+	- mbedtls: fixed incorrect size of EC signature
+
+2019-05-09 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.9
+	- added EC key/cert support (-t, --type=EC, default RSA)
+	- added RSA key length option (-b, --bits=BITS, default 2048)
+
+2019-05-04 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.8
+	- added OpenSSL support (./configure --with-openssl)
+	- check libraries versions at both compile and run time
+	- exit codes: 0=success, 1=cert issuance skipped, 2=error
+	- mbedtls: dynamically grow buffers when needed
+
+2019-04-29 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.7
+	- added HTTP User-Agent: header to all requests
+	- added --disable-docs configure option
+	- manpage version now updated automatically
+
+2019-04-27 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.6
+	- fix uninitialized variable in authorize()
+
+2019-04-27 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.5
+	- add AM_MAINTAINER_MODE to configure.ac
+	- minor cosmetic change to json primitive dump
+
+2019-04-26 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.4
+	- debian packaging
+	- fix potential uninitialized var access in acme_get()
+	- fix fprintf format string in _json_dump()
+	- copy doc/index.html on demand only
+
+2019-04-25 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.3
+	- fixed more -pedantic gcc warnings
+	- html manpage in html5; copy as doc/html for github hosting
+
+2019-04-24 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.2
+	- allow choosing between GnuTLS and mbedTLS at compile time
+	- improved directory existence check
+	- fixed -Wall -pedantic gcc warnings
+
+2019-04-21 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* Release 1.0.1
+	- fix acme challenge web server path
+	- fix spelling in help text
+
+2019-04-21 Nicola Di Lieto <nicola.dilieto@gmail.com>
+	* First public release (1.0)

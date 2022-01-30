@@ -1,0 +1,15 @@
+/chunk_api-*.sql
+/continuous_aggs_ddl-*.sql
+/continuous_aggs_permissions-*.sql
+/continuous_aggs_query-*.sql
+/continuous_aggs_union_view-*.sql
+/transparent_decompression-*.sql
+/transparent_decompression_ordered_index-*.sql
+/compression_permissions-*.sql
+/compression_qualpushdown-*.sql
+/hypertable_distributed-*.sql
+/dist_hypertable-*.sql
+/dist_query-*.sql
+/move-*.sql
+/reorder-*.sql
+/jit-*.sql
