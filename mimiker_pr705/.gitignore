@@ -1,0 +1,62 @@
+# Object files & libraries
+*.o
+*.ko
+*.a
+*.ka
+
+# Executables
+*.elf
+*.uelf
+*.test
+
+# Ramdisk
+*.cpio
+
+# Backup and log files
+*~
+*.orig
+*.log
+*#
+
+# Linker output
+*.map
+
+# Build dependency files
+.*.D
+*-stamp
+
+# Python cache
+*.pyc
+
+# ctags & cscope files
+cscope.out
+tags
+etags
+*.taghl
+
+# generated assembly files
+assym.h
+
+# Editor swap files
+*.sw[a-p]
+
+# Temporary test data
+tests/*_test_files
+
+# Downloads and source cache
+cache
+
+# Dynamically created sysroot
+sysroot
+
+# gdb history
+.gdb_history
+
+# Visual Studio Code files
+.vscode
+
+# DTB
+*.dtb
+
+# Tmux user override config
+.tmux.conf.local

@@ -1,0 +1,97 @@
+// name:      Tearing18-minimal
+// keywords:  minimal tearing
+// status:    correct
+// teardown_command:  rm -f Tearing18
+// cflags: -d=-newInst
+
+loadFile("Tearing18.mo"); getErrorString();
+
+setDebugFlags("backenddaeinfo"); getErrorString();
+setTearingMethod("minimalTearing"); getErrorString();
+simulate(Tearing18); getErrorString();
+
+val(x0,1.0); getErrorString();
+val(x3,1.0); getErrorString();
+val(x4,1.0); getErrorString();
+val(x5,1.0); getErrorString();
+val(x6,1.0); getErrorString();
+val(x7,1.0); getErrorString();
+val(x8,1.0); getErrorString();
+
+// Result:
+// true
+// ""
+// true
+// ""
+// true
+// ""
+// record SimulationResult
+//     resultFile = "Tearing18_res.mat",
+//     simulationOptions = "startTime = 0.0, stopTime = 1.0, numberOfIntervals = 500, tolerance = 1e-06, method = 'dassl', fileNamePrefix = 'Tearing18', options = '', outputFormat = 'mat', variableFilter = '.*', cflags = '', simflags = ''",
+//     messages = "LOG_SUCCESS       | info    | The initialization finished successfully without homotopy method.
+// assert            | debug   | Solving non-linear system 34 failed at time=0.086.
+// |                 | |       | For more information please use -lv LOG_NLS.
+// stdout            | warning | Integrator attempt to handle a problem with a called assert.
+// LOG_SUCCESS       | info    | The simulation finished successfully.
+// "
+// end SimulationResult;
+// "Notification: Model statistics after passing the front-end and creating the data structures used by the back-end:
+//  * Number of equations: 7
+//  * Number of variables: 7
+// Warning: There are nonlinear iteration variables with default zero start attribute found in NLSJac0. For more information set -d=initialization. In OMEdit Tools->Options->Simulation->Show additional information from the initialization process, in OMNotebook call setCommandLineOptions(\"-d=initialization\").
+// Notification: Model statistics after passing the back-end for initialization:
+//  * Number of independent subsystems: 1
+//  * Number of states: 0 ('-d=stateselection' for list of states)
+//  * Number of discrete variables: 0 ('-d=discreteinfo' for list of discrete vars)
+//  * Number of discrete states: 0 ('-d=discreteinfo' for list of discrete states)
+//  * Number of clocked states: 0 ('-d=discreteinfo' for list of clocked states)
+//  * Top-level inputs: 0
+// Notification: Strong component statistics for initialization (2):
+//  * Single equations (assignments): 1
+//  * Array equations: 0
+//  * Algorithm blocks: 0
+//  * Record equations: 0
+//  * When equations: 0
+//  * If-equations: 0
+//  * Equation systems (linear and non-linear blocks): 0
+//  * Torn equation systems: 1
+//  * Mixed (continuous/discrete) equation systems: 0
+// Notification: Torn system details for strict tearing set:
+//  * Linear torn systems: 0
+//  * Non-linear torn systems: 1 {6 0}
+// Notification: Model statistics after passing the back-end for simulation:
+//  * Number of independent subsystems: 1
+//  * Number of states: 0 ('-d=stateselection' for list of states)
+//  * Number of discrete variables: 0 ('-d=discreteinfo' for list of discrete vars)
+//  * Number of discrete states: 0 ('-d=discreteinfo' for list of discrete states)
+//  * Number of clocked states: 0 ('-d=discreteinfo' for list of clocked states)
+//  * Top-level inputs: 0
+// Notification: Strong component statistics for simulation (5):
+//  * Single equations (assignments): 4
+//  * Array equations: 0
+//  * Algorithm blocks: 0
+//  * Record equations: 0
+//  * When equations: 0
+//  * If-equations: 0
+//  * Equation systems (linear and non-linear blocks): 0
+//  * Torn equation systems: 1
+//  * Mixed (continuous/discrete) equation systems: 0
+// Notification: Torn system details for strict tearing set:
+//  * Linear torn systems: 0
+//  * Non-linear torn systems: 1 {6 0}
+// "
+// -0.9589242746631385
+// ""
+// 1.489535057843215
+// ""
+// -0.294476257366079
+// ""
+// -1.018493952318733
+// ""
+// 0.1102524957021611
+// ""
+// 3.489535057843215
+// ""
+// 0.340964233657884
+// ""
+// endResult

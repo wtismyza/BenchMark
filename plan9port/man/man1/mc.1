@@ -1,0 +1,57 @@
+.TH MC 1
+.SH NAME
+mc \- multicolumn print
+.SH SYNOPSIS
+.B mc
+[
+.B -
+]
+[
+.BI - N
+]
+[
+.I file ...
+]
+.SH DESCRIPTION
+.I Mc
+splits the input into as many columns as will fit in
+.I N
+print positions.
+If run in a
+.MR 9term (1) ,
+.MR xterm (1) ,
+or
+.MR acme (1)
+window, the default
+.I N
+is the number of blanks that will fit across the window;
+otherwise the default
+.I N
+is 80.
+Under option
+.B -
+each input line ending in a colon 
+.L :
+is printed separately.
+.SH SOURCE
+.B \*9/src/cmd/draw/mc.c
+.SH "SEE ALSO"
+.MR 9term (1) ,
+.MR acme (1) ,
+.MR acme (4) ,
+.MR xterm (1) ,
+.MR pr (1) ,
+.I lc
+in
+.MR ls (1)
+.SH BUGS
+On systems with high-DPI screens,
+.I 9term
+and
+.I acme
+do not have one current font.
+They have a pair of current fonts, one font used when the window
+on a low-DPI screen and one used when the window is on a 
+high-DPI screen.
+.I Mc
+always uses the low-DPI font for columnation decisions.

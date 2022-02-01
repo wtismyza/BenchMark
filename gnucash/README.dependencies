@@ -1,0 +1,133 @@
+GnuCash Compiler Dependency
+---------------------------
+
+The GnuCash developers use gcc (https://gcc.gnu.org) for developing and
+testing GnuCash.  For convenience, we have relied on certain features
+of gcc that are not part of any official standard and may not be
+available with other standard-compliant compilers.  Anyone desiring to
+compile GnuCash with some other compiler may have to remove these
+"gcc-isms", some of which are documented here.
+
+  Pointer-typed NULL sentinel values
+  ----------------------------------
+
+  Gcc provides an implementation of `stddef.h' that defines NULL to
+always expand to a pointer-typed null constant.  This is precisely
+what is needed in order to make sentinel value arguments to variadic
+functions correct for both 32 and 64 bit platforms.  However, another
+implementation may define NULL to expand to `0'.  In that case, all
+sentinel value arguments must have an explicit `(void *)' cast.
+
+  C++ style comments
+  ------------------
+
+  C++ style comments (`// comment to end of line') are discouraged but
+not actively eradicated.
+
+  Variadic Macros
+  ---------------
+
+  GnuCash uses variadic macros for debugging and logging support (via
+qof).
+
+
+
+Important notice
+----------------
+You can find the most recent version of the following part at
+https://wiki.gnucash.org/wiki/Dependencies.
+
+GnuCash Library Dependency Policy
+---------------------------------
+
+GnuCash desires to only depend on library versions and packages that are
+practically available.  Specifically, we choose to depend only on versions
+that have been in the major distributions for 6 months. (This is motivated in
+part by the 1.6 release, which required a large set of relatively-recent
+dependencies.  Specifically, as most user's (distributions) did not have the
+required versions packaged, it was exceedingly painful for end users to
+upgrade to the anticipated release, leading to a reputation that gnucash
+still has.)
+
+Libraries/Deps
+--------------
+  required              Version
+  --------              _______
+  gcc or clang          8.0 (gcc)/6.0(clang)    C++17 C/C++ compiler
+  cmake                 3.10                    Build system manager
+  glib2                 2.56.1
+  gtk+3                 3.22.30
+  guile                 3.0, 2.2 or 2.0.9       Must be built with regex
+                                                support enabled
+  libxml2               2.9.4
+  gettext               0.20                    Required to build gnucash.pot,
+                                                0.19.6 or later permitted but
+                                                won't generate gnucash.pot.
+  libxslt, including xsltproc
+  ICU                                           International Components for
+                                                Unicode
+  boost                 1.67.0                  All headers plus date_time,
+                                                filesystem, locale,
+                                                program_options, and
+                                                regex libraries.
+                                                locale and regex libs must be
+                                                built with ICU support.
+                                                Note that 1.67.0 is the first
+                                                *release* that supports C++17,
+                                                but that some distributions
+                                                have patched earlier versions
+                                                to work.
+  swig                  3.0.12                  Makes Guile and Python Bindings.
+  webkit                2.4.11 (Windows,
+                        2.14.1 (Everything Else)
+  googletest            1.8.0                   Some distros call it gtest.
+                                                Some distros also separate out
+                                                googlemock or gmock; both are
+                                                required.
+
+  libdbi                0.8.3                    SQL backend; also requires at
+                                                 least one of libdbd-sqlite3,
+                                                 libdbd-mysql, or libdbd-pgsql
+
+  zlib
+
+  optional
+  --------
+  aqbanking             5.7.8                    online banking; Note that 6.1.0
+  gwenhywfar            4.20.0                   or higher is needed for German
+                                                 FinTS.
+
+  python                3.6.0                    python bindings; headers
+                                                 required, not just binaries.
+  libofx                0.9.12                   OFX/QFX import
+
+  libsecret             0.18
+  gtk-mac-integration                            MacOS only, for menus to go
+                                                 to the main menu bar instead
+                                                 of one on the window.
+
+  makeinfo                                       Not really needed, it
+                                                 just builds the
+                                                 mostly obsolete
+                                                 design documentation
+                                                 (superceded for the
+                                                 most part in Doxygen
+                                                 docs).
+  doxygen                                        For building the Doxygen API
+                                                 documentation.
+
+  at runtime, required
+  ---------------------
+  a gsettings backend to store the gnucash global preferences in
+  This backend is platform dependent.
+  - linux:        dconf
+  - windows:      registry
+  - osx/quarz:    plists
+
+  Note that the osx and windows backends are built-in in gio for their
+  respective platforms. On linux and similar systems, the dconf package
+  should be installed.
+
+  at runtime, suggested
+  ---------------------
+  isocodes: translation of currency names

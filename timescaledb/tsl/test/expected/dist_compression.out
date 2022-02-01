@@ -1,0 +1,327 @@
+-- This file and its contents are licensed under the Timescale License.
+-- Please see the included NOTICE for copyright information and
+-- LICENSE-TIMESCALE for a copy of the license.
+---------------------------------------------------
+-- Test compression on a distributed hypertable
+---------------------------------------------------
+\c :TEST_DBNAME :ROLE_CLUSTER_SUPERUSER
+\set DATA_NODE_1 :TEST_DBNAME _1
+\set DATA_NODE_2 :TEST_DBNAME _2
+\set DATA_NODE_3 :TEST_DBNAME _3
+\ir include/remote_exec.sql
+-- This file and its contents are licensed under the Timescale License.
+-- Please see the included NOTICE for copyright information and
+-- LICENSE-TIMESCALE for a copy of the license.
+CREATE SCHEMA IF NOT EXISTS test;
+psql:include/remote_exec.sql:5: NOTICE:  schema "test" already exists, skipping
+GRANT USAGE ON SCHEMA test TO PUBLIC;
+CREATE OR REPLACE FUNCTION test.remote_exec(srv_name name[], command text)
+RETURNS VOID
+AS :TSL_MODULE_PATHNAME, 'ts_remote_exec'
+LANGUAGE C;
+SELECT (add_data_node (name, host => 'localhost', DATABASE => name)).*
+FROM (VALUES (:'DATA_NODE_1'), (:'DATA_NODE_2'), (:'DATA_NODE_3')) v (name);
+       node_name       |   host    | port  |       database        | node_created | database_created | extension_created 
+-----------------------+-----------+-------+-----------------------+--------------+------------------+-------------------
+ db_dist_compression_1 | localhost | 55432 | db_dist_compression_1 | t            | t                | t
+ db_dist_compression_2 | localhost | 55432 | db_dist_compression_2 | t            | t                | t
+ db_dist_compression_3 | localhost | 55432 | db_dist_compression_3 | t            | t                | t
+(3 rows)
+
+GRANT USAGE ON FOREIGN SERVER :DATA_NODE_1, :DATA_NODE_2, :DATA_NODE_3 TO :ROLE_1;
+SET ROLE :ROLE_1;
+CREATE TABLE compressed(time timestamptz, device int, temp float);
+-- Replicate twice to see that compress_chunk compresses all replica chunks
+SELECT create_distributed_hypertable('compressed', 'time', 'device', replication_factor => 2);
+NOTICE:  adding not-null constraint to column "time"
+ create_distributed_hypertable 
+-------------------------------
+ (1,public,compressed,t)
+(1 row)
+
+INSERT INTO compressed SELECT t, (abs(timestamp_hash(t::timestamp)) % 10) + 1, random()*80
+FROM generate_series('2018-03-02 1:00'::TIMESTAMPTZ, '2018-03-04 1:00', '1 hour') t;
+ALTER TABLE compressed SET (timescaledb.compress, timescaledb.compress_segmentby='device', timescaledb.compress_orderby = 'time DESC');
+SELECT test.remote_exec(NULL, $$
+SELECT table_name, compressed_hypertable_id
+FROM _timescaledb_catalog.hypertable
+WHERE table_name = 'compressed';
+$$);
+NOTICE:  [db_dist_compression_1]: 
+SELECT table_name, compressed_hypertable_id
+FROM _timescaledb_catalog.hypertable
+WHERE table_name = 'compressed'
+NOTICE:  [db_dist_compression_1]:
+table_name|compressed_hypertable_id
+----------+------------------------
+compressed|                       2
+(1 row)
+
+
+NOTICE:  [db_dist_compression_2]: 
+SELECT table_name, compressed_hypertable_id
+FROM _timescaledb_catalog.hypertable
+WHERE table_name = 'compressed'
+NOTICE:  [db_dist_compression_2]:
+table_name|compressed_hypertable_id
+----------+------------------------
+compressed|                       2
+(1 row)
+
+
+NOTICE:  [db_dist_compression_3]: 
+SELECT table_name, compressed_hypertable_id
+FROM _timescaledb_catalog.hypertable
+WHERE table_name = 'compressed'
+NOTICE:  [db_dist_compression_3]:
+table_name|compressed_hypertable_id
+----------+------------------------
+compressed|                       2
+(1 row)
+
+
+ remote_exec 
+-------------
+ 
+(1 row)
+
+-- There should be no compressed chunks
+SELECT * from chunk_compression_stats( 'compressed')
+ORDER BY chunk_name, node_name;
+     chunk_schema      |      chunk_name       | compression_status | before_compression_table_bytes | before_compression_index_bytes | before_compression_toast_bytes | before_compression_total_bytes | after_compression_table_bytes | after_compression_index_bytes | after_compression_toast_bytes | after_compression_total_bytes |       node_name       
+-----------------------+-----------------------+--------------------+--------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------------------
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+(6 rows)
+
+-- Test that compression is rolled back on aborted transaction
+BEGIN;
+SELECT compress_chunk(chunk)
+FROM show_chunks('compressed') AS chunk
+ORDER BY chunk
+LIMIT 1;
+               compress_chunk                
+---------------------------------------------
+ _timescaledb_internal._dist_hyper_1_1_chunk
+(1 row)
+
+-- Data nodes should now report compressed chunks
+SELECT * from chunk_compression_stats( 'compressed')
+ORDER BY chunk_name, node_name;
+     chunk_schema      |      chunk_name       | compression_status | before_compression_table_bytes | before_compression_index_bytes | before_compression_toast_bytes | before_compression_total_bytes | after_compression_table_bytes | after_compression_index_bytes | after_compression_toast_bytes | after_compression_total_bytes |       node_name       
+-----------------------+-----------------------+--------------------+--------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------------------
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Compressed         |                           8192 |                          32768 |                              0 |                          40960 |                          8192 |                         16384 |                          8192 |                         32768 | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Compressed         |                           8192 |                          32768 |                              0 |                          40960 |                          8192 |                         16384 |                          8192 |                         32768 | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+(6 rows)
+
+-- Abort the transaction
+ROLLBACK;
+-- No compressed chunks since we rolled back
+SELECT * from chunk_compression_stats( 'compressed')
+ORDER BY chunk_name, node_name;
+     chunk_schema      |      chunk_name       | compression_status | before_compression_table_bytes | before_compression_index_bytes | before_compression_toast_bytes | before_compression_total_bytes | after_compression_table_bytes | after_compression_index_bytes | after_compression_toast_bytes | after_compression_total_bytes |       node_name       
+-----------------------+-----------------------+--------------------+--------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------------------
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+(6 rows)
+
+-- Compress for real this time
+SELECT compress_chunk(chunk)
+FROM show_chunks('compressed') AS chunk
+ORDER BY chunk
+LIMIT 1;
+               compress_chunk                
+---------------------------------------------
+ _timescaledb_internal._dist_hyper_1_1_chunk
+(1 row)
+
+-- Check that one chunk, and its replica, is compressed
+SELECT * from chunk_compression_stats( 'compressed')
+ORDER BY chunk_name, node_name;
+     chunk_schema      |      chunk_name       | compression_status | before_compression_table_bytes | before_compression_index_bytes | before_compression_toast_bytes | before_compression_total_bytes | after_compression_table_bytes | after_compression_index_bytes | after_compression_toast_bytes | after_compression_total_bytes |       node_name       
+-----------------------+-----------------------+--------------------+--------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------------------
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Compressed         |                           8192 |                          32768 |                              0 |                          40960 |                          8192 |                         16384 |                          8192 |                         32768 | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Compressed         |                           8192 |                          32768 |                              0 |                          40960 |                          8192 |                         16384 |                          8192 |                         32768 | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+(6 rows)
+
+select * from hypertable_compression_stats('compressed'); 
+ total_chunks | number_compressed_chunks | before_compression_table_bytes | before_compression_index_bytes | before_compression_toast_bytes | before_compression_total_bytes | after_compression_table_bytes | after_compression_index_bytes | after_compression_toast_bytes | after_compression_total_bytes |       node_name       
+--------------+--------------------------+--------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------------------
+            2 |                        1 |                           8192 |                          32768 |                              0 |                          40960 |                          8192 |                         16384 |                          8192 |                         32768 | db_dist_compression_1
+            2 |                        0 |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+            2 |                        1 |                           8192 |                          32768 |                              0 |                          40960 |                          8192 |                         16384 |                          8192 |                         32768 | db_dist_compression_2
+(3 rows)
+
+-- Compress twice to generate NOTICE that the chunk is already compressed
+SELECT compress_chunk(chunk, if_not_compressed => true)
+FROM show_chunks('compressed') AS chunk
+ORDER BY chunk
+LIMIT 1;
+NOTICE:  chunk "_dist_hyper_1_1_chunk" is already compressed
+ compress_chunk 
+----------------
+ 
+(1 row)
+
+-- Decompress the chunk and replica
+SELECT decompress_chunk(chunk)
+FROM show_chunks('compressed') AS chunk
+ORDER BY chunk
+LIMIT 1;
+              decompress_chunk               
+---------------------------------------------
+ _timescaledb_internal._dist_hyper_1_1_chunk
+(1 row)
+
+-- Should now be decompressed
+SELECT * from chunk_compression_stats( 'compressed')
+ORDER BY chunk_name, node_name;
+     chunk_schema      |      chunk_name       | compression_status | before_compression_table_bytes | before_compression_index_bytes | before_compression_toast_bytes | before_compression_total_bytes | after_compression_table_bytes | after_compression_index_bytes | after_compression_toast_bytes | after_compression_total_bytes |       node_name       
+-----------------------+-----------------------+--------------------+--------------------------------+--------------------------------+--------------------------------+--------------------------------+-------------------------------+-------------------------------+-------------------------------+-------------------------------+-----------------------
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_1_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_3_chunk | Uncompressed       |                                |                                |                                |                                |                               |                               |                               |                               | db_dist_compression_3
+(6 rows)
+
+-- Decompress twice to generate NOTICE that the chunk is already decompressed
+SELECT decompress_chunk(chunk, if_compressed => true)
+FROM show_chunks('compressed') AS chunk
+ORDER BY chunk
+LIMIT 1;
+NOTICE:  chunk "_dist_hyper_1_1_chunk" is not compressed
+ decompress_chunk 
+------------------
+ 
+(1 row)
+
+\x
+SELECT * FROM timescaledb_information.hypertables
+WHERE hypertable_name = 'compressed';
+-[ RECORD 1 ]-------+--------------------------------------------------------------------
+hypertable_schema   | public
+hypertable_name     | compressed
+owner               | test_role_1
+num_dimensions      | 2
+num_chunks          | 3
+compression_enabled | f
+is_distributed      | t
+replication_factor  | 2
+data_nodes          | {db_dist_compression_1,db_dist_compression_2,db_dist_compression_3}
+tablespaces         | 
+
+SELECT * from timescaledb_information.chunks 
+ORDER BY hypertable_name, chunk_name;
+-[ RECORD 1 ]----------+----------------------------------------------
+hypertable_schema      | public
+hypertable_name        | compressed
+chunk_schema           | _timescaledb_internal
+chunk_name             | _dist_hyper_1_1_chunk
+primary_dimension      | time
+primary_dimension_type | timestamp with time zone
+range_start            | Wed Feb 28 16:00:00 2018 PST
+range_end              | Wed Mar 07 16:00:00 2018 PST
+range_start_integer    | 
+range_end_integer      | 
+is_compressed          | f
+chunk_tablespace       | 
+data_nodes             | {db_dist_compression_1,db_dist_compression_2}
+-[ RECORD 2 ]----------+----------------------------------------------
+hypertable_schema      | public
+hypertable_name        | compressed
+chunk_schema           | _timescaledb_internal
+chunk_name             | _dist_hyper_1_2_chunk
+primary_dimension      | time
+primary_dimension_type | timestamp with time zone
+range_start            | Wed Feb 28 16:00:00 2018 PST
+range_end              | Wed Mar 07 16:00:00 2018 PST
+range_start_integer    | 
+range_end_integer      | 
+is_compressed          | f
+chunk_tablespace       | 
+data_nodes             | {db_dist_compression_2,db_dist_compression_3}
+-[ RECORD 3 ]----------+----------------------------------------------
+hypertable_schema      | public
+hypertable_name        | compressed
+chunk_schema           | _timescaledb_internal
+chunk_name             | _dist_hyper_1_3_chunk
+primary_dimension      | time
+primary_dimension_type | timestamp with time zone
+range_start            | Wed Feb 28 16:00:00 2018 PST
+range_end              | Wed Mar 07 16:00:00 2018 PST
+range_start_integer    | 
+range_end_integer      | 
+is_compressed          | f
+chunk_tablespace       | 
+data_nodes             | {db_dist_compression_1,db_dist_compression_3}
+
+SELECT * from timescaledb_information.dimensions 
+ORDER BY hypertable_name, dimension_number;
+-[ RECORD 1 ]-----+-------------------------
+hypertable_schema | public
+hypertable_name   | compressed
+dimension_number  | 1
+column_name       | time
+column_type       | timestamp with time zone
+dimension_type    | Time
+time_interval     | @ 7 days
+integer_interval  | 
+integer_now_func  | 
+num_partitions    | 
+-[ RECORD 2 ]-----+-------------------------
+hypertable_schema | public
+hypertable_name   | compressed
+dimension_number  | 2
+column_name       | device
+column_type       | integer
+dimension_type    | Space
+time_interval     | 
+integer_interval  | 
+integer_now_func  | 
+num_partitions    | 3
+
+\x
+SELECT * FROM chunks_detailed_size('compressed'::regclass) 
+ORDER BY chunk_name, node_name;
+     chunk_schema      |      chunk_name       | table_bytes | index_bytes | toast_bytes | total_bytes |       node_name       
+-----------------------+-----------------------+-------------+-------------+-------------+-------------+-----------------------
+ _timescaledb_internal | _dist_hyper_1_1_chunk |        8192 |       32768 |           0 |       40960 | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_1_chunk |        8192 |       32768 |           0 |       40960 | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk |        8192 |       32768 |           0 |       40960 | db_dist_compression_2
+ _timescaledb_internal | _dist_hyper_1_2_chunk |        8192 |       32768 |           0 |       40960 | db_dist_compression_3
+ _timescaledb_internal | _dist_hyper_1_3_chunk |        8192 |       32768 |           0 |       40960 | db_dist_compression_1
+ _timescaledb_internal | _dist_hyper_1_3_chunk |        8192 |       32768 |           0 |       40960 | db_dist_compression_3
+(6 rows)
+
+SELECT * FROM hypertable_detailed_size('compressed'::regclass) ORDER BY node_name;
+ table_bytes | index_bytes | toast_bytes | total_bytes |       node_name       
+-------------+-------------+-------------+-------------+-----------------------
+       16384 |       65536 |           0 |       81920 | db_dist_compression_1
+       16384 |       65536 |           0 |       81920 | db_dist_compression_2
+       16384 |       65536 |           0 |       81920 | db_dist_compression_3
+(3 rows)
+
+-- Test compression policy with distributed hypertable
+--
+\set ON_ERROR_STOP 0
+SELECT add_compression_policy('compressed', '60d'::interval);
+ERROR:  add_compression_policy not implemented for distributed hypertable
+\set ON_ERROR_STOP 1

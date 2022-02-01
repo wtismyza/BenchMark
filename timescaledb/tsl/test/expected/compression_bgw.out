@@ -1,0 +1,216 @@
+-- This file and its contents are licensed under the Timescale License.
+-- Please see the included NOTICE for copyright information and
+-- LICENSE-TIMESCALE for a copy of the license.
+\c :TEST_DBNAME :ROLE_SUPERUSER
+CREATE ROLE NOLOGIN_ROLE WITH nologin noinherit;
+GRANT NOLOGIN_ROLE TO :ROLE_DEFAULT_PERM_USER WITH ADMIN OPTION;
+\c :TEST_DBNAME :ROLE_DEFAULT_PERM_USER
+CREATE TABLE conditions (
+      time        TIMESTAMPTZ       NOT NULL,
+      location    TEXT              NOT NULL,
+      location2    char(10)              NOT NULL,
+      temperature DOUBLE PRECISION  NULL,
+      humidity    DOUBLE PRECISION  NULL
+    );
+select create_hypertable( 'conditions', 'time', chunk_time_interval=> '31days'::interval);
+    create_hypertable    
+-------------------------
+ (1,public,conditions,t)
+(1 row)
+
+--TEST 1--
+--cannot set policy without enabling compression --
+\set ON_ERROR_STOP 0
+select add_compression_policy('conditions', '60d'::interval);
+ERROR:  compression not enabled on hypertable "conditions"
+\set ON_ERROR_STOP 1
+-- TEST2 --
+--add a policy to compress chunks --
+alter table conditions set (timescaledb.compress, timescaledb.compress_segmentby = 'location', timescaledb.compress_orderby = 'time');
+insert into conditions
+select generate_series('2018-12-01 00:00'::timestamp, '2018-12-31 00:00'::timestamp, '1 day'), 'POR', 'klick', 55, 75;
+select add_compression_policy('conditions', '60d'::interval) AS compressjob_id
+\gset
+select * from _timescaledb_config.bgw_job where id = :compressjob_id;
+  id  |     application_name      | schedule_interval  | max_runtime | max_retries | retry_period |      proc_schema      |     proc_name      |       owner       | scheduled | hypertable_id |                       config                        
+------+---------------------------+--------------------+-------------+-------------+--------------+-----------------------+--------------------+-------------------+-----------+---------------+-----------------------------------------------------
+ 1000 | Compression Policy [1000] | @ 15 days 12 hours | @ 0         |          -1 | @ 1 hour     | _timescaledb_internal | policy_compression | default_perm_user | t         |             1 | {"hypertable_id": 1, "compress_after": "@ 60 days"}
+(1 row)
+
+select * from alter_job(:compressjob_id, schedule_interval=>'1s');
+ job_id | schedule_interval | max_runtime | max_retries | retry_period | scheduled |                       config                        | next_start 
+--------+-------------------+-------------+-------------+--------------+-----------+-----------------------------------------------------+------------
+   1000 | @ 1 sec           | @ 0         |          -1 | @ 1 hour     | t         | {"hypertable_id": 1, "compress_after": "@ 60 days"} | -infinity
+(1 row)
+
+select * from _timescaledb_config.bgw_job where id >= 1000 ORDER BY id;
+  id  |     application_name      | schedule_interval | max_runtime | max_retries | retry_period |      proc_schema      |     proc_name      |       owner       | scheduled | hypertable_id |                       config                        
+------+---------------------------+-------------------+-------------+-------------+--------------+-----------------------+--------------------+-------------------+-----------+---------------+-----------------------------------------------------
+ 1000 | Compression Policy [1000] | @ 1 sec           | @ 0         |          -1 | @ 1 hour     | _timescaledb_internal | policy_compression | default_perm_user | t         |             1 | {"hypertable_id": 1, "compress_after": "@ 60 days"}
+(1 row)
+
+insert into conditions
+select now()::timestamp, 'TOK', 'sony', 55, 75;
+-- TEST3 --
+--only the old chunks will get compressed when policy is executed--
+CALL run_job(:compressjob_id);
+select chunk_name, pg_size_pretty(before_compression_total_bytes) before_total,
+pg_size_pretty( after_compression_total_bytes)  after_total
+from chunk_compression_stats('conditions') where compression_status like 'Compressed' order by chunk_name;
+    chunk_name    | before_total | after_total 
+------------------+--------------+-------------
+ _hyper_1_1_chunk | 32 kB        | 32 kB
+(1 row)
+
+-- TEST 4 --
+--cannot set another policy
+\set ON_ERROR_STOP 0
+select add_compression_policy('conditions', '60d'::interval, if_not_exists=>true);
+NOTICE:  compression policy already exists on hypertable "conditions", skipping
+ add_compression_policy 
+------------------------
+                     -1
+(1 row)
+
+select add_compression_policy('conditions', '60d'::interval);
+ERROR:  compression policy already exists for hypertable "conditions"
+select add_compression_policy('conditions', '30d'::interval, if_not_exists=>true);
+WARNING:  compression policy already exists for hypertable "conditions" with different arguments
+ add_compression_policy 
+------------------------
+                     -1
+(1 row)
+
+\set ON_ERROR_STOP 1
+--TEST 5 --
+-- drop the policy --
+select remove_compression_policy('conditions');
+ remove_compression_policy 
+---------------------------
+ t
+(1 row)
+
+select count(*) from _timescaledb_config.bgw_job WHERE id>=1000;
+ count 
+-------
+     0
+(1 row)
+
+--TEST 6 --
+-- try to execute the policy after it has been dropped --
+\set ON_ERROR_STOP 0
+CALL run_job(:compressjob_id);
+ERROR:  job 1000 not found
+\set ON_ERROR_STOP 1
+-- We're done with the table, so drop it.
+DROP TABLE IF EXISTS conditions CASCADE;
+NOTICE:  drop cascades to table _timescaledb_internal.compress_hyper_2_4_chunk
+--TEST 7
+--compression policy for integer based partition hypertable
+CREATE TABLE test_table_int(time bigint, val int);
+SELECT create_hypertable('test_table_int', 'time', chunk_time_interval => 1);
+NOTICE:  adding not-null constraint to column "time"
+      create_hypertable      
+-----------------------------
+ (3,public,test_table_int,t)
+(1 row)
+
+create or replace function dummy_now() returns BIGINT LANGUAGE SQL IMMUTABLE as  'SELECT 5::BIGINT';
+select set_integer_now_func('test_table_int', 'dummy_now');
+ set_integer_now_func 
+----------------------
+ 
+(1 row)
+
+insert into test_table_int select generate_series(1,5), 10;
+alter table test_table_int set (timescaledb.compress);
+select add_compression_policy('test_table_int', 2::int) AS compressjob_id
+\gset
+select * from _timescaledb_config.bgw_job where id=:compressjob_id;
+  id  |     application_name      | schedule_interval | max_runtime | max_retries | retry_period |      proc_schema      |     proc_name      |       owner       | scheduled | hypertable_id |                  config                   
+------+---------------------------+-------------------+-------------+-------------+--------------+-----------------------+--------------------+-------------------+-----------+---------------+-------------------------------------------
+ 1001 | Compression Policy [1001] | @ 1 day           | @ 0         |          -1 | @ 1 hour     | _timescaledb_internal | policy_compression | default_perm_user | t         |             3 | {"hypertable_id": 3, "compress_after": 2}
+(1 row)
+
+\gset
+CALL run_job(:compressjob_id);
+CALL run_job(:compressjob_id);
+select chunk_name, before_compression_total_bytes, after_compression_total_bytes
+from chunk_compression_stats('test_table_int') where compression_status like 'Compressed' order by chunk_name;
+    chunk_name    | before_compression_total_bytes | after_compression_total_bytes 
+------------------+--------------------------------+-------------------------------
+ _hyper_3_5_chunk |                          24576 |                         16384
+ _hyper_3_6_chunk |                          24576 |                         16384
+(2 rows)
+
+--TEST 8
+--hypertable owner lacks permission to start background worker
+SET ROLE NOLOGIN_ROLE;
+CREATE TABLE test_table_nologin(time bigint, val int);
+SELECT create_hypertable('test_table_nologin', 'time', chunk_time_interval => 1);
+NOTICE:  adding not-null constraint to column "time"
+        create_hypertable        
+---------------------------------
+ (5,public,test_table_nologin,t)
+(1 row)
+
+SELECT set_integer_now_func('test_table_nologin', 'dummy_now');
+ set_integer_now_func 
+----------------------
+ 
+(1 row)
+
+ALTER TABLE test_table_nologin set (timescaledb.compress);
+\set ON_ERROR_STOP 0
+SELECT add_compression_policy('test_table_nologin', 2::int);
+ERROR:  permission denied to start background process as role "nologin_role"
+\set ON_ERROR_STOP 1
+RESET ROLE;
+REVOKE NOLOGIN_ROLE FROM :ROLE_DEFAULT_PERM_USER;
+\c :TEST_DBNAME :ROLE_DEFAULT_PERM_USER
+CREATE TABLE conditions(
+    time TIMESTAMPTZ NOT NULL,
+    device INTEGER,
+    temperature FLOAT
+);
+SELECT * FROM create_hypertable('conditions', 'time',
+                                chunk_time_interval => '1 day'::interval);
+ hypertable_id | schema_name | table_name | created 
+---------------+-------------+------------+---------
+             7 | public      | conditions | t
+(1 row)
+
+INSERT INTO conditions
+SELECT time, (random()*30)::int, random()*80 - 40
+FROM generate_series('2018-12-01 00:00'::timestamp, '2018-12-31 00:00'::timestamp, '10 min') AS time;
+CREATE MATERIALIZED VIEW conditions_summary
+WITH (timescaledb.continuous) AS
+SELECT device,
+       time_bucket(INTERVAL '1 hour', "time") AS day,
+       AVG(temperature) AS avg_temperature,
+       MAX(temperature) AS max_temperature,
+       MIN(temperature) AS min_temperature
+FROM conditions
+GROUP BY device, time_bucket(INTERVAL '1 hour', "time") WITH NO DATA;
+CALL refresh_continuous_aggregate('conditions_summary', NULL, NULL);
+ALTER TABLE conditions SET (timescaledb.compress);
+SELECT COUNT(*) AS dropped_chunks_count
+  FROM drop_chunks('conditions', TIMESTAMPTZ '2018-12-15 00:00');
+ dropped_chunks_count 
+----------------------
+                   14
+(1 row)
+
+-- We need to have some chunks that are marked as dropped, otherwise
+-- we will not have a problem below.
+SELECT COUNT(*) AS dropped_chunks_count
+  FROM _timescaledb_catalog.chunk
+ WHERE dropped = TRUE;
+ dropped_chunks_count 
+----------------------
+                   14
+(1 row)
+
+SELECT add_compression_policy AS job_id
+  FROM add_compression_policy('conditions', INTERVAL '1 day') \gset
+CALL run_job(:job_id);
